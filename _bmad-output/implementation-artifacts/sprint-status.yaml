@@ -1,0 +1,111 @@
+# generated: 2026-01-20
+# project: JomNikah
+# project_key: jomnikah
+# tracking_system: file-system
+# story_location: /Users/amirrulhaiqal/BMAD-Projects/JomNikah/_bmad-output/implementation-artifacts
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+#
+# Epic Status Transitions:
+#   - backlog → in-progress: Automatically when first story is created (via create-story)
+#   - in-progress → done: Manually when all stories reach 'done' status
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created in stories folder
+#   - in-progress: Developer actively working on implementation
+#   - review: Ready for code review (via Dev's code-review workflow)
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epic transitions to 'in-progress' automatically when first story is created
+# - Stories can be worked in parallel if team capacity allows
+# - SM typically creates next story after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
+
+generated: 2026-01-20
+project: JomNikah
+project_key: jomnikah
+tracking_system: file-system
+story_location: /Users/amirrulhaiqal/BMAD-Projects/JomNikah/_bmad-output/implementation-artifacts
+
+development_status:
+  # Epic 1: Foundation & Access Control
+  epic-1: backlog
+  1-1-super-admin-authentication: backlog
+  1-2-create-couple-account: backlog
+  1-3-package-tier-assignment: backlog
+  1-4-premium-feature-toggles: backlog
+  1-5-couple-package-upgrade: backlog
+  epic-1-retrospective: optional
+
+  # Epic 2: Wedding Card Configuration
+  epic-2: backlog
+  2-1-couple-authentication-dashboard-access: backlog
+  2-2-subdomain-selection-validation: backlog
+  2-3-template-selection-preview: backlog
+  2-4-wedding-details-entry: backlog
+  2-5-photo-gallery-upload: backlog
+  2-6-setup-progress-completion: backlog
+  epic-2-retrospective: optional
+
+  # Epic 3: Guest Experience & RSVP
+  epic-3: backlog
+  3-1-public-wedding-card-access-via-subdomain: backlog
+  3-2-curtain-animation-ritual: backlog
+  3-3-wedding-details-countdown-display: backlog
+  3-4-whatsapp-rsvp-integration: backlog
+  3-5-web-form-rsvp-fallback: backlog
+  3-6-rsvp-list-real-time-updates-for-couples: backlog
+  epic-3-retrospective: optional
+
+  # Epic 4: Guestbook & Wishes
+  epic-4: backlog
+  4-1-guestbook-message-submission: backlog
+  4-2-guestbook-moderation-for-couples: backlog
+  4-3-guestbook-export-to-excel: backlog
+  4-4-guestbook-export-to-pdf: backlog
+  epic-4-retrospective: optional
+
+  # Epic 5: Premium Gift Registry
+  epic-5: backlog
+  5-1-wish-present-crud-operations: backlog
+  5-2-guest-gift-claiming-system: backlog
+  5-3-claim-cancellation-reclaiming: backlog
+  5-4-wish-present-feature-locking: backlog
+  epic-5-retrospective: optional
+
+  # Epic 6: Digital Ang Pow System
+  epic-6: backlog
+  6-1-qr-code-upload-display: backlog
+  6-2-bank-account-details-management: backlog
+  6-3-guest-view-of-digital-ang-pow: backlog
+  6-4-privacy-of-contribution-amounts: backlog
+  6-5-digital-ang-pow-feature-locking: backlog
+  epic-6-retrospective: optional
+
+  # Epic 7: Real-Time Monitoring & Dashboards
+  epic-7: backlog
+  7-1-super-admin-wedding-accounts-list: backlog
+  7-2-setup-progress-tracking: backlog
+  7-3-engagement-metrics-monitoring: backlog
+  7-4-couple-dashboard-rsvp-guestbook-views: backlog
+  epic-7-retrospective: optional
+
+  # Epic 8: Data Lifecycle & Compliance
+  epic-8: backlog
+  8-1-privacy-policy-terms-of-service-pages: backlog
+  8-2-6-month-automated-data-deletion: backlog
+  8-3-bilingual-interface-support: backlog
+  8-4-feature-locking-upgrade-prompts: backlog
+  epic-8-retrospective: optional

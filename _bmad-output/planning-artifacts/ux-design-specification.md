@@ -1,5 +1,5 @@
 ---
-stepsCompleted: [1, 2, 3, 4, 5, 6, 7]
+stepsCompleted: [1, 2, 3, 4, 5, 6, 7, 8]
 inputDocuments: ['prd.md', 'project-proposal.md', 'implementation-readiness-report-2026-01-19.md']
 documentCounts:
   briefs: 0
@@ -1392,5 +1392,305 @@ Guest receives WhatsApp link → Taps to open → Sees elegant curtain overlay �
 - Competitors get RSVPs. JomNikah creates word-of-mouth.
 
 **The Curtain Opening Is The "Swipe Right" Moment for JomNikah** - The interaction users will describe to their friends when recommending the platform.
+
+---
+
+## Visual Design Foundation
+
+### Color System
+
+**Primary Palette (Emotional Colors):**
+
+**1. Primary Rose (#F43F5E)** - Romance, Love, Celebration
+- **Emotional Association:** Wedding romance, love, celebration, joy
+- **Usage:** Primary buttons, heart icons, romantic accents, celebration moments
+- **Psychological Impact:** Creates warmth and emotional connection
+- **Applications:**
+  - Primary call-to-action buttons (RSVP, Share)
+  - Heart icons for guestbook likes
+  - Confetti celebration particles
+  - Romantic accent colors in templates
+
+**2. Primary Gold (#F59E0B)** - Achievement, Warmth, Premium
+- **Emotional Association:** Achievement, warmth, premium quality, success
+- **Usage:** Success states, progress indicators, premium feature highlights
+- **Psychological Impact:** Creates sense of accomplishment and value
+- **Applications:**
+  - Setup progress bar (60% → 100% completion)
+  - Premium feature badges and locks
+  - Success messages and toasts
+  - Achievement celebrations
+
+**3. Primary Emerald (#10B981)** - Success, Completion, Progress
+- **Emotional Association:** Success, completion, growth, reassurance
+- **Usage:** Success confirmations, positive feedback, progress tracking
+- **Psychological Impact:** Creates confidence and relief
+- **Applications:**
+  - Validation success indicators (green checkmarks)
+  - RSVP confirmed badges
+  - Setup completion celebration
+  - Form validation feedback
+
+**Neutral Palette (Minimalist Backdrop - Instagram-Inspired):**
+
+**Grayscale (50-900):**
+- **Neutral 50 (#FAFAFA):** Light backgrounds (minimalist, clean canvas)
+- **Neutral 100 (#F5F5F5):** Subtle borders, secondary backgrounds
+- **Neutral 900 (#171717):** Primary text, high contrast (accessibility compliant)
+
+**Usage Strategy:**
+- **Backgrounds:** Neutral 50/100 for Instagram-like cleanness
+- **Text:** Neutral 900 for primary content (WCAG AA compliant 4.5:1 contrast)
+- **Borders:** Neutral 200-300 for subtle separation
+- **Hover States:** Neutral 800 for interactive elements
+
+**Why This Palette Works for JomNikah:**
+- **Cultural Alignment:** Rose/Gold honor Malaysian wedding celebration traditions
+- **Emotional Resonance:** Colors create warmth (primary priority) not just information delivery
+- **Minimalist Foundation:** Neutrals provide Instagram-inspired cleanness
+- **Differentiation:** Rose/Gold/Emerald creates memorable brand identity vs. generic wedding blues
+- **Accessibility:** All color combinations meet WCAG AA contrast requirements
+
+**Semantic Color Mappings (Tailwind Configuration):**
+
+```javascript
+// tailwind.config.js
+colors: {
+  primary: {
+    rose: '#F43F5E',      // Romance, celebration
+    gold: '#F59E0B',       // Achievement, premium
+    emerald: '#10B981',    // Success, progress
+  },
+  neutral: {
+    50: '#FAFAFA',        // Light background
+    100: '#F5F5F5',       // Secondary background
+    200: '#E5E5E5',       // Borders
+    300: '#D4D4D4',       // Disabled states
+    800: '#262626',       // Hover states
+    900: '#171717',       // Primary text
+  }
+}
+```
+
+**Accessibility Compliance:**
+- **Contrast Ratios:** All text/background combinations ≥4.5:1 (WCAG AA)
+- **Color Independence:** Critical information not conveyed by color alone (icons + text)
+- **Focus Indicators:** Visible focus rings (2px primary-rose) for keyboard navigation
+- **Color Blind Safe:** Palette tested for deuteranopia, protanopia, tritanopia
+
+### Typography System
+
+**Primary Typeface: Inter (Sans-Serif)**
+
+**Characteristics:**
+- **Designer:** Rasmus Andersson (2016)
+- **Style:** Modern, geometric, highly readable
+- **Vibe:** Professional, friendly, approachable
+- **Inspiration:** Instagram, modern tech platforms
+
+**Usage:**
+- **Body Text:** All paragraph content, descriptions, messages
+- **UI Elements:** Buttons, forms, navigation, labels
+- **Interface Components:** Dashboards, settings, tables
+- **Mobile Optimization:** 16px base size (NFR-USE-003 compliance)
+
+**Why Inter:**
+- **Readability:** Excellent legibility on mobile devices (80%+ guests)
+- **Performance:** Variable font support, fast loading
+- **Versatility:** Works from small captions (14px) to large headings (48px)
+- **Emotional Tone:** Friendly without being playful, professional without being cold
+
+**Secondary Typeface: Playfair Display (Serif)**
+
+**Characteristics:**
+- **Designer:** Claus Eggers Sørensen (2011)
+- **Style:** Elegant, high contrast, editorial
+- **Vibe:** Special, romantic, traditional
+- **Inspiration:** Wedding invitations, fashion magazines
+
+**Usage:**
+- **Couple Names:** Hero section, wedding card headers (48px desktop / 32px mobile)
+- **Wedding Card Titles:** "The Wedding of Sarah & Ahmad"
+- **Section Headlines:** "About Us", "Gallery", "RSVP" (32px desktop / 24px mobile)
+- **Elegant Accents:** Pull quotes, special messages
+
+**Why Playfair Display:**
+- **Wedding Context:** Serif fonts signal "this is special, formal, important"
+- **Emotional Resonance:** Creates celebratory, romantic atmosphere
+- **Cultural Fit:** Aligns with Malaysian wedding elegance expectations
+- **Differentiation:** Sans-serif (Inter) for utility + Serif (Playfair) for emotion = perfect balance
+
+**Type Scale (Responsive Hierarchy):**
+
+| Element          | Desktop Size | Mobile Size | Usage Context           |
+|------------------|--------------|-------------|-------------------------|
+| **H1** (Hero)    | 48px / 1.2   | 32px / 1.2  | Couple names, card title |
+| **H2** (Section) | 32px / 1.2   | 24px / 1.2  | Section titles          |
+| **H3** (Subhead) | 24px / 1.3   | 20px / 1.3  | Subsection headers      |
+| **Body**         | 16px / 1.6   | 16px / 1.6  | Content, descriptions   |
+| **Small**        | 14px / 1.5   | 14px / 1.5  | Captions, metadata      |
+
+**Font Weights:**
+- **Regular (400):** Body text, normal emphasis
+- **Medium (500):** UI elements, buttons, labels
+- **Semibold (600):** Headings, important text
+- **Bold (700):** Hero headlines, couple names (Playfair Display only)
+
+**Line Heights:**
+- **Headings (H1-H3):** 1.2-1.3 (tight, elegant)
+- **Body Text:** 1.6 (readable, comfortable)
+- **Small Text:** 1.5 (prevents cramping)
+
+**Letter Spacing:**
+- **Sans-Serif (Inter):** 0em (default, natural)
+- **Serif (Playfair Display):** +0.01em (slight expansion for elegance)
+
+**Typography Best Practices:**
+- **Max Line Length:** 70-80 characters (readable, not eye-fatiguing)
+- **Paragraph Spacing:** 1.5× line height (visual separation)
+- **Text Alignment:** Left-aligned (never justified on mobile - creates rivers)
+
+**Accessibility Compliance:**
+- **Minimum Size:** 16px body text (NFR-USE-003)
+- **Contrast:** 4.5:1 minimum (neutral-900 on neutral-50)
+- **Scalability:** Text reflows on zoom (200% zoom still readable)
+
+### Spacing & Layout Foundation
+
+**Spacing System: 8px Base Unit (Tailwind Default)**
+
+**Why 8px:**
+- **Tailwind Standard:** Aligns with framework conventions
+- **Mobile-Optimized:** Divides evenly into 44px touch targets (NFR-USE-002)
+- **Flexible:** Creates consistent rhythm (8, 16, 24, 32, 48, 64, 96)
+- **Familiar:** Most web designers think in 8px increments
+
+**Spacing Scale:**
+
+| Token    | Value | Usage Context                           |
+|----------|-------|----------------------------------------|
+| 2        | 8px   | Tight spacing, icon padding            |
+| 3        | 12px  | Small gaps, label spacing              |
+| 4        | 16px  | Mobile padding, compact spacing        |
+| 6        | 24px  | Desktop padding, comfortable spacing    |
+| 8        | 32px  | Section margins, card padding          |
+| 12       | 48px  | Large gaps, major sections             |
+| 16       | 64px  | Vertical rhythm between sections       |
+| 22       | 96px  | Hero section spacing                    |
+
+**Touch Targets (Mobile-First):**
+- **Minimum:** 44×44px (NFR-USE-002 compliance)
+- **Recommended:** 48×48px (thumb-friendly, generous)
+- **Primary Actions:** 52×52px (RSVP buttons, CTAs)
+
+**Layout Philosophy: Airy and Spacious (Minimalist)**
+
+**Design Principles:**
+1. **Generous Whitespace:** Don't fear empty space (Instagram-inspired)
+2. **Visual Breathing Room:** Content needs space to feel premium
+3. **Mobile Density:** Slightly tighter on mobile (preserve screen real estate)
+4. **Desktop Expansion:** More spacing on larger screens (emphasizes elegance)
+
+**Component Spacing:**
+
+**Cards and Containers:**
+- **Mobile:** 16px padding (comfortable, not cramped)
+- **Desktop:** 24px padding (airy, professional)
+- **Gap Between Cards:** 16px (grid layouts)
+
+**Forms and Inputs:**
+- **Input Height:** 48px (touch-friendly, generous)
+- **Gap Between Fields:** 16px (clear separation)
+- **Form Sections:** 32px gaps (group related fields)
+
+**Buttons:**
+- **Padding:** 12px horizontal / 16px vertical (mobile), 16px/20px (desktop)
+- **Gap Between Buttons:** 12px (primary + secondary)
+- **Full-Width Mobile:** Buttons span full width (thumb-friendly)
+
+**Navigation:**
+- **Bottom Nav (Mobile):** 56px height (Material Design standard)
+- **Side Nav (Desktop):** 240px width (sufficient for labels)
+- **Top Nav (Desktop):** 64px height (comfortable touch/click targets)
+
+**Section Spacing (Vertical Rhythm):**
+
+```
+Hero Section
+  ↓ 64px spacing
+About Section
+  ↓ 48px spacing
+Gallery Section
+  ↓ 48px spacing
+RSVP Section
+  ↓ 64px spacing
+Footer
+```
+
+**Grid System:**
+
+**Mobile (4-Column Grid):**
+- **Columns:** 4 flexible columns (2fr each)
+- **Gutters:** 16px between columns
+- **Usage:** Photo gallery (2 columns), card layouts (single column)
+
+**Desktop (12-Column Grid):**
+- **Columns:** 12 flexible columns (1fr each)
+- **Gutters:** 24px between columns
+- **Usage:** Complex layouts (dashboard widgets, multi-column content)
+
+**Container Strategy:**
+- **Mobile:** 100% width (edge-to-edge)
+- **Tablet:** 640px max-width (centered)
+- **Desktop:** 1024px max-width (content), 1200px (wide layouts)
+
+**Layout Patterns:**
+
+**Single-Column (Mobile Primary):**
+- All wedding card content flows vertically
+- Optimal for scrolling (80%+ guest behavior)
+- Simple, focused, no cognitive load
+
+**Multi-Column (Desktop Enhancement):**
+- **Dashboard:** Sidebar navigation + main content area
+- **Photo Gallery:** 3-4 column grid (showcase more photos)
+- **RSVP List:** Table layout (scan multiple guests at once)
+
+**Responsive Breakpoints:**
+
+| Breakpoint | Screen Width | Layout Adjustments                    |
+|------------|--------------|---------------------------------------|
+| **Mobile** | < 640px      | Single column, bottom nav, tight spacing |
+| **Tablet** | 640px - 1024px | Adjusted spacing, 2-column grids     |
+| **Desktop** | > 1024px     | Multi-column, side nav, generous spacing |
+
+**Accessibility Considerations:**
+
+**Responsive Text:**
+- Text scales proportionally (not fixed pixels)
+- 16px base maintains readability at all breakpoints
+- No horizontal scrolling (text reflows)
+
+**Spacing for Accessibility:**
+- **Focus Indicators:** 2px outline in primary-rose, 4px offset (visible)
+- **Touch Targets:** Minimum 44×44px (arthritis-friendly)
+- **Click Targets:** Minimum 24×24px for desktop mouse users
+
+**Layout Accessibility:**
+- **Linear Flow:** Content order makes sense when read sequentially
+- **Skip Links:** "Skip to main content" for keyboard users
+- **Landmarks:** Proper HTML5 semantic elements (header, nav, main, footer)
+
+**Performance Optimization:**
+
+**CSS Optimization:**
+- **Tailwind JIT:** On-demand utility generation (minimal CSS)
+- **Critical CSS:** Inline above-the-fold styles (curtain animation, hero)
+- **PurgeCSS:** Remove unused utilities in production
+
+**Layout Performance:**
+- **No JavaScript Layouts:** Pure CSS for responsive design (faster)
+- **GPU Acceleration:** Transform and opacity for animations (60fps)
+- **Will Change:** Hint browser for animated elements (curtain, fade-ins)
 
 ---

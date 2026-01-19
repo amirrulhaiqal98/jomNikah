@@ -1,5 +1,5 @@
 ---
-stepsCompleted: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+stepsCompleted: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 inputDocuments: ['prd.md', 'project-proposal.md', 'implementation-readiness-report-2026-01-19.md']
 documentCounts:
   briefs: 0
@@ -3030,3 +3030,710 @@ This gives you:
 - ✅ Solo developer realistic scope (achievable in 4 weeks)
 
 ---
+## Step 12: UX Consistency Patterns
+
+**Goal:** Establish consistent interaction patterns, visual behaviors, and design rules that ensure the entire JomNikah platform feels cohesive, polished, and intuitive.
+
+---
+
+### Design Token System
+
+**What are Design Tokens?**
+Design tokens are the visual atoms of the design system - colors, spacing, typography, shadows, and animations that are used consistently across all components and pages.
+
+#### Color Tokens
+
+**Primary Colors (Brand Identity):**
+```javascript
+// Tailwind config - colors.js
+primary: {
+  rose: {
+    50:  '#FFF1F2',  // Lightest backgrounds
+    100: '#FEE2E2',  // Curtain gradients
+    500: '#F43F5E',  // Primary buttons, links
+    700: '#BE123C',  // Subtitles, secondary text
+    900: '#881337',  // Headings, primary text
+  },
+  gold: {
+    50:  '#FEF3C7',  // Background accents
+    400: '#FDE68A',  // Gradients
+    500: '#F59E0B',  // Achievements, badges
+    600: '#D97706',  // Borders, dividers
+  },
+  emerald: {
+    500: '#10B981',  // Success states, progress
+    700: '#047857',  // Success text
+    800: '#065F46',  // Bismillah, Islamic text
+  }
+}
+```
+
+**Semantic Colors (States):**
+```javascript
+semantic: {
+  success: 'emerald-500',    // Success toasts, checkmarks
+  error: 'rose-600',         // Error messages, validation
+  warning: 'gold-500',       // Warning states
+  info: 'blue-500',          // Info messages
+}
+```
+
+**When to Use Each Color:**
+
+**Primary Rose (`primary-rose-500`):**
+- Primary buttons (JcButton variant="primary")
+- Active tab indicators
+- Link hover states
+- Progress bar fill
+
+**Gold (`gold-500` and `gold-600`):**
+- Achievement badges
+- Premium feature locks
+- Confetti particles
+- Upgrade prompts
+
+**Emerald (`emerald-500` and `emerald-800`):**
+- Success toasts
+- Completed step checkmarks
+- Islamic text (Bismillah)
+- Progress completion
+
+---
+
+#### Spacing Tokens
+
+**Base Unit: 4px (Tailwind default)**
+
+**Spacing Scale:**
+```javascript
+spacing: {
+  1:  '4px',   // 0.25rem - Icon padding, tight spacing
+  2:  '8px',   // 0.5rem  - Related items (checkbox + label)
+  3:  '12px',  // 0.75rem - Card sections
+  4:  '16px',  // 1rem    - Default padding, base margin
+  5:  '20px',  // 1.25rem - Form fields spacing
+  6:  '24px',  // 1.5rem  - Section padding
+  8:  '32px',  // 2rem    - Card gaps, major sections
+  12: '48px',  // 3rem    - Page sections
+  16: '64px',  // 4rem    - Hero sections
+}
+```
+
+**When to Use Each Spacing:**
+
+**`p-4` (16px):** Default card padding, button padding, form input padding
+**`p-6` (24px):** Modal content padding, dashboard cards
+**`p-8` (32px):** Section container padding (desktop)
+**`gap-4` (16px):** Default gap between elements
+**`gap-6` (24px):** Form fields spacing, list items
+
+---
+
+#### Typography Tokens
+
+**Font Families:**
+```javascript
+fontFamily: {
+  sans: ['Inter', 'system-ui', 'sans-serif'],
+  serif: ['Playfair Display', 'Georgia', 'serif'],
+}
+```
+
+**When to Use Each Typography:**
+
+**Headings (Serif - Playfair Display):**
+- Page titles: `text-4xl font-bold` (mobile), `text-5xl` (desktop)
+- Section headings: `text-2xl font-bold`
+- Couple names: `text-4xl font-serif font-bold text-rose-900`
+
+**Body Text (Sans-Serif - Inter):**
+- Default body: `text-base font-normal text-neutral-700`
+- Form labels: `text-sm font-medium text-neutral-900`
+- Helper text: `text-xs text-neutral-500`
+
+---
+
+#### Shadow Tokens
+
+**Elevation System:**
+```javascript
+boxShadow: {
+  sm: '0 1px 2px rgba(0, 0, 0, 0.05)',           // Subtle cards
+  DEFAULT: '0 1px 3px rgba(0, 0, 0, 0.1)',        // Default cards
+  md: '0 4px 6px rgba(0, 0, 0, 0.1)',             // Raised cards
+  lg: '0 10px 15px rgba(0, 0, 0, 0.1)',           // Modals, dropdowns
+  xl: '0 20px 25px rgba(0, 0, 0, 0.15)',          // Curtains, hero
+}
+```
+
+**When to Use Each Shadow:**
+
+**`shadow-sm`:** Form inputs, small cards, badges
+**`shadow-md`:** Dashboard cards, photo gallery items
+**`shadow-lg`:** Modals, dropdowns, toasts
+**`shadow-xl`:** Curtain overlay, wedding details preview
+
+---
+
+### Interaction Patterns
+
+#### 1. Hover States
+
+**Purpose:** Provide visual feedback when mouse/pointer hovers over interactive elements.
+
+**Button Hover:**
+```vue
+<button class="bg-primary-rose-500 hover:bg-primary-rose-700 transition-colors duration-200">
+  Click Me
+</button>
+```
+
+**Behavior:**
+- Color: Darken by 2 shades (rose-500 → rose-700)
+- Transition: 200ms smooth
+- Optional Scale: `hover:scale-105` (5% larger for emphasis)
+
+**Card Hover:**
+```vue
+<div class="bg-white shadow-md hover:shadow-xl transition-all duration-300">
+  Card content
+</div>
+```
+
+**Behavior:**
+- Shadow: `shadow-md` → `shadow-xl` (elevation lift)
+- Optional: `hover:-translate-y-1` (slight upward movement)
+
+---
+
+#### 2. Focus States
+
+**Purpose:** Clear visual indication for keyboard navigation (WCAG 2.1 compliance).
+
+**Focus Ring Pattern:**
+```vue
+<button class="focus:outline-none focus:ring-2 focus:ring-primary-rose-500 focus:ring-offset-2">
+  Button
+</button>
+```
+
+**Standard Focus Ring:**
+- `outline-none`: Remove browser default
+- `ring-2`: 2px ring
+- `ring-primary-rose-500`: Brand color
+- `ring-offset-2`: 2px gap for contrast
+
+**Input Focus:**
+```vue
+<input class="border-neutral-300 focus:border-primary-rose-500 focus:ring-2 focus:ring-primary-rose-200" />
+```
+
+**Accessibility Note:**
+- Focus indicators must have 3:1 contrast ratio minimum (WCAG AA)
+- Never use `outline-none` without custom focus ring
+- Test keyboard navigation: Tab through all interactive elements
+
+---
+
+#### 3. Active/Pressed States
+
+**Purpose:** Provide immediate tactile feedback when user clicks/taps.
+
+**Button Active:**
+```vue
+<button class="active:scale-95 active:bg-primary-rose-800 transition-all">
+  Press Me
+</button>
+```
+
+**Behavior:**
+- Scale: `scale-95` (5% smaller, like pressing physical button)
+- Color: Darken by 3 shades
+- Transition: `duration-100` (fast response)
+
+---
+
+#### 4. Disabled States
+
+**Purpose:** Clearly indicate non-interactive elements.
+
+**Disabled Button:**
+```vue
+<button :disabled="isLoading" class="bg-primary-rose-500 disabled:bg-neutral-300 disabled:cursor-not-allowed">
+  <span v-if="isLoading">Loading...</span>
+  <span v-else>Submit</span>
+</button>
+```
+
+**Behavior:**
+- Color: `bg-neutral-300` (gray)
+- Cursor: `cursor-not-allowed`
+- Optional: `disabled:opacity-60`
+
+---
+
+### Validation & Error Patterns
+
+#### 1. Inline Validation
+
+**Purpose:** Real-time feedback as user types.
+
+**Pattern:**
+```vue
+<div class="space-y-2">
+  <input
+    v-model="subdomain"
+    @input="validateSubdomain"
+    :class="[
+      'border',
+      validationStatus === 'valid' && 'border-emerald-500',
+      validationStatus === 'invalid' && 'border-rose-500'
+    ]"
+  />
+
+  <div v-if="validationStatus === 'valid'" class="text-sm text-emerald-700">
+    ✅ Available!
+  </div>
+  <div v-else-if="validationStatus === 'invalid'" class="text-sm text-rose-700">
+    ❌ This subdomain is taken. Try another.
+  </div>
+</div>
+```
+
+**States:**
+- **Valid:** Green border + checkmark
+- **Invalid:** Rose border + helpful message
+- **Timing:** 300ms debounce after typing
+
+---
+
+#### 2. Kind Error Messaging
+
+**Purpose:** Helpful, not punitive error messages.
+
+**❌ BAD (Technical, Punitive):**
+```
+Error: Validation failed. Field 'subdomain' must match regex /^[a-z0-9-]+$/.
+```
+
+**✅ GOOD (Kind, Helpful):**
+```
+This subdomain can only contain lowercase letters, numbers, and hyphens.
+
+Try: sarah-ahmad-wedding
+```
+
+**Pattern Components:**
+1. What went wrong (clear, non-technical)
+2. Why it matters (context)
+3. How to fix it (actionable suggestion)
+
+**Example - Photo Upload:**
+```
+This photo is 5.2MB, which is too large for optimal performance.
+
+Please choose a photo under 2MB, or resize this photo before uploading.
+
+[Choose Another Photo] [Resize This Photo]
+```
+
+---
+
+#### 3. Toast Notifications
+
+**Purpose:** Non-intrusive feedback for success/error states.
+
+**Success Toast:**
+```vue
+<div class="fixed bottom-4 right-4 bg-emerald-500 text-white px-6 py-3 rounded-lg shadow-lg">
+  <span class="text-2xl">✅</span>
+  <div>
+    <p class="font-semibold">RSVP Sent!</p>
+    <p class="text-sm">Sarah & Ahmad will be notified.</p>
+  </div>
+  <button @click="dismiss">✕</button>
+</div>
+```
+
+**Behavior:**
+- Position: Bottom-right (desktop), bottom-center (mobile)
+- Animation: Slide up from bottom
+- Auto-dismiss: 5 seconds (success), 8 seconds (error)
+- Stacking: Multiple toasts stack vertically
+
+---
+
+### Loading States
+
+#### 1. Skeleton Screens
+
+**Purpose:** Show content structure while loading (perceived performance).
+
+**Pattern:**
+```vue
+<div v-if="isLoading" class="grid grid-cols-2 gap-4">
+  <div v-for="i in 6" :key="i" class="bg-neutral-200 rounded-lg animate-pulse aspect-square"></div>
+</div>
+
+<div v-else class="grid grid-cols-2 gap-4">
+  <img v-for="photo in photos" :key="photo.id" :src="photo.url" class="rounded-lg" />
+</div>
+```
+
+**Behavior:**
+- Animation: `animate-pulse` (gentle fade in/out)
+- Color: `bg-neutral-200` (light gray)
+- Shape: Match final content structure
+
+---
+
+#### 2. Spinner Loading
+
+**Purpose:** Indicate active loading for actions.
+
+**Button Spinner:**
+```vue
+<button :disabled="isLoading" class="bg-primary-rose-500 text-white">
+  <svg v-if="isLoading" class="animate-spin h-5 w-5">
+    <!-- Spinner SVG -->
+  </svg>
+  <span v-if="isLoading">Saving...</span>
+  <span v-else>Save Changes</span>
+</button>
+```
+
+**Behavior:**
+- Spinner: 20×20px SVG, rotating
+- Text Change: "Save Changes" → "Saving..."
+- Disabled: Button disabled during loading
+- Min Duration: 500ms (for visibility)
+
+---
+
+### Empty States
+
+**Purpose:** Guide users when content is missing.
+
+**Pattern Components:**
+1. Illustration/Icon (visual empathy)
+2. Clear Message (what's missing)
+3. Why It Matters (context)
+4. Action Button (what to do next)
+
+**Example - No RSVPs:**
+```vue
+<div class="text-center py-16 px-4">
+  <div class="text-6xl mb-4">📭</div>
+  <h3 class="text-2xl font-serif font-bold mb-2">No RSVPs Yet</h3>
+  <p class="text-neutral-600 max-w-md mx-auto mb-6">
+    Your wedding card is ready! Share your link with guests via WhatsApp to start receiving RSVPs.
+  </p>
+  <button class="bg-primary-rose-500 text-white px-8 py-3 rounded-lg">
+    📱 Share via WhatsApp
+  </button>
+</div>
+```
+
+**Empty State Rules:**
+1. Empathy: Warm, encouraging language
+2. Illustration: Large emoji or SVG (60-80px)
+3. Centered: Center alignment for focus
+4. Action: Always provide clear next step
+5. Spacing: Generous padding (py-16)
+
+---
+
+### Responsive Behavior Patterns
+
+#### 1. Mobile-First Typography
+
+```vue
+<h1 class="text-3xl font-bold md:text-4xl lg:text-5xl">
+  Sarah & Ahmad
+</h>
+
+<p class="text-base md:text-lg">
+  Together with our families...
+</p>
+```
+
+**Breakpoints:**
+- Mobile: < 768px (default)
+- Tablet: `md:` ≥ 768px
+- Desktop: `lg:` ≥ 1024px
+- Large Desktop: `xl:` ≥ 1280px
+
+---
+
+#### 2. Responsive Grid
+
+```vue
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  <div v-for="photo in photos" :key="photo.id">
+    <img :src="photo.url" />
+  </div>
+</div>
+```
+
+**Photo Gallery:**
+- Mobile: 1 column
+- Tablet: 2 columns
+- Desktop: 3 columns
+
+---
+
+#### 3. Responsive Navigation
+
+**Mobile:** Bottom tab bar (thumb-friendly)
+```vue
+<nav class="fixed bottom-0 left-0 right-0 bg-white border-t md:hidden">
+  <div class="grid grid-cols-4">
+    <a href="/dashboard" class="flex flex-col items-center py-3">
+      <span>🏠</span>
+      <span class="text-xs">Home</span>
+    </a>
+    <!-- More tabs -->
+  </div>
+</nav>
+```
+
+**Desktop:** Top horizontal nav
+```vue
+<nav class="hidden md:flex items-center space-x-8">
+  <a href="/dashboard">Home</a>
+  <a href="/rsvps">RSVPs</a>
+  <a href="/guestbook">Wishes</a>
+</nav>
+```
+
+---
+
+### Animation Timing Patterns
+
+**Standard Durations:**
+```javascript
+durations: {
+  instant: '100ms',   // Micro-interactions (button press)
+  fast: '200ms',      // Hover states, focus rings
+  normal: '300ms',    // Card elevation, modal open
+  slow: '500ms',      // Content fade-in, curtain reveal
+  verySlow: '1000ms', // Confetti, celebrations
+}
+```
+
+**Easing Functions:**
+```javascript
+easing: {
+  easeOut: 'cubic-bezier(0, 0, 0.2, 1)',      // Most animations
+  easeIn: 'cubic-bezier(0.4, 0, 1, 1)',       // Elements entering
+  bounce: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)', // Confetti
+}
+```
+
+**When to Use:**
+
+**200ms + ease-out:** Hover, focus, button press
+**300ms + ease-out:** Modal, dropdown, card elevation
+**500ms + ease-out:** Curtain reveal, content fade-in
+**1000ms + bounce:** Confetti, achievement badges
+
+---
+
+### Accessibility Patterns
+
+#### 1. Focus Management
+
+**Modal Focus Trap:**
+```vue
+<Dialog @open="focusFirstElement" @close="returnFocus">
+  <DialogContent>
+    <input ref="firstInput" /> <!-- Auto-focused -->
+    <button @click="close">Close</button>
+  </DialogContent>
+</Dialog>
+```
+
+**Behavior:**
+- Open: Focus first interactive element
+- Tab: Trap focus within modal
+- Close (Escape): Return focus to trigger
+
+---
+
+#### 2. Screen Reader Announcements
+
+**Live Region Pattern:**
+```vue
+<div>
+  <button @click="submitRSVP">RSVP Now</button>
+
+  <div role="status" class="sr-only">
+    {{ rsvpAnnouncement }}
+  </div>
+</div>
+
+<script setup>
+const rsvpAnnouncement = ref('')
+
+const submitRSVP = async () => {
+  rsvpAnnouncement.value = 'RSVP submitted successfully. Sarah and Ahmad will be notified.'
+  setTimeout(() => rsvpAnnouncement.value = '', 5000)
+}
+</script>
+```
+
+**`sr-only` class:**
+```css
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+```
+
+---
+
+#### 3. Keyboard Navigation
+
+**Skip Link Pattern:**
+```vue
+<a
+  href="#main-content"
+  class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-white px-4 py-2 rounded"
+>
+  Skip to main content
+</a>
+
+<div id="main-content">
+  <!-- Main content -->
+</div>
+```
+
+**Keyboard Shortcuts:**
+- Tab: Move focus forward
+- Shift + Tab: Move focus backward
+- Enter/Space: Activate focused element
+- Escape: Close modal/dropdown
+- Arrow Keys: Navigate within components
+
+---
+
+### Pattern Summary
+
+**Consistency Checklist:**
+
+✅ **Colors:** Use defined tokens (rose, gold, emerald)
+✅ **Spacing:** Use spacing scale (4px base unit)
+✅ **Typography:** Sans-serif body, serif headings
+✅ **Shadows:** Elevation system (sm → md → lg → xl)
+✅ **Borders:** Rounded scale (md: 8px default)
+✅ **Hover:** Darken colors, elevation lift
+✅ **Focus:** 2px ring with offset (accessibility)
+✅ **Active:** Scale down (tactile feedback)
+✅ **Disabled:** Gray colors, not-allowed cursor
+✅ **Validation:** Green (valid), rose (invalid)
+✅ **Errors:** Kind, actionable messages
+✅ **Toasts:** Auto-dismissing, stackable
+✅ **Loading:** Skeleton screens + spinners
+✅ **Empty:** Empathetic messages + action buttons
+✅ **Responsive:** Mobile-first breakpoints
+✅ **Animations:** 200ms (fast), 300ms (normal), 500ms (slow)
+✅ **Accessibility:** Focus management, screen readers, keyboard
+
+**Key Principle:**
+> "If it looks the same, it should behave the same. If it behaves differently, it should look different."
+
+Every interaction follows these patterns to create a cohesive, intuitive experience where users learn once and apply everywhere.
+
+---
+
+## Step 12: UX Consistency Patterns - COMPLETE! ✅
+
+**What We Defined:**
+
+✅ **Design Token System** - Colors, spacing, typography, shadows, borders
+✅ **Interaction Patterns** - Hover, focus, active, disabled states
+✅ **Validation & Errors** - Inline validation, kind error messaging, toasts
+✅ **Loading States** - Skeleton screens, spinners
+✅ **Empty States** - Empathetic messages with actions
+✅ **Responsive Behavior** - Mobile-first typography, grids, navigation
+✅ **Animation Timing** - Duration standards (100ms - 1000ms)
+✅ **Accessibility Patterns** - Focus management, screen readers, keyboard nav
+
+---
+
+# Complete UX Design Specification - ALL 12 STEPS COMPLETE! 🎉
+
+### Document Structure
+
+✅ **Step 1:** Executive Summary
+✅ **Step 2:** Core User Experience
+✅ **Step 3:** Desired Emotional Response
+✅ **Step 4:** UX Pattern Analysis & Inspiration
+✅ **Step 5:** Design System Foundation
+✅ **Step 6:** Defining Experience (Curtain Animation)
+✅ **Step 7:** Visual Design Foundation
+✅ **Step 8:** Design Direction Decision
+✅ **Step 9:** User Journey Flows
+✅ **Step 10:** Design Mockups
+✅ **Step 11:** Component Strategy
+✅ **Step 12:** UX Consistency Patterns
+
+### What You Now Have
+
+**Complete UX Design Specification** including:
+
+1. **User-Centered Design** - Three user personas with detailed journeys
+2. **Emotional Design Framework** - Safety Before Efficiency, Ritual Over Function
+3. **Comprehensive Design System** - Colors, typography, spacing, shadows, animations
+4. **Defining Experience** - Enhanced curtain animation with Islamic elements
+5. **Visual Direction** - Ritual Elegance (70%) + Minimalist Modern (30%)
+6. **Component Library** - 13 custom components with 4-phase implementation plan
+7. **Consistency Patterns** - All interaction states documented
+8. **Accessibility** - WCAG AA compliance, keyboard navigation, screen reader support
+9. **Performance** - <5 second load times, 60fps animations, lazy loading
+
+### Next Steps
+
+**Recommended Sequence:**
+
+1. **Create Technical Architecture** (Next)
+   - Use: `/bmad:bmm:agents:architect`
+   - Input: This UX specification + PRD
+   - Output: Database schema, API design, deployment architecture
+
+2. **Create Epics & Stories** (After Architecture)
+   - Use: `/bmad:bmm:agents:pm`
+   - Input: PRD + UX + Architecture
+   - Output: Sprint-ready user stories with acceptance criteria
+
+3. **Begin Implementation** (After Epics)
+   - Start with P0 components (JcButton, JcInput, JcCard, JCurtainAnimation)
+   - Follow 4-phase roadmap (Week 2-5)
+   - Test accessibility and performance at each phase
+
+### Files Created During UX Design
+
+1. **ux-design-specification.md** - Complete specification (this file, all 12 steps)
+2. **ux-design-directions.html** - Interactive design directions showcase
+3. **ux-journey-flows.md** - Detailed Mermaid flow diagrams
+4. **ux-design-mockups.md** - Visual text-based mockups
+5. **enhanced-curtain-animation.md** - Islamic-inspired curtain design with Vue 3 code
+
+---
+
+**UX Design Phase: COMPLETE** ✅
+
+Total effort: ~8 hours (comprehensive specification)
+Ready for: Technical Architecture phase
+
+**Date Completed:** 2026-01-19
+**Author:** Amirrul (with UX Designer Agent guidance)
+**Status:** Ready for implementation planning
+

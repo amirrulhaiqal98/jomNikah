@@ -1,5 +1,5 @@
 ---
-stepsCompleted: ['step-01-init', 'step-02-discovery', 'step-03-success', 'step-04-journeys', 'step-05-domain', 'step-06-innovation', 'step-07-project-type', 'step-08-scoping']
+stepsCompleted: ['step-01-init', 'step-02-discovery', 'step-03-success', 'step-04-journeys', 'step-05-domain', 'step-06-innovation', 'step-07-project-type', 'step-08-scoping', 'step-09-functional']
 inputDocuments: ['project-proposal.md']
 workflowType: 'prd'
 documentCounts:
@@ -507,4 +507,326 @@ JomNikah is a **Single Page Application (SPA)** built with **Vue 3 + Inertia.js 
 - **Images:** Browser caching with CDN optimization (optional)
 - **Dynamic content:** No caching for authenticated dashboards
 - **Public cards:** Short-term caching (5-15 minutes) to balance freshness vs performance
+
+
+## Project Scoping & Phased Development
+
+### MVP Strategy & Philosophy
+
+**MVP Approach:** Experience-Plus MVP - Solve the core pain (expensive physical cards) while delighting users with smooth UX and flexible pricing tiers
+
+**Current Status:** Development complete, launching with packaged pricing model
+
+**Resource Requirements:**
+- Solo developer (Amirrul as owner/operator)
+- DigitalOcean droplet hosting
+- Manual server management and customer support
+- Target: 100 weddings for initial validation
+
+**Business Model:**
+- **Tiered pricing:** RM20 Standard vs RM30 Premium
+- **One-time fee:** No recurring revenue (6-month card validity)
+- **Manual onboarding:** Super Admin creates all accounts
+- **Upgrade path:** RM10 difference to unlock premium features
+
+### MVP Feature Set (Phase 1) - CURRENT VERSION
+
+**Core User Journeys Supported:**
+- ✅ Couple Success Path (Sarah & Ahmad) - Full setup in <1 hour
+- ✅ Super Admin Account Creation (Amirrul) - Manual account provisioning with package selection
+- ✅ Guest Experience (Auntie Fatimah) - Mobile-first card viewing, RSVP, guestbook
+- ✅ Couple Error Recovery - Frontend validation, self-service UX
+
+**Must-Have Capabilities (All Packages):**
+
+**Authentication & Access Control:**
+- Spatie Permission-based roles (super-admin, couple)
+- Manual account creation by Super Admin
+- Package assignment at account creation (Standard/Premium)
+- Secure password management
+
+**Core Card Features (Standard & Premium):**
+- Dynamic subdomain generation (e.g., sarah-ahmad.jomnikah.com)
+- Real-time subdomain availability checking
+- Template switching engine (change designs without losing data)
+- Wedding details management (date, time, venue, map)
+- Photo gallery upload (<2MB limit, frontend validation)
+- Live countdown timer (JavaScript-based, updates every second)
+- Mobile-first responsive design
+- Curtain animation (tap to open)
+
+**Guest Interaction Features (Standard & Premium):**
+- RSVP tracking (WhatsApp redirect + form-based)
+- Real-time RSVP list for couples
+- Guestbook with message submission
+- Guestbook moderation (approve/delete messages)
+- Print to PDF (guestbook and wishes)
+- Export to Excel (guestbook messages)
+
+**Admin & Management (Standard & Premium):**
+- Super Admin dashboard (wedding manager, create accounts)
+- Couple dashboard (edit details, view RSVPs, manage guestbook)
+- Package-based feature locking
+- Setup progress tracking
+- System monitoring (RSVPs, wishes, performance)
+
+**Premium Features (RM30 Package Only):**
+- ✅ **Wish Present Registry** - CRUD operations, claim tracking with guest contact info, delivery details, prevent duplicates, cancel/reclaim functionality
+- ✅ **Digital Ang Pow** - QR code upload, bank account details, private monetary gift collection
+- ✅ **Feature locking/unlocking** by Super Admin
+
+**Technical & Non-Functional (All Packages):**
+- Page load <5 seconds (mobile-optimized)
+- Subdomain generation <5 minutes
+- Support for 100 concurrent weddings
+- 6-month data retention with auto-deletion
+- Privacy Policy and Terms of Service
+- Frontend validation (file size, subdomain availability)
+- Bahasa Malaysia & English language support
+
+**Explicitly Out of Scope for MVP:**
+- No self-service registration (admin-led onboarding only)
+- No automated emails (manual WhatsApp/Telegram communication)
+- No payment processing integration (manual payment via bank transfer)
+- No API for third-party integrations
+- No mobile apps (web-only)
+- No PWA/offline functionality
+- No advanced analytics (basic metrics only)
+
+### Post-MVP Features
+
+**Phase 2 (Post-Launch - After First 100 Weddings):**
+
+*To be determined based on user feedback and market validation*
+
+**Potential Growth Features:**
+- Automated email notifications (RSVP confirmations, reminders)
+- Payment gateway integration (FPX, credit card)
+- Self-service registration (optional, alongside manual onboarding)
+- Analytics dashboard (engagement metrics, popular templates)
+- Template marketplace (more design options)
+- Video messages from guests
+- Photo album expansion (more photos, better gallery)
+- Couple collaboration features (both partners can edit)
+
+**Phase 3 (Expansion - Future):**
+
+*Dream version to be defined based on market learning*
+
+**Potential Platform Features:**
+- Wedding vendor directory integration
+- Multi-language support (Chinese, Tamil)
+- White-label solution for wedding planners
+- API for third-party integrations
+- Mobile apps (iOS/Android)
+- Advanced analytics and insights
+- Community features (forums, tips)
+
+### Package & Pricing Strategy
+
+**Standard Package - RM20 (One-Time):**
+
+**Target:** Budget-conscious couples who want digital convenience without gift management
+
+**Included Features:**
+- Full wedding card customization
+- RSVP tracking and management
+- Guestbook with wishes
+- Photo gallery
+- Template switching
+- Print to PDF + Excel export
+- Mobile-first experience
+- 6-month card validity
+
+**Excluded Features:**
+- ❌ Wish Present registry
+- ❌ Digital Ang Pow
+
+**Upgrade Path:** Can add Premium features later for RM10 additional
+
+---
+
+**Premium Package - RM30 (One-Time):**
+
+**Target:** Couples who want complete digital wedding experience with gift management
+
+**Included Features:**
+- **ALL Standard features**
+- **PLUS:**
+  - Wish Present registry (claim system, guest contact info, delivery details)
+  - Digital Ang Pow (QR codes, bank details, private monetary gifts)
+  - Premium feature access for 6 months
+
+**Value Proposition:** Extra RM10 for comprehensive gift and monetary management features
+
+---
+
+**Feature Locking Implementation:**
+
+**Super Admin Controls:**
+- **Package Selection:** Dropdown during account creation (Standard/Premium)
+- **Feature Unlocking:** Checkbox to enable/disable Wish Present and Digital Ang Pow independently
+- **Upgrade Handling:** Change package from Standard → Premium, system unlocks features
+
+**Couple Dashboard Experience:**
+- **Standard Couples:** See Wish Present and Digital Ang Pow sections in dashboard
+  - Sections appear **locked/grayed out**
+  - Message displayed: "Upgrade to Premium Package (RM30) to unlock this feature"
+  - Call-to-action button: "Upgrade Now - Add RM10"
+  - Clicking upgrade sends notification to Super Admin
+- **Premium Couples:** Full access to all features with no restrictions
+
+**Upgrade Workflow:**
+1. Couple clicks "Upgrade Now" in dashboard
+2. System sends notification to Super Admin (WhatsApp/email)
+3. Super Admin processes RM10 payment
+4. Super Admin changes couple package to Premium in admin dashboard
+5. System instantly unlocks Wish Present and Digital Ang Pow features
+6. Couple receives confirmation and can immediately use premium features
+
+### Risk Mitigation Strategy
+
+**Technical Risks:**
+
+**Risk:** Subdomain routing issues with 100+ weddings
+**Mitigation:** Manual Nginx configuration testing, wildcard SSL certificate, gradual rollout
+
+**Risk:** Page load performance degrades with photo-heavy cards
+**Mitigation:** Frontend validation (<2MB limit), lazy loading for galleries, CDN optimization (if needed)
+
+**Risk:** Data deletion after 6 months removes valuable memories
+**Mitigation:** Export functionality (PDF + Excel), reminder notifications before expiry, optional renewal
+
+**Market Risks:**
+
+**Risk:** Couples unwilling to pay for digital wedding cards
+**Mitigation:** Strong value proposition (save RM800+ vs physical cards), low entry price (RM20), social proof through first 100 weddings
+
+**Risk:** Competitors copy the model and undercut pricing
+**Mitigation:** Focus on user experience (easy setup, mobile-first), personalized service (manual onboarding), Malaysian cultural features (Digital Ang Pow)
+
+**Risk:** Low upgrade rate from Standard to Premium
+**Mitigation:** Visible locked features create desire, targeted messaging about gift management benefits, upgrade path is frictionless (RM10 difference)
+
+**Resource Risks:**
+
+**Risk:** Solo developer overwhelmed by support requests
+**Mitigation:** Frontend validation prevents common errors, clear documentation, limit to 100 weddings initially, automated FAQ
+
+**Risk:** DigitalOcean server management complexity
+**Mitigation:** Manual setup gives full control, no queue workers simplifies architecture, synchronous processing easier to debug
+
+**Risk:** Time constraints for manual account creation
+**Mitigation:** Streamlined admin dashboard, quick account creation process (<5 minutes per couple), scale support resources with revenue
+
+
+## Functional Requirements
+
+### Account & Package Management
+
+- **FR1:** Super Admin can create new couple accounts with email/phone and password
+- **FR2:** Super Admin can assign package tier (Standard or Premium) during account creation
+- **FR3:** Super Admin can independently enable or disable Wish Present feature per couple
+- **FR4:** Super Admin can independently enable or disable Digital Ang Pow feature per couple
+- **FR5:** Super Admin can upgrade couple from Standard to Premium package
+- **FR6:** Couples can log in to their dashboard using credentials provided by Super Admin
+- **FR7:** Couples can request package upgrade through their dashboard
+
+### Wedding Card Configuration
+
+- **FR8:** Couples can define unique subdomain for their wedding card
+- **FR9:** System can validate subdomain availability in real-time during subdomain creation
+- **FR10:** System can enforce subdomain format rules (lowercase, no special characters)
+- **FR11:** Couples can select wedding template from available options
+- **FR12:** Couples can switch templates without losing previously entered data
+- **FR13:** Couples can enter wedding details (date, time, venue, location map)
+- **FR14:** Couples can upload photos to photo gallery
+- **FR15:** System can validate photo file size before upload (<2MB limit)
+
+### Guest RSVP Management
+
+- **FR16:** Guests can RSVP through WhatsApp redirect
+- **FR17:** Guests can RSVP through web form
+- **FR18:** Couples can view real-time RSVP list
+- **FR19:** System can track RSVP submission date and time
+- **FR20:** System can display RSVP count and status in couple dashboard
+
+### Guestbook & Wishes
+
+- **FR21:** Guests can submit messages to couple's guestbook
+- **FR22:** System can require guestbook message approval before public display
+- **FR23:** Couples can approve guestbook messages
+- **FR24:** Couples can delete any guestbook message
+- **FR25:** System can display guestbook approval status to guests
+- **FR26:** Couples can export guestbook messages to Excel format
+- **FR27:** Couples can export guestbook messages to PDF format
+
+### Premium Features - Wish Present Registry
+
+- **FR28:** Premium couples can add gift items to Wish Present registry
+- **FR29:** Premium couples can edit gift items in Wish Present registry
+- **FR30:** Premium couples can delete gift items from Wish Present registry
+- **FR31:** Guests can claim gift items from Wish Present registry
+- **FR32:** System can require guest contact information (email or phone) during present claim
+- **FR33:** System can prevent multiple guests from claiming same gift item
+- **FR34:** System can display claimed status with guest identifier for gift items
+- **FR35:** Guests can cancel gift item claims, making items available for other guests
+- **FR36:** System can display couple's contact information (name, phone, address) to guests who claimed presents
+- **FR37:** Standard couples can view Wish Present registry section in locked state
+- **FR38:** System can display upgrade prompt when Standard couples access locked Wish Present features
+
+### Premium Features - Digital Ang Pow
+
+- **FR39:** Premium couples can upload QR code image for Digital Ang Pow
+- **FR40:** Premium couples can add bank account details for Digital Ang Pow
+- **FR41:** Premium couples can specify bank name for displayed account details
+- **FR42:** Guests can view QR code for Digital Ang Pow contributions
+- **FR43:** Guests can view bank account details for Digital Ang Pow contributions
+- **FR44:** System can maintain privacy of Ang Pow contribution amounts
+- **FR45:** Standard couples can view Digital Ang Pow section in locked state
+- **FR46:** System can display upgrade prompt when Standard couples access locked Digital Ang Pow features
+
+### Public Wedding Card Display
+
+- **FR47:** Guests can view wedding card through unique subdomain URL
+- **FR48:** System can display curtain animation with tap-to-open interaction
+- **FR49:** System can display wedding countdown timer that updates in real-time
+- **FR50:** System can display photo gallery on public wedding card
+- **FR51:** System can display wedding details (names, date, time, venue, map)
+- **FR52:** System can display RSVP section on public wedding card
+- **FR53:** System can display guestbook section on public wedding card
+
+### Admin & Monitoring
+
+- **FR54:** Super Admin can view list of all wedding accounts
+- **FR55:** Super Admin can view setup progress for each wedding account
+- **FR56:** Super Admin can monitor RSVP counts per wedding
+- **FR57:** Super Admin can monitor guestbook message count per wedding
+- **FR58:** Super Admin can monitor Wish Present claim activity per wedding
+- **FR59:** Couples can view RSVP list in their dashboard
+- **FR60:** Couples can view guestbook messages in their dashboard
+- **FR61:** System can track setup completion percentage for couples
+
+### Data Management & Privacy
+
+- **FR62:** System can automatically delete wedding photos 6 months after wedding date
+- **FR63:** System can automatically delete wedding card content 6 months after wedding date
+- **FR64:** System can retain couple account credentials beyond 6-month period
+- **FR65:** System can display Privacy Policy to users
+- **FR66:** System can display Terms of Service to users
+- **FR67:** System can comply with personal data protection requirements
+
+### Multi-Language Support
+
+- **FR68:** System can display interface in English language
+- **FR69:** System can display interface in Bahasa Malaysia language
+- **FR70:** Users can switch between English and Bahasa Malaysia
+
+### Feature Locking & Upgrade
+
+- **FR71:** System can hide Wish Present functionality from Standard couples
+- **FR72:** System can hide Digital Ang Pow functionality from Standard couples
+- **FR73:** System can display upgrade prompts for locked premium features
+- **FR74:** System can send upgrade request notifications to Super Admin
+- **FR75:** System can instantly unlock premium features when package is upgraded
 

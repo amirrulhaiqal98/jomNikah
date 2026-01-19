@@ -1,5 +1,5 @@
 ---
-stepsCompleted: [1, 2, 3]
+stepsCompleted: [1, 2, 3, 4]
 inputDocuments: ['prd.md', 'project-proposal.md', 'implementation-readiness-report-2026-01-19.md']
 documentCounts:
   briefs: 0
@@ -289,3 +289,164 @@ This core action encompasses:
 - Busy couples need to setup anywhere, anytime. Support both desktop (focus) and mobile (convenience)
 - **Translation:** Responsive design that works beautifully on both. Desktop: multi-column with live preview. Mobile: single-column with camera integration. Data syncs across devices
 - **Applies to:** Couple dashboard, setup flow, admin interface
+
+---
+
+## Desired Emotional Response
+
+### Primary Emotional Goals
+
+**For Couples: "Empowered Relief"**
+- **Emotional Definition:** Feeling capable, supported, and successful in completing wedding card setup without the stress and cost of traditional physical cards
+- **Key Feelings:** "I can do this!" → "This is easier than I thought" → "I'm almost there!" → "I did it! And saved RM800+!"
+- **Differentiation from Physical Cards:** Couples feel empowered (active participant) vs. overwhelmed (passive victim of complex printing process)
+- **Word-of-Mouth Driver:** "You won't believe how easy this was! I set up our entire wedding card in 47 minutes!"
+
+**For Guests: "Connected Belonging"**
+- **Emotional Definition:** Feeling included in the celebration, part of the couple's special day, and satisfied that they've expressed their care
+- **Key Feelings:** Excited → Delighted → Accomplished → Connected
+- **Differentiation from Physical Cards:** Guests feel emotionally connected (ritualistic opening, personal photos) vs. transactionally informed (date/time/venue only)
+- **Word-of-Mouth Driver:** "The digital card was so beautiful! I loved opening it - felt like a real event!"
+
+**For Admin: "Efficient Satisfaction"**
+- **Emotional Definition:** Feeling productive and helpful, enabling happiness efficiently without operational burden
+- **Key Feelings:** Capable → Efficient → Proud → Accomplished
+- **Success Indicator:** <5 minutes to onboard each couple, smooth operations
+
+### Emotional Journey Mapping
+
+**Couple Emotional Journey (Sarah & Ahmad):**
+
+| Journey Stage | Emotional State | Design Triggers | Avoid These Negative Emotions |
+|---------------|-----------------|-----------------|-------------------------------|
+| **1. Account Creation** | Hopeful | WhatsApp credential delivery, warm personal message from Admin | Bureaucratic, cold, automated feeling |
+| **2. First Login** | Curious → Supported | Clean dashboard, clear progress indicator (0% → 25%) | Overwhelmed, "where do I start?" confusion |
+| **3. Subdomain Setup** | Empowered | Real-time availability check, green ✅ "Available!" | Frustration, "sorry, taken!" disappointment |
+| **4. Template Selection** | Creative Delight | Instant preview, "Click, boom! New design!" switching | Anxiety about data loss, commitment pressure |
+| **5. Details Entry** | Capable | Live preview updates, form validation feedback | Boredom, fatigue from repetitive data entry |
+| **6. Photo Upload** | Guided | Kind validation messages (<2MB), helpful tips | Rejected, punitive error feeling |
+| **7. Premium Setup** (Optional) | Confident | Locked features with upgrade prompts, clear value props | Confused about what's included |
+| **8. Setup Complete** | Elated Relief | Celebration animation (confetti!), "100% done!", copy link button | Anti-climactic, "is that it?" letdown |
+| **9. Share Link** | Proud Anticipation | Easy share button, preview of public card | Uncertainty, "did I do everything right?" |
+| **10. First RSVP** | Joyous Validation | Real-time notification: "Auntie Fatimah confirmed!" | Delayed gratification, "is anyone seeing this?" |
+| **11. Ongoing Monitoring** | Connected & Organized | Dashboard with RSVP/wish counts, guestbook feed | Anxiety about missing messages |
+
+**Guest Emotional Journey (Auntie Fatimah):**
+
+| Journey Stage | Emotional State | Design Triggers | Avoid These Negative Emotions |
+|---------------|-----------------|-----------------|-------------------------------|
+| **1. Receives Link** | Curious Excitement | Personalized WhatsApp message from couple | Generic, spam-like feeling |
+| **2. Opens Card** | Anticipation | Curtain animation: "Tap to Open Their Wedding Card" | Nothing, immediate content dump |
+| **3. Card Reveals** | Delighted Beauty | Smooth fade-in, couple's photo, beautiful design | Slow loading, broken images |
+| **4. Views Details** | Informed | Clear date/time/venue, countdown timer | Confusion about when/where |
+| **5. RSVPs** | Accomplished | One-tap WhatsApp, immediate confirmation | Frustrating form filling, "did it work?" |
+| **6. Views Registry** (Optional) | Generous | Wish Present items, clear claiming process | Pressure, guilt about gifts |
+| **7. Gives Ang Pow** (Optional) | Private Contribution | QR code/bank details, privacy assured | Exposed amounts, public comparison |
+| **8. Writes Wish** | Expressive Love | Simple guestbook form, "Thank you! Pending approval" | Technical barriers, login requirements |
+| **9. Completion** | Satisfied Inclusion | "Your response has been sent to Sarah & Ahmad" | Unfinished feeling, uncertainty |
+
+**Admin Emotional Journey (Amirrul):**
+
+| Journey Stage | Emotional State | Design Triggers |
+|---------------|-----------------|-----------------|
+| **1. Onboards Couple** | Efficient | Streamlined form, <5 min process |
+| **2. Sends Credentials** | Helpful | WhatsApp automation, personal message template |
+| **3. Monitors Progress** | Informed | Dashboard with setup completion % |
+| **4. Sees Success** | Proud | RSVP/wish counts, active weddings |
+
+### Micro-Emotions
+
+**Critical Micro-Emotions for JomNikah:**
+
+**1. Confidence (Couple Setup Experience)**
+- **Why Critical:** Wedding planning creates uncertainty. Couples must feel capable to complete setup independently
+- **UX Approach:** Clear progress indication, gentle guidance, forgiving interface
+- **Anti-Pattern:** Confusing navigation, technical jargon, punitive errors
+
+**2. Trust (Guest Gift-Giving)**
+- **Why Critical:** Guests need privacy assurance for Digital Ang Pow and registry contact info
+- **UX Approach:** Private amounts, clear privacy statements, secure HTTPS indicators
+- **Anti-Pattern:** Public contribution amounts, unclear data usage
+
+**3. Excitement (Guest Anticipation)**
+- **Why Critical:** Wedding guests are excited. Platform should amplify, not dampen, this emotion
+- **UX Approach:** Curtain animation ritual, countdown timer, beautiful design reveal
+- **Anti-Pattern:** Generic, boring, purely functional interface
+
+**4. Accomplishment (Progress Tracking)**
+- **Why Critical:** Setup is multi-step process. Users need milestone reinforcement to persist
+- **UX Approach:** Progress bar (60% → 75% → 85% → 100%), celebration animations
+- **Anti-Pattern:** No progress indication, endless-feeling forms
+
+**5. Delight (Exceeding Expectations)**
+- **Why Critical:** Delight creates word-of-mouth. Satisfied users don't recommend; delighted users do
+- **UX Approach:** Micro-animations, instant template switching, "Wow!" moments
+- **Anti-Pattern:** Merely functional, zero personality
+
+**6. Belonging (Guest Connection)**
+- **Why Critical:** Guests want to feel part of celebration, not just informed of logistics
+- **UX Approach:** Guestbook with others' messages, personal photos, couple's story
+- **Anti-Pattern:** Impersonal, information-only interface
+
+### Design Implications
+
+**Emotion-First UX Decisions:**
+
+**To Create "Empowered Relief" (Couples):**
+
+| Emotional Goal | UX Design Implementation | Examples |
+|----------------|------------------------|----------|
+| **Feeling Supported** | Clear guidance with warm language | "Let's set up your wedding card together" (not "Enter data") |
+| **Feeling Capable** | Progressive disclosure with progress tracking | Setup sections shown one at a time, completion % visible |
+| **Feeling Successful** | Instant feedback + celebration moments | Real-time validation, confetti at 100%, "First RSVP" notification |
+| **Feeling Relieved** | Prevent errors + kind error handling | Frontend validation, helpful tips: "Try compressing your photo" |
+| **Avoiding Overwhelm** | Simplify complexity | Guided setup flow, don't show all sections at once |
+
+**To Create "Connected Belonging" (Guests):**
+
+| Emotional Goal | UX Design Implementation | Examples |
+|----------------|------------------------|----------|
+| **Feeling Anticipation** | Ritualistic opening interaction | Curtain animation with "Tap to Open Their Wedding Card" |
+| **Feeling Delighted** | Beautiful, celebratory design | Couple's photo prominent, warm color palette, smooth animations |
+| **Feeling Accomplished** | Easy, quick interactions | One-tap RSVP, simple guestbook form, immediate confirmation |
+| **Feeling Connected** | Community elements | Visible guestbook messages (approved), see who's attending |
+| **Feeling Included** | Personal touch | Couple's names prominent, their story, countdown to special day |
+| **Avoiding Transaction** | Emotional resonance vs. pure utility | Not just date/time/venue - feelings, photos, wishes matter |
+
+**To Avoid Negative Emotions:**
+
+| Negative Emotion | Prevention Strategy |
+|------------------|-------------------|
+| **Confusion** | Clear labels, simple language (BM/English), unambiguous buttons |
+| **Frustration** | Prevent errors before they happen, clear guidance, forgiving interface |
+| **Anxiety** | Progress tracking, auto-save reassurance, "You're doing great!" messaging |
+| **Disappointment** | Meet expectations set by marketing, deliver on promises |
+| **Impersonal Feeling** | Warm design language, celebratory micro-interactions, personal photos |
+| **Skepticism** | Privacy assurance, secure indicators, clear data policies |
+
+### Emotional Design Principles
+
+**1. Safety Before Efficiency (The "Stressed Couple" Principle)**
+- Users are emotionally vulnerable (wedding planning stress). Prioritize feeling safe over speed
+- **Translation:** Kind error messages, helpful validation, clear progress, "You can do this!" reinforcement
+- **Applies to:** Setup flow, error handling, photo uploads, form validation
+
+**2. Ritual Over Function (The "Celebration" Principle)**
+- Weddings are emotional events, not transactions. Create rituals that match physical card traditions
+- **Translation:** Curtain opening ritual, countdown anticipation, celebration moments, personal prominence
+- **Applies to:** Public card experience, notification design, completion moments
+
+**3. Delight Creates Advocacy (The "Word-of-Mouth" Principle)**
+- Satisfied users don't recommend products. Delighted users do. Design for "Wow!" moments
+- **Translation:** Micro-animations, instant template switching, beautiful reveals, unexpected polish
+- **Applies to:** Template selection, card opening, RSVP confirmation, wish submission
+
+**4. Connection Through Transparency (The "Belonging" Principle)**
+- Guests feel included when they see others participating. Couple feels supported when they see real-time activity
+- **Translation:** Guestbook messages visible, RSVP counts shown, live dashboard updates
+- **Applies to:** Dashboard design, guestbook display, RSVP tracking
+
+**5. Privacy Enables Generosity (The "Trust" Principle)**
+- Guests give more when they feel private and respected. Cultural norms around gift-giving must be honored
+- **Translation:** Private Digital Ang Pow amounts, secure contact info, clear privacy policies
+- **Applies to:** Premium features, gift registry, data handling

@@ -1,5 +1,5 @@
 ---
-stepsCompleted: [1, 2, 3, 4, 5, 6]
+stepsCompleted: [1, 2, 3, 4, 5, 6, 7]
 inputDocuments: ['prd.md', 'project-proposal.md', 'implementation-readiness-report-2026-01-19.md']
 documentCounts:
   briefs: 0
@@ -1181,5 +1181,216 @@ This convention:
 - Page load <5s on 4G (NFR-PERF-001)
 - First Contentful Paint <2s
 - Time to Interactive <3s (NFR-PERF-002)
+
+---
+
+## Core User Experience
+
+### Defining Experience
+
+**"Tap to Open Their Wedding Card" - The Ritualistic Digital Reveal**
+
+Every successful product has a defining experience - the core interaction that, if we nail it, everything else follows. For JomNikah, that moment is when guests open the wedding card and feel the same anticipation and delight they would from opening a physical wedding invitation envelope.
+
+**This is the moment guests will remember and talk about.**
+
+**The Core Interaction:**
+
+Guest receives WhatsApp link → Taps to open → Sees elegant curtain overlay → Taps curtain → Watches it dramatically part like theater curtains → Wedding card fades in with couple's photo, names, and countdown → Guest feels delight, inclusion, and excitement
+
+**Word-of-Mouth Driver:**
+"Did you see Sarah & Ahmad's wedding card? You tap the link and there's this curtain, you tap it and it opens like a real invitation! So beautiful!"
+
+### User Mental Model
+
+**How Guests Think About Opening Wedding Cards:**
+
+**Mental Model from Physical Cards:**
+- "Opening the envelope = special moment, ceremonial"
+- "Beautiful design shows couple's personality"
+- "Photo makes me feel connected to them"
+- "This is something important, worth my time"
+
+**Mental Model Gap with Most Digital Cards:**
+- Current digital cards: Just a webpage with information
+- No ritual, no ceremony, no anticipation
+- Feels transactional, not emotional
+- "Click link → see details" - boring, forgettable
+
+**JomNikah's Digital Ritual:**
+- Bridges the gap between physical and digital
+- Creates "opening ceremony" through curtain animation
+- Rebuilds the anticipation mental model
+- "Tap link → see curtain → tap to open → reveal" - feels special!
+
+**Key Insight:** Guests don't want "information delivery" - they want **emotional participation** in the couple's celebration. The curtain animation restores the ritual they expect from wedding invitations.
+
+### Success Criteria
+
+**When Guests Say "This Just Works":**
+
+**Immediate Success Indicators:**
+1. **"Wow, that's beautiful!"** - Delight within 2 seconds of curtain opening
+2. **"Masya Allah, cantiknya!"** - Cultural emotional response to design
+3. **No confusion** - Know exactly what to do (tap curtain)
+4. **Smooth animation** - No stuttering, loads fast on 4G mobile
+
+**Technical Success Criteria:**
+- Curtain animation completes in <2 seconds
+- Touch target for curtain tap is minimum 100×100px (entire screen)
+- Works smoothly on 4G mobile connection (80%+ guests on smartphones)
+- Fallback: If animation fails, still shows card (no broken experience)
+
+**Emotional Success Criteria:**
+- Guest feels anticipation during curtain phase
+- Reveal creates "moment of delight" when card appears
+- Guest feels "invited to something special," not just "informed"
+- Creates desire to RSVP and leave wishes (emotional reciprocity)
+
+**Word-of-Mouth Success:**
+- Guest WhatsApps couple: "The digital card is so beautiful! Felt like opening a real invitation!"
+- Guest mentions to friends: "Have you seen Sarah & Ahmad's wedding card? It has this curtain opening, so special!"
+
+### Novel vs. Established Patterns
+
+**Pattern Analysis:**
+
+**Is This Novel or Established?**
+**Answer:** Hybrid - Familiar concept (curtain/reveal) applied in novel way (wedding digital cards)
+
+**Established Patterns We're Using:**
+- **Tap/Click to Reveal:** Used in games, apps (scratch cards, gift reveals)
+- **Full-Screen Overlay:** Common in mobile apps (onboarding, splash screens)
+- **Fade-In Transitions:** Standard web animation pattern
+
+**Novel Application:**
+- **Wedding Domain:** Most digital wedding cards are static information pages
+- **Ritualistic Opening:** Using curtain specifically to recreate physical invitation envelope opening
+- **Cultural Alignment:** Malaysian weddings love ceremonial moments - this honors that tradition
+
+**How We'll Teach Users This Pattern:**
+- **Explicit CTA:** "Tap to Open Their Wedding Card" - crystal clear
+- **Visual Cue:** Curtain moves slightly (gentle sway) to invite interaction
+- **Single Action:** Entire screen is touch target - can't miss it
+- **Immediate Reward:** Animation flows beautifully into card reveal
+
+**Accessibility Fallback:**
+- Auto-reveal after 5 seconds for users who don't tap
+- Screen reader announcement: "Wedding card loading. Tap to open."
+- If animation disabled, skip curtain entirely (user preference)
+
+### Experience Mechanics
+
+**The Step-by-Step Curtain Opening Flow:**
+
+#### **1. Initiation (Guest Receives Link)**
+
+**What Happens:**
+- Guest receives WhatsApp message from couple:
+  > "Assalamualaikum! We're getting married!
+  > View our wedding card: sarah-ahmad.jomnikah.com ❤️"
+
+- Guest taps link
+
+**What They See First:**
+- Full-screen curtain overlay appears
+- Background: Elegant fabric texture or gradient (wedding-themed colors - rose, gold, or soft neutrals)
+- Center text: "Tap to Open Their Wedding Card" (large, readable, 24px+)
+- Subtle animation: Curtain gently sways (1-2px movement) to invite interaction
+- Sound (optional): Gentle "whoosh" or fabric sound (can be muted)
+
+**Technical Details:**
+- Loads in <2 seconds on 4G
+- Touch target: Entire viewport (100% width, 100% height)
+- Accessibility: Screen reader announces "Wedding card loading. Tap to open."
+- Loading state: If assets loading, show subtle spinner behind curtain
+
+#### **2. Interaction (Guest Taps Curtain)**
+
+**What Guest Does:**
+- Single tap anywhere on screen (thumb-friendly, no precision needed)
+
+**System Response:**
+- **Animation Sequence:**
+  1. **Tap Feedback** (0.1s): Ripple effect from tap point (visual confirmation)
+  2. **Curtain Parts** (0.8s): Curtain splits from center, opens left and right (like theater curtains)
+  3. **Fade Out** (0.4s): Curtain fades away as it opens
+  4. **Card Reveals** (0.5s): Wedding card fades in from bottom (slide-up + fade-in)
+  5. **Total Duration:** ~1.8 seconds (feels substantial, not sluggish)
+
+**Visual Details:**
+- Curtain opening uses smooth easing (ease-in-out for natural feel)
+- Card reveal has slight stagger (hero image first, then details)
+- Background music can start (if couple enabled)
+- Countdown timer begins ticking (if <30 days to wedding)
+
+**Mobile Optimization:**
+- Touch targets: Entire screen
+- Animation: 60fps on mid-range smartphones
+- Progressive: Card content loads during curtain animation (perceived performance)
+
+#### **3. Feedback (Guest Knows It's Working)**
+
+**Positive Feedback (Success):**
+- **Visual:** Curtain opens smoothly, card appears beautifully
+- **Audio (optional):** Gentle "ta-da" sound effect or couple's chosen music
+- **Haptic (mobile):** Subtle vibration on curtain tap (tactile confirmation)
+- **Loading States:** If card content loading, show skeleton screens (not blank)
+
+**If Something Goes Wrong (Error Handling):**
+- **Animation Stutters:** Graceful degradation - show card immediately
+- **Content Loads Slowly:** Show loading indicator, curtain already opened
+- **Device Too Old:** Skip curtain animation, show card directly (accessibility)
+- **No Error Messages:** Just show the card - guests don't need technical details
+
+**Success Feedback:**
+- No explicit "Success!" message needed
+- The beautiful card reveal IS the feedback
+- Guest's delight = confirmation it worked
+
+#### **4. Completion (Guest Experiences Full Card)**
+
+**How Guest Knows They're Done:**
+- Curtain completely gone
+- Wedding card fully visible
+- Smooth scroll enabled (can explore sections)
+- All interactions available (RSVP button, guestbook, etc.)
+
+**What Happens Next:**
+- Guest scrolls through card:
+  - Couple's photo (hero section)
+  - Names and wedding date
+  - Countdown timer
+  - Venue details and map
+  - Photo gallery
+  - RSVP button
+  - Guestbook form
+  - Wish Present / Digital Ang Pow (if premium)
+
+**Micro-Interactions During Exploration:**
+- Scroll progress indicator (shows how much content remains)
+- Subtle fade-in animations as sections scroll into view
+- RSVP button pulses gently (draws attention)
+- Guestbook message appears with slide-up animation when submitted
+
+**Completing the Experience:**
+- Guest RSVPs (one-tap WhatsApp or form)
+- Guest leaves wish in guestbook
+- Guest sees: "Thank you! Your response has been sent to Sarah & Ahmad"
+- **Emotional Payoff:** "I've participated. I feel included. They'll know I care."
+
+### Why This Defines JomNikah
+
+**Competitive Analysis:**
+- **ekaddigital:** Static page, loads immediately, no ritual
+- **Physical Cards:** Envelope opening ritual, but expensive (RM500-1000)
+- **JomNikah:** Digital ritual + affordable (RM20-30) + real-time features
+
+**This Is The Moment That Differentiates JomNikah:**
+- Competitors deliver information. JomNikah delivers emotion.
+- Competitors feel like websites. JomNikah feels like a celebration.
+- Competitors get RSVPs. JomNikah creates word-of-mouth.
+
+**The Curtain Opening Is The "Swipe Right" Moment for JomNikah** - The interaction users will describe to their friends when recommending the platform.
 
 ---

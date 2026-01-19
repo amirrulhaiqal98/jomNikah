@@ -1,5 +1,5 @@
 ---
-stepsCompleted: [1, 2, 3, 4, 5]
+stepsCompleted: [1, 2, 3, 4, 5, 6]
 inputDocuments: ['prd.md', 'project-proposal.md', 'implementation-readiness-report-2026-01-19.md']
 documentCounts:
   briefs: 0
@@ -805,5 +805,381 @@ This core action encompasses:
 - **RSVP Confirmation:** "Your RSVP has been sent to Sarah & Ahmad" - guest is now committed
 
 **Emotional Impact:** "I started this, I should finish it" - increases completion rates
+
+---
+
+## Design System Foundation
+
+### Design System Choice
+
+**Hybrid Approach: Tailwind CSS + Headless UI + Custom Emotional Components**
+
+For JomNikah, we're using a **hybrid design system approach** that combines the speed and reliability of established tools with custom emotional components that create distinctive brand experiences.
+
+**Three-Layer Foundation:**
+
+1. **Tailwind CSS** (Utility-First Styling)
+   - Already selected as part of tech stack (Vue 3 + Tailwind CSS + Inertia.js + Laravel 12)
+   - Provides utility classes for rapid development
+   - Mobile-first responsive design out of the box
+   - Performance optimized with JIT compiler
+
+2. **Headless UI for Vue** (Accessible Component Logic)
+   - Official component library by Tailwind Labs
+   - Unstyled, fully accessible components (modals, dropdowns, tabs, etc.)
+   - Perfect for complex interactive UI elements
+   - Full styling control via Tailwind utilities
+
+3. **Custom Emotional Components** (Brand Differentiation)
+   - Purpose-built components that create JomNikah's unique emotional experience
+   - Ritualistic interactions (curtain animation, celebrations)
+   - Wedding-specific features (photo gallery, guestbook, countdown)
+   - Micro-interactions and delightful details
+
+### Rationale for Selection
+
+**Why This Hybrid Approach for JomNikah?**
+
+**1. Speed Without Sacrificing Uniqueness**
+- **Challenge:** Need MVP quickly (100 weddings validation phase) but must differentiate from competitors like ekaddigital
+- **Solution:** Headless UI accelerates complex component development, while custom emotional components create unique brand identity
+- **Result:** Fast time-to-market without becoming "just another wedding card platform"
+
+**2. Solo Developer Sustainability**
+- **Challenge:** Amirrul is solo developer - needs maintainable, well-documented approach
+- **Solution:** Established libraries (Tailwind + Headless UI) have strong communities, reducing support burden. Custom components are few and focused
+- **Result:** Long-term maintainability without fighting framework constraints or debugging complex custom implementations
+
+**3. Mobile-First Performance Requirements**
+- **Challenge:** 80%+ guests on smartphones, <5 second page load requirement on 4G (NFR-PERF-001)
+- **Solution:** Tailwind JIT compiler purges unused CSS, minimal bundle size. Headless UI components are optimized for performance
+- **Result:** Fast, responsive experience on mobile devices without manual CSS optimization
+
+**4. Accessibility for Cross-Generational Users**
+- **Challenge:** Guests aged 20-70 with varying tech comfort, including elderly users like Auntie Fatimah (60)
+- **Solution:** Headless UI components have accessibility built-in (ARIA labels, keyboard navigation, screen reader support)
+- **Result:** Inclusive design without requiring deep a11y expertise from solo developer
+
+**5. Emotional Context as Top Priority**
+- **Challenge:** User emphasized "Emotional Context" as TOP PRIORITY - need warmth, celebration, connection
+- **Solution:** Custom emotional components (curtain animation, confetti, progress milestones) create distinctive brand personality
+- **Result:** Platform feels special, celebratory, and emotionally resonant - not generic
+
+**6. Vue 3 + Inertia.js Alignment**
+- **Challenge:** Tech stack is Vue 3 + Inertia.js + Laravel 12 SPA architecture
+- **Solution:** Headless UI has official Vue 3 support. Tailwind works seamlessly with Inertia.js
+- **Result:** No framework wrestling, smooth integration, predictable behavior
+
+### Implementation Approach
+
+**Phase 1: Foundation Setup (Week 1)**
+
+**1.1 Configure Tailwind with JomNikah Design Tokens**
+
+```javascript
+// tailwind.config.js
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          rose: '#F43F5E',      // Romance, love, celebration
+          gold: '#F59E0B',       // Warmth, joy, achievement
+          emerald: '#10B981',    // Success, completion, progress
+        },
+        neutral: {
+          50: '#FAFAFA',        // Light background (Instagram-like)
+          100: '#F5F5F5',
+          900: '#171717',       // Dark text, minimalist aesthetic
+        }
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],      // Clean, modern, readable
+        display: ['Playfair Display', 'serif'],          // Elegant, wedding-like
+      },
+      spacing: {
+        '18': '4.5rem',   // Generous spacing for minimalist aesthetic
+        '22': '5.5rem',
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.5s ease-in-out',
+        'slide-up': 'slideUp 0.3s ease-out',
+        'bounce-subtle': 'bounceSubtle 0.6s ease-in-out',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        slideUp: {
+          '0%': { transform: 'translateY(10px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        bounceSubtle: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-5px)' },
+        },
+      },
+    },
+  },
+  plugins: [
+    require('@tailwindcss/forms'),       // Better form styling
+    require('@tailwindcss/typography'),  // Prose for guestbook messages
+  ],
+}
+```
+
+**1.2 Install and Configure Headless UI**
+
+```bash
+npm install @headlessui/vue
+```
+
+```javascript
+// Import components as needed
+import { Dialog, Menu, Tab, Disclosure } from '@headlessui/vue'
+```
+
+**1.3 Create Base Component Structure**
+
+```
+resources/js/components/
+├── jc-base/              # Base components (design tokens applied)
+│   ├── JcButton.vue     # Primary, secondary, tertiary buttons
+│   ├── JcInput.vue      # Text, email, phone inputs with validation
+│   ├── JcCard.vue       # Card container (dashboard widgets)
+│   └── JcBadge.vue      # Status badges (confirmed, pending)
+├── jc-feedback/          # Feedback components
+│   ├── JcProgressBar.vue      # Setup progress tracking
+│   ├── JcConfetti.vue         # Celebration animation
+│   └── JcToast.vue            # Success/error messages
+├── jc-interactive/       # Headless UI wrappers
+│   ├── JcModal.vue           # Modal dialogs (upgrade prompts)
+│   ├── JcTabs.vue            # Tab navigation (dashboard)
+│   └── JcAccordion.vue       # Accordion sections (setup form)
+└── jc-wedding/           # Wedding-specific emotional components
+    ├── JCurtainAnimation.vue # Tap-to-open card ritual
+    ├── JcPhotoGallery.vue     # Photo display with lazy loading
+    ├── JcCountdown.vue        # Wedding countdown timer
+    ├── JcGuestbook.vue        # Guestbook message display
+    └── JcRSVPCounter.vue      # RSVP statistics
+```
+
+**Phase 2: Core Component Development (Week 2-3)**
+
+**2.1 Build Custom Emotional Components**
+
+**JCurtainAnimation.vue** (Ritualistic Opening)
+- Full-screen overlay with animated curtain
+- "Tap to Open Their Wedding Card" call-to-action
+- Smooth fade-out transition to reveal card
+- Mobile-optimized (touch targets, <2s animation)
+
+**JcProgressBar.vue** (Setup Tracking)
+- Visual progress bar (60% → 75% → 85% → 100%)
+- Milestone celebrations at each section completion
+- "You're almost there!" motivational messaging
+- Persists progress in local storage
+
+**JcConfetti.vue** (Celebration Moments)
+- Canvas-based particle animation
+- Triggers at 100% setup completion
+- Lightweight (<50KB) for performance
+- Can be reused for other celebrations
+
+**JcPhotoGallery.vue** (Emotional Visual Display)
+- Lazy loading images (<2MB validation)
+- Swipe gestures for mobile navigation
+- Progressive image loading (blur-up technique)
+- Lightbox view for full-screen photos
+
+**2.2 Implement Headless UI Components**
+
+**JcModal.vue** (Premium Upgrade Prompts)
+- Wraps Headless UI Dialog component
+- Tailwind styling for warm, non-intrusive appearance
+- "Upgrade to unlock Digital Ang Pow" messaging
+- Accessible (ESC to close, focus trap)
+
+**JcTabs.vue** (Dashboard Navigation)
+- Wraps Headless UI Tab component
+- Mobile: Bottom navigation bar (thumb-friendly)
+- Desktop: Side navigation or top tabs
+- Active state indicators
+
+**JcAccordion.vue** (Setup Form Sections)
+- Wraps Headless UI Disclosure component
+- Progressive disclosure (show one section at a time)
+- "Subdomain" → "Template" → "Details" → "Photos" → "Premium"
+- Smooth expand/collapse animations
+
+**Phase 3: Templates & Polish (Week 4)**
+
+**3.1 Create Wedding Card Templates**
+
+```
+resources/js/components/templates/
+├── RusticElegance.vue    # Earth tones, botanical accents
+├── MinimalistModern.vue  # Clean lines, sans-serif fonts
+├── LuxuryGold.vue        # Gold accents, serif fonts
+└── FloralRomance.vue     # Soft colors, flower motifs
+```
+
+Each template:
+- Uses design tokens (can swap color palettes easily)
+- Implements same emotional components (curtain, countdown, gallery)
+- Fully responsive (mobile-first approach)
+- Accessible (semantic HTML, ARIA labels)
+
+**3.2 Refine Animations and Micro-Interactions**
+
+- Button hover states: Subtle scale transform (1.02), shadow increase
+- Input focus states: Warm primary color ring, smooth transition
+- Page transitions: Fade-in + slide-up (0.3s ease-out)
+- Loading states: Skeleton screens, not spinners (better perceived performance)
+
+**3.3 Performance Optimization**
+
+- Tailwind JIT purges unused CSS (minimal bundle size)
+- Image optimization: WebP format, responsive images, lazy loading
+- Code splitting: Load template components on-demand
+- Measure: Lighthouse scores >90 for mobile performance
+
+### Customization Strategy
+
+**Component Naming Convention**
+
+All custom components use `Jc` prefix (JomNikah Component) to prevent conflicts:
+- `JcButton`, `JcModal`, `JcPhotoGallery`, etc.
+
+This convention:
+- Prevents naming collisions with third-party libraries
+- Makes component origin clear in codebase
+- Supports IDE autocomplete (type `Jc` to see all components)
+
+**Design Token Management**
+
+**Colors (Emotional Context):**
+- **Primary Rose (#F43F5E):** Romance, love, celebration
+- **Primary Gold (#F59E0B):** Achievement, warmth, premium feel
+- **Primary Emerald (#10B981):** Success, completion, progress
+- **Neutral Grays:** Minimalist backdrop (Instagram-inspired cleanness)
+
+**Typography (Cross-Generational Readability):**
+- **Sans (Inter):** Body text, UI elements - 16px minimum on mobile (NFR-USE-003)
+- **Display (Playfair Display):** Headlines, couple names - elegant, wedding-like
+
+**Spacing (Mobile-First):**
+- Generous padding (minimalist aesthetic, touch-friendly)
+- 8px base unit (Tailwind default)
+- Larger touch targets (44×44px minimum for mobile, NFR-USE-002)
+
+**Animation (Delight Without Distraction):**
+- Short durations (200-500ms)
+- Smooth easing curves (ease-out, ease-in-out)
+- Purposeful (supports emotional goals, not decorative)
+
+**Component Composition Strategy**
+
+**Base Components** (jc-base/):
+- Pure presentational components
+- Receive props, emit events
+- No business logic
+- Reusable across application
+
+**Compound Components** (jc-interactive/):
+- Combine base components
+- Wrap Headless UI for accessibility
+- Handle user interactions
+- Manage internal state
+
+**Feature Components** (jc-wedding/):
+- Domain-specific business logic
+- Wedding-themed styling
+- Emotional design patterns
+- Directly map to PRD features
+
+**Styling Approach**
+
+**Utility-First (Tailwind):**
+- 90% of styling done with Tailwind utility classes
+- Fast development, consistent results
+- Easy responsive design (sm:, md:, lg: prefixes)
+
+**Component Variants:**
+```vue
+<template>
+  <button
+    class="jc-btn"
+    :class="[
+      variant === 'primary' ? 'bg-primary-rose text-white' : 'bg-gray-100 text-gray-900',
+      size === 'lg' ? 'px-6 py-3' : 'px-4 py-2'
+    ]"
+  >
+    <slot />
+  </button>
+</template>
+```
+
+**CSS-in-JS (When Needed):**
+- Complex animations (keyframes defined in Tailwind config)
+- Component-specific overrides (scoped `<style>` blocks)
+- Minimal usage - prefer Tailwind utilities
+
+**Accessibility Strategy**
+
+**Headless UI Foundation:**
+- All interactive components use Headless UI (Dialog, Menu, Tab, Disclosure)
+- Built-in ARIA labels, keyboard navigation, focus management
+- Screen reader support out-of-the-box
+
+**Custom Component Accessibility:**
+- Semantic HTML (button, not div with onClick)
+- Focus indicators (visible, high contrast)
+- Alt text for images (couple photos)
+- Color contrast WCAG AA compliant (4.5:1 minimum)
+
+**Testing:**
+- Keyboard navigation only (no mouse)
+- Screen reader testing (VoiceOver on Mac, NVDA on Windows)
+- Color contrast validator tools
+
+**Responsive Design Strategy**
+
+**Mobile-First (Primary Platform):**
+- Default styling = mobile (<640px)
+- Touch targets 44×44px minimum
+- Single-column layouts
+- Bottom navigation for dashboard
+
+**Desktop Enhancement:**
+- `md:` (640px+) and `lg:` (1024px+) breakpoints
+- Multi-column layouts
+- Side navigation or top tabs
+- Larger images, more content visible
+
+**Testing:**
+- Chrome DevTools device emulation
+- Real device testing (Android, iOS)
+- 4G network throttling (Chrome Network Throttling)
+
+**Performance Strategy**
+
+**CSS Optimization:**
+- Tailwind JIT compiler (on-demand CSS generation)
+- Purge unused styles in production
+- Critical CSS inline (above-the-fold content)
+- Minimal custom CSS
+
+**Component Optimization:**
+- Lazy load heavy components (photo gallery, templates)
+- Code splitting (route-based chunks)
+- Tree-shaking (unused code eliminated)
+
+**Measurement:**
+- Lighthouse performance score >90
+- Page load <5s on 4G (NFR-PERF-001)
+- First Contentful Paint <2s
+- Time to Interactive <3s (NFR-PERF-002)
 
 ---

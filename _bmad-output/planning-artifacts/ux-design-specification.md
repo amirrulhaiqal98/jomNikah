@@ -1,5 +1,5 @@
 ---
-stepsCompleted: [1, 2, 3, 4]
+stepsCompleted: [1, 2, 3, 4, 5]
 inputDocuments: ['prd.md', 'project-proposal.md', 'implementation-readiness-report-2026-01-19.md']
 documentCounts:
   briefs: 0
@@ -450,3 +450,360 @@ This core action encompasses:
 - Guests give more when they feel private and respected. Cultural norms around gift-giving must be honored
 - **Translation:** Private Digital Ang Pow amounts, secure contact info, clear privacy policies
 - **Applies to:** Premium features, gift registry, data handling
+
+---
+
+## UX Pattern Analysis & Inspiration
+
+### Inspiring Products Analysis
+
+**Based on your input about social media apps, interactivity, psychology-driven design, and minimalist aesthetics, here's the inspiration analysis for JomNikah:**
+
+#### 1. Instagram (Visual Storytelling & Emotional Connection)
+
+**What We Can Learn:**
+- **Photo-First Philosophy:** Instagram puts visuals front and center. For JomNikah, the couple's photos should be prominent and celebrated
+- **Minimalist UI:** Clean interface that lets content shine. No clutter, no competing elements
+- **Emotional Engagement:** Heart reactions, comments create sense of community. Translate to guestbook wishes and RSVP celebrations
+- **Story Format:** Ephemeral, full-screen content that feels intimate and personal
+
+**Application to JomNikah:**
+- Photo gallery should be the "hero" of the wedding card
+- Clean, white/minimalist background that puts couple's photos in spotlight
+- Guestbook wishes can have "heart" reaction from couple (creating two-way emotional connection)
+- Consider "Story-style" countdown or special moments
+
+#### 2. TikTok (Instant Gratification & Flow State)
+
+**What We Can Learn:**
+- **Immediate Reward:** Videos start instantly, no friction. Users are immediately engaged
+- **Flow State Design:** Infinite scroll, seamless transitions between content - users lose track of time
+- **Micro-Interactions:** Hearts, comments, shares are one-tap actions with instant visual feedback
+- **Algorithmic Personalization:** Content adapts to user preferences (advanced, but applicable to template suggestions)
+
+**Application to JomNikah:**
+- Template switching should be instant (no loading screens) - "Click, boom! New design!"
+- Setup progress should flow smoothly from section to section (no disjointed multi-page forms)
+- Celebrate small wins with micro-animations (like TikTok's heart explosions)
+- Guest RSVP should be one-tap action with immediate confirmation
+
+#### 3. WhatsApp (Intimacy & Reliability)
+
+**What We Can Learn:**
+- **Utter Simplicity:** One screen, clear purpose. No features competing for attention
+- **Intimacy in Design:** Chat bubbles, checkmarks, profile photos create personal connection
+- **Reliability First:** Messages always go through. Clear status indicators (sent, delivered, read)
+- **Cross-Platform Parity:** Works identically on mobile and desktop
+
+**Application to JomNikah:**
+- RSVP via WhatsApp deep link - leverages users' existing comfort with WhatsApp
+- Simple, single-purpose screens (Setup, Dashboard, Public Card - each with clear focus)
+- Reliable status indicators: "RSVP received," "Wish submitted and pending approval"
+- Mobile and desktop experiences feel equally capable
+
+#### 4. Spotify (Personalization & Delight)
+
+**What We Can Learn:**
+- **Onboarding Delight:** "Pick your artists" creates instant personalization. Users feel "this is made for me"
+- **Micro-Interactions:** Hover effects, smooth transitions, satisfying animations
+- **Dark Mode as Default:** Sleek, modern aesthetic that reduces eye strain
+- **Playlist = Curation:** Easy to organize, reorder, customize content
+
+**Application to JomNikah:**
+- Template selection should feel like "pick your vibe" - instant visual personalization
+- Smooth transitions between setup sections
+- Consider dark mode option for evening guests viewing cards
+- Photo gallery should be easy to reorder and customize (drag-and-drop)
+
+#### 5. Canva (Template-Based Creativity)
+
+**What We Can Learn:**
+- **Template Grid:** Visual browsing with instant preview. Users see exactly what they'll get
+- **Zero Learning Curve:** Templates are pre-designed. Users just customize content
+- **No "Commitment Anxiety":** Can switch templates anytime without losing work
+- **"Done For You" Feeling:** Users feel creative without actually designing from scratch
+
+**Application to JomNikah:**
+- Template selector with visual thumbnails and instant preview
+- Couple fills details once, can switch templates endlessly
+- No "design skills required" - everything looks beautiful automatically
+- "You're almost done!" messaging reinforces ease of use
+
+#### 6. ekaddigital.com (Competitor Analysis)
+
+**Analysis of https://ekaddigital.com/ikrizainvite/IK11738:**
+
+**Strengths to Learn From:**
+- **Single-Page Scroll:** All information accessible by scrolling - no navigation complexity
+- **Visual Hierarchy:** Couple's names and photo are prominent. Date/time/venue are clear
+- **Music Integration:** Background music creates atmosphere (optional feature to consider)
+- **WhatsApp RSVP Button:** Clear, prominent CTA button
+- **Countdown Timer:** Builds anticipation and excitement
+- **Islamic Elements:** "Bismillah" at top, prayer timings - culturally aligned
+
+**Gaps to Improve Upon (JomNikah Opportunities):**
+- **Static Design:** No template switching capability. JomNikah can offer flexibility
+- **No Guestbook:** Missing community/wishes feature. JomNikah adds emotional connection
+- **No Gift Registry:** No Wish Present or Digital Ang Pow features. JomNikah provides complete solution
+- **Minimal Interaction:** Mostly informational. JomNikah can create more engaging, interactive experience
+- **No Couple Dashboard:** Appears to be static card only. JomNikah adds ongoing management and real-time RSVP tracking
+
+**Key Takeaway:** ekaddigital proves market exists and validates single-page scroll format. JomNikah's competitive advantage is interactivity, premium features (registry, ang pow), and couple dashboard.
+
+### Transferable UX Patterns
+
+#### Navigation Patterns
+
+**1. Progressive Disclosure (Show One Section at a Time)**
+- **Source:** Setup wizards, form design best practices
+- **Application:** Setup flow shows sections sequentially (Subdomain → Template → Details → Photos → Premium)
+- **Benefit:** Reduces cognitive load, creates sense of progress, prevents overwhelm
+- **Emotional Impact:** "I can do this" confidence building
+
+**2. Bottom Navigation (Mobile Pattern)**
+- **Source:** Instagram, TikTok mobile apps
+- **Application:** Couple dashboard mobile view uses bottom tab bar (Home, Editor, Gallery, RSVP, Settings)
+- **Benefit:** Thumb-friendly, clear navigation hierarchy, always visible
+- **Emotional Impact:** "I know where I am" confidence
+
+**3. Gesture-Based Navigation (Desktop Enhancement)**
+- **Source:** macOS trackpad gestures, innovative web interfaces
+- **Application:** Swipe between photos in gallery, pull-to-refresh RSVP list (desktop)
+- **Benefit:** Fast, fluid interactions feel modern and delightful
+- **Emotional Impact:** "This feels premium and polished" delight
+
+#### Interaction Patterns
+
+**1. Instant Preview (Zero-Latency Feedback)**
+- **Source:** Canva template switching, Instagram filters
+- **Application:** Template selector shows live preview of couple's data in new design instantly
+- **Benefit:** No anxiety about "what will this look like?" Exploration feels safe
+- **Emotional Impact:** "Wow, that's beautiful!" delight in exploration
+
+**2. Micro-Interactions (Emotional Delight)**
+- **Source:** Twitter heart animation, TikTok reactions
+- **Application:** Confetti at setup completion, subtle bounce on button hover, smooth fade-ins
+- **Benefit:** Creates delight, makes interface feel alive and responsive
+- **Emotional Impact:** "This is fun!" positive association with platform
+
+**3. Real-Time Validation (Prevent Errors Before They Happen)**
+- **Source:** Modern form design, signup flows
+- **Application:** Subdomain availability checks as user types (green ✅ "Available!")
+- **Benefit:** Smooth progress, no "submit → error → fix → resubmit" frustration
+- **Emotional Impact:** "Everything is working perfectly" flow state
+
+**4. One-Tap Actions (Reduce Friction)**
+- **Source:** RSVP via WhatsApp, mobile payment flows
+- **Application:** Single-tap RSVP, one-tap template switch, one-tap photo upload
+- **Benefit:** Minimal effort, fast completion
+- **Emotional Impact:** "That was easy!" satisfaction
+
+#### Visual Patterns
+
+**1. Card-Based Layout (Content Organization)**
+- **Source:** Material Design, modern web design
+- **Application:** Dashboard shows RSVPs, wishes, and stats as cards
+- **Benefit:** Clear content hierarchy, scannable, responsive
+- **Emotional Impact:** "I can see everything at a glance" clarity
+
+**2. Minimalist Aesthetic (Content Over Chrome)**
+- **Source:** Apple design, Instagram, TikTok
+- **Application:** Clean white/minimal backgrounds, generous whitespace, focus on photos and content
+- **Benefit:** Fast load times, reduces distraction, feels premium
+- **Emotional Impact:** "This looks professional and beautiful" pride
+
+**3. Dark Mode (Optional Enhancement)**
+- **Source:** Spotify, Twitter, modern apps
+- **Application:** Optional dark theme for evening viewing, reduces eye strain
+- **Benefit:** Accessibility, modern feel, personalization
+- **Emotional Impact:** "This platform thinks of everything" delight
+
+**4. Progress Indicators (Clear Finish Line)**
+- **Source:** Setup wizards, gaming progress bars
+- **Application:** Setup completion % (60% → 75% → 85% → 100% done!)
+- **Benefit:** Motivation, clear goals, sense of accomplishment
+- **Emotional Impact:** "I'm making progress" encouragement
+
+### Anti-Patterns to Avoid
+
+**1. Cluttered Interfaces (Cognitive Overload)**
+- **Anti-Pattern:** Squeezing too many features, buttons, options into single screen
+- **Why Avoid:** Overwhelms stressed couples, confuses elderly guests
+- **JomNikah Solution:** Progressive disclosure, one primary action per screen, clear hierarchy
+
+**2. Pagination on Mobile (Friction)**
+- **Anti-Pattern:** "View 10 more RSVPs" pagination on guest list
+- **Why Avoid:** Breaks flow, adds unnecessary clicks
+- **JomNikah Solution:** Infinite scroll or load more on scroll (smooth, continuous)
+
+**3. Pop-Up Overlays (Disruptive)**
+- **Anti-Pattern:** Modal pop-ups for "Upgrade now!" or "Rate this app"
+- **Why Avoid:** Interrupts flow, feels aggressive, damages trust
+- **JomNikah Solution:** Non-intrusive inline prompts, gentle upgrade suggestions in context
+
+**4. Multi-Page Forms (Fatigue)**
+- **Anti-Pattern:** Wedding details spread across 5 separate form pages with "Next" buttons
+- **Why Avoid:** Creates anxiety about length, users abandon mid-process
+- **JomNikah Solution:** Single-page setup with accordion sections or smooth scrolling, clear progress indicator
+
+**5. Hidden Features (Discoverability Failure)**
+- **Anti-Pattern:** Premium features buried in settings, users don't know they exist
+- **Why Avoid:** Couples won't upgrade if they don't see value
+- **JomNikah Solution:** Visible (locked) premium sections with clear "Upgrade to access" prompts
+
+**6. Generic Error Messages (Frustration)**
+- **Anti-Pattern:** "Error 500: Internal Server Error" or "An error occurred"
+- **Why Avoid:** Users feel confused, don't know what to do
+- **JomNikah Solution:** Kind, actionable messages: "Photo upload failed. Please try a smaller file under 2MB"
+
+**7. Feature Bloat (Loss of Focus)**
+- **Anti-Pattern:** Adding too many features "because we can"
+- **Why Avoid:** Confuses primary value proposition, harder to maintain
+- **JomNikah Solution:** Ruthless MVP focus - do fewer things perfectly, not many things poorly
+
+### Design Inspiration Strategy
+
+#### What to Adopt (Direct Inspiration)
+
+**1. Single-Page Scroll Format (from ekaddigital)**
+- All wedding information accessible by scrolling
+- Simple, familiar interaction model
+- Works beautifully on mobile
+
+**2. Visual Template Browser (from Canva)**
+- Grid of template thumbnails with instant preview
+- Clear visual differentiation between options
+- One-click activation
+
+**3. Real-Time Validation (from modern signup flows)**
+- AJAX subdomain availability checking
+- Instant photo size validation before upload
+- Green checkmarks for valid inputs
+
+**4. One-Tap RSVP via WhatsApp (from ekaddigital + WhatsApp integration)**
+- Leverage existing user behavior
+- Minimal friction for guests
+- Reliable delivery
+
+**5. Progress Bar with Milestones (from setup wizards)**
+- Clear visual progress (0% → 25% → 50% → 75% → 100%)
+- Celebratory moments at each milestone
+- "You're almost there!" motivation
+
+#### What to Adapt (Customize for Wedding Domain)
+
+**1. "Stories" Format (from Instagram/WhatsApp)**
+- **Adaptation:** Create "Wedding Journey" section showing couple's story, photos, countdown
+- **Wedding Context:** Not ephemeral like stories, but permanent emotional narrative
+- **Emotional Impact:** Guests feel connected to couple's journey
+
+**2. Music Integration (from ekaddigital + Spotify)**
+- **Adaptation:** Optional background music for public card ( culturally aligned with Malaysian weddings)
+- **Wedding Context:** Couple chooses their special song
+- **Technical Consideration:** Auto-play restrictions (browser policy), mute by default
+
+**3. Dark Mode (from Spotify/Twitter)**
+- **Adaptation:** Optional theme for evening wedding card viewing
+- **Wedding Context:** Elegant, romantic aesthetic for night receptions
+- **Implementation:** User choice, not forced (accessibility)
+
+#### What to Avoid (Anti-Patterns for This Domain)
+
+**1. Social Feed Features (from Facebook/Instagram)**
+- **Why Avoid:** Wedding cards are private events, not social networks
+- **Exception:** Guestbook shows messages, but this is curated by couple, not open feed
+
+**2. Algorithmic Content Discovery (from TikTok/YouTube)**
+- **Why Avoid:** Wedding cards have specific, curated content. No "recommendations" needed
+- **Exception:** Template suggestions based on selected template ("You liked Rustic, try also Vintage")
+
+**3. Gamification Overload (from language learning apps)**
+- **Why Avoid:** Weddings are emotional, not game-like. Too many badges/points feels trivializing
+- **Exception:** Gentle celebration moments (confetti at 100% setup), but not "streaks" or "leaderboards"
+
+**4. Infinite Scroll Everything (from Twitter/Instagram)**
+- **Why Avoid:** Setup has clear finish line. Infinite scroll would feel endless
+- **Exception:** Guest RSVP list and guestbook can use infinite scroll (these grow continuously)
+
+### Psychology-Driven Design Principles
+
+**Based on your emphasis on psychology/counseling knowledge about human wants:**
+
+#### 1. Social Proof (People Follow Others)
+
+**Psychological Principle:** People look to others' behavior to guide their own actions
+
+**Application to JomNikah:**
+- **Guestbook Visibility:** Show approved wishes publicly (with "Auntie Fatimah wished you: 'Congrats!'")
+- **RSVP Count Display:** "23 guests confirmed attendance" creates momentum
+- **Testimonials (Future):** After validation phase, show "500 couples chose JomNikah"
+
+**Emotional Impact:** "Others are doing this, I should too" - reduces guest hesitation
+
+#### 2. Reciprocity (Give to Receive)
+
+**Psychological Principle:** People feel obligated to return favors and kindness
+
+**Application to JomNikah:**
+- **Couple Gives Beautiful Card:** Guests feel compelled to RSVP and give wishes in return
+- **Platform Gives Easy Setup:** Couples feel motivated to recommend to friends (word-of-mouth)
+- **Free Template Preview:** Give value upfront, couples feel compelled to complete setup
+
+**Emotional Impact:** "They've done something nice for me, I should respond" - increases engagement
+
+#### 3. Authority (Trust Experts)
+
+**Psychological Principle:** People trust credible, knowledgeable sources
+
+**Application to JomNikah:**
+- **Professional Design:** High-quality templates signal "this platform knows weddings"
+- **Clear Communication:** Professional, warm copy builds trust
+- **Privacy Assurance:** Explicit PDPA compliance statements (authority of law)
+
+**Emotional Impact:** "These people know what they're doing" - reduces skepticism
+
+#### 4. Emotional Contagion (Feelings Spread)
+
+**Psychological Principle:** People emotionally mimic those around them
+
+**Application to JomNikah:**
+- **Couple's Photos:** Happy, smiling photos evoke guests' happiness
+- **Celebratory Design:** Warm colors, countdown create excitement
+- **Positive Language:** "You're doing great!" "Almost there!" transfers positivity to couple
+
+**Emotional Impact:** Guests feel couple's joy - creates emotional connection
+
+#### 5. Loss Aversion (People Fear Losing More Than They Value Gaining)
+
+**Psychological Principle:** People are more motivated by avoiding loss than acquiring gain
+
+**Application to JomNikah:**
+- **Setup Progress:** "Don't lose your progress! Auto-save enabled" - motivates completion
+- **Premium Upsell:** "Upgrade now to unlock Digital Ang Pow" - FOMO (fear of missing out)
+- **Limited Time (Future):** "Early adopter pricing RM20 (normally RM30)" - scarcity principle
+
+**Emotional Impact:** "I don't want to miss out" - drives action
+
+#### 6. Cognitive Ease (People Prefer Easy)
+
+**Psychological Principle:** People gravitate toward familiar, easy, low-effort options
+
+**Application to JomNikah:**
+- **WhatsApp RSVP:** Leverage familiar platform vs. learning new form
+- **Template-Based:** No design skills required - cognitive ease
+- **Progressive Disclosure:** One section at a time vs. overwhelming all-at-once
+
+**Emotional Impact:** "This is easy, I'll do it now" - reduces procrastination
+
+#### 7. Commitment Consistency (People Stick to Choices)
+
+**Psychological Principle:** Once people commit publicly, they align actions with that commitment
+
+**Application to JomNikah:**
+- **Setup Progress Tracking:** Each section completed is micro-commitment to finish
+- **Share Link Early:** After setup complete, prompt "Share your card now" - public commitment
+- **RSVP Confirmation:** "Your RSVP has been sent to Sarah & Ahmad" - guest is now committed
+
+**Emotional Impact:** "I started this, I should finish it" - increases completion rates
+
+---

@@ -1,5 +1,5 @@
 ---
-stepsCompleted: [1, 2, 3, 4, 5, 6, 7, 8]
+stepsCompleted: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 inputDocuments: ['prd.md', 'project-proposal.md', 'implementation-readiness-report-2026-01-19.md']
 documentCounts:
   briefs: 0
@@ -1692,5 +1692,400 @@ Footer
 - **No JavaScript Layouts:** Pure CSS for responsive design (faster)
 - **GPU Acceleration:** Transform and opacity for animations (60fps)
 - **Will Change:** Hint browser for animated elements (curtain, fade-ins)
+
+---
+
+## Design Direction Decision
+
+### Design Directions Explored
+
+**8 Design Direction Variations Generated:**
+
+**1. Ritual Elegance**
+- Focus on ceremonial curtain opening with dramatic reveal
+- Strong emphasis on the "tap to open" defining experience
+- Romantic, atmospheric, emotional
+
+**2. Minimalist Modern**
+- Instagram-inspired, content-first approach
+- Clean, efficient, fast information delivery
+- More functional than emotional
+
+**3. Romantic Warmth**
+- Rose/gold color emphasis throughout
+- Hearts, romantic motifs, warm atmosphere
+- Strong emotional feminine tone
+
+**4. Interactive Joy**
+- Micro-interactions, animations, playful elements
+- Confetti, bouncing effects, celebratory feel
+- Highly engaging, word-of-mouth worthy
+
+**5. Content Rich**
+- Information-dense, efficient layout
+- Grid-based, card-driven information display
+- Less scrolling, more visible at once
+
+**6. Cultural Traditional**
+- Malaysian wedding design elements
+- Islamic motifs (bismillah header), emerald color scheme
+- Respectful, culturally aligned
+
+**7. Dark Mode Luxury**
+- Evening reception aesthetic, premium feel
+- Gold accents on dark background
+- Unique differentiation
+
+**8. Playful Celebration**
+- Confetti, emojis, highly celebratory
+- Fun, informal, energetic
+- Memorable and shareable
+
+**Complete Design Showcase:**
+Interactive HTML mockups available at `/Users/amirrulhaiqal/BMAD-Projects/JomNikah/_bmad-output/planning-artifacts/ux-design-directions.html`
+
+### Chosen Direction
+
+**Hybrid Approach: Ritual Elegance + Minimalist Modern**
+
+**Primary Direction (70%): Ritual Elegance (Direction 1)**
+- Curtain opening animation as the defining experience
+- Dramatic reveal creates emotional anticipation
+- Ceremonial, special, memorable
+
+**Secondary Direction (30%): Minimalist Modern (Direction 2)**
+- Clean card content layout after curtain opens
+- Instagram-inspired information hierarchy
+- Efficient delivery of wedding details
+
+**Key Elements Adopted:**
+
+**From Ritual Elegance:**
+- Full-screen curtain overlay with "Tap to Open Their Wedding Card" CTA
+- Animated curtain parting (left/right like theater curtains)
+- Smooth fade-in reveal of wedding card
+- Emotional moment created by anticipation and reveal
+
+**From Minimalist Modern:**
+- Clean card layout: photo → names → date/time → venue → RSVP button
+- Single-column scroll (mobile-first)
+- Generous whitespace, no clutter
+- Fast, efficient information access
+
+**What We're NOT Using:**
+- Overly romantic elements (Direction 3) - too feminine
+- Excessive animations (Direction 4) - performance concerns
+- Dense information grids (Direction 5) - feels functional, not special
+- Heavy cultural/religious motifs (Direction 6) - limits broader appeal
+- Dark mode (Direction 7) - not suitable for all weddings
+- Playful/emoji-heavy (Direction 8) - may feel informal
+
+### Design Rationale
+
+**Why This Hybrid Direction for JomNikah:**
+
+**1. Perfectly Aligns with Defining Experience**
+- **Defining Experience:** "Tap to Open Their Wedding Card" (Step 7)
+- **Ritual Elegance nails this:** Curtain opening IS the memorable moment
+- **Minimalist Modern supports:** Once opened, content is easily digestible
+
+**2. Honors Emotional Context (TOP PRIORITY)**
+- **Curtain ritual creates:** Anticipation, delight, specialness
+- **Clean layout maintains:** Clarity, not overwhelm
+- **Balance achieved:** Emotional opening + rational content consumption
+
+**3. Differentiation from Competitors**
+- **ekaddigital:** Static, no ritual (just information)
+- **JomNikah:** Emotional ritual + efficient delivery (best of both)
+- **Word-of-Mouth Driver:** "Did you see the curtain opening? So beautiful!"
+
+**4. Cultural Alignment**
+- **Malaysian weddings love ceremony:** Ritual feels appropriate
+- **Not overly traditional:** Modern couples appreciate digital innovation
+- **Balanced approach:** Respects tradition while embracing modernity
+
+**5. Mobile Optimization**
+- **80%+ guests on smartphones:** Designed for mobile first
+- **Curtain works beautifully on touch:** Tap anywhere on screen
+- **Minimalist layout:** Optimized for small screens, easy scrolling
+
+**6. Implementation Feasibility**
+- **Solo developer realistic:**
+  - Curtain animation: CSS transitions + Vue component (~200 lines)
+  - Card layout: HTML + Tailwind utilities (~150 lines)
+  - Total complexity: Medium-High (achievable in 2-3 weeks)
+- **Performance:** Animation <2 seconds, loads smoothly on 4G
+- **Maintainability:** Clear separation between "ritual" and "content"
+
+**7. Scalability to Multiple Templates**
+- **Curtain ritual:** Universal (all templates use same curtain)
+- **Card content:** Swappable template components
+- **System design:** Ritual wrapper + Template content = Complete card
+
+**8. Cross-Generational Usability**
+- **Elderly guests (Auntie Fatimah, 60):**
+  - Curtain: Clear "Tap to Open" instruction
+  - Content: Simple, readable, no complex navigation
+- **Younger guests:**
+  - Appreciate the digital ritual
+  - Fast information access suits their expectations
+
+### Implementation Approach
+
+**Phase 1: Curtain Animation Component (Week 2, Days 1-3)**
+
+**Technical Stack:**
+- **Vue 3 Component:** `JCurtainAnimation.vue`
+- **Animation:** CSS transitions + Vue `<transition>` wrapper
+- **Touch Handling:** Entire viewport as touch target (100% width/height)
+
+**Component Structure:**
+```vue
+<template>
+  <div class="curtain-container">
+    <!-- Curtain Overlay -->
+    <transition name="curtain">
+      <div v-if="showCurtain" class="curtain-overlay" @click="openCard">
+        <div class="curtain-content">
+          <p class="text-2xl mb-2">💍</p>
+          <h1 class="serif text-3xl">{{ coupleNames }}</h1>
+          <p class="mt-4 text-lg">Tap to Open Their Wedding Card</p>
+        </div>
+      </div>
+    </transition>
+
+    <!-- Wedding Card (revealed after curtain) -->
+    <transition name="fade">
+      <div v-if="!showCurtain" class="wedding-card">
+        <slot></slot> <!-- Template content goes here -->
+      </div>
+    </transition>
+  </div>
+</template>
+
+<script setup>
+import { ref, onMounted } from 'vue'
+
+const showCurtain = ref(true)
+const openCard = () => {
+  showCurtain.value = false
+  // Optional: Play sound, trigger confetti
+}
+
+onMounted(() => {
+  // Auto-reveal after 5 seconds (accessibility fallback)
+  setTimeout(() => {
+    if (showCurtain.value) showCurtain.value = false
+  }, 5000)
+})
+</script>
+
+<style scoped>
+.curtain-enter-active, .curtain-leave-active {
+  transition: all 1.8s ease-in-out;
+}
+
+.curtain-enter-from, .curtain-leave-to {
+  transform: translateX(0);
+}
+
+.curtain-leave-to {
+  transform: translateX(-100%);
+}
+
+.fade-enter-active {
+  transition: opacity 0.5s ease-out 1.5s;
+}
+
+.fade-enter-from {
+  opacity: 0;
+}
+</style>
+```
+
+**File Location:** `resources/js/components/jc-wedding/JCurtainAnimation.vue`
+
+---
+
+**Phase 2: Wedding Card Templates (Week 2, Days 4-5)**
+
+**Template Structure:**
+```
+resources/js/components/templates/
+├── BaseWeddingCard.vue       # Minimalist modern layout base
+├── RusticElegance.vue        # Rustic theme variant
+├── MinimalistModern.vue      # Clean theme variant
+└── LuxuryGold.vue            # Premium theme variant
+```
+
+**BaseWeddingCard.vue (Minimalist Modern Layout):**
+```vue
+<template>
+  <div class="wedding-card bg-white min-h-screen">
+    <!-- Hero Photo -->
+    <div class="relative">
+      <img :src="heroPhoto" class="w-full h-64 md:h-96 object-cover">
+      <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+        <h1 class="serif text-white text-3xl md:text-4xl font-bold">
+          {{ brideName }} & {{ groomName }}
+        </h1>
+      </div>
+    </div>
+
+    <!-- Content Section -->
+    <div class="p-6 md:p-8 space-y-6">
+      <!-- Invitation Text -->
+      <p class="text-center text-neutral-600">
+        Together with our families, we invite you to share our joy
+      </p>
+
+      <!-- Date & Time -->
+      <div class="border-t border-b border-neutral-200 py-6">
+        <div class="text-center space-y-2">
+          <p class="text-2xl font-bold text-neutral-900">{{ formattedDate }}</p>
+          <p class="text-neutral-600">{{ formattedTime }}</p>
+          <p class="text-neutral-500 text-sm">{{ venue }}</p>
+        </div>
+      </div>
+
+      <!-- RSVP Button -->
+      <button class="w-full bg-primary-rose text-white py-4 rounded-lg font-medium text-lg">
+        RSVP via WhatsApp
+      </button>
+
+      <!-- Countdown (if < 30 days) -->
+      <div v-if="showCountdown" class="text-center">
+        <countdown-timer :wedding-date="weddingDate" />
+      </div>
+    </div>
+  </div>
+</template>
+```
+
+**Usage Example:**
+```vue
+<JCurtainAnimation>
+  <BaseWeddingCard
+    :bride-name="Sarah"
+    :groom-name="Ahmad"
+    :hero-photo="photoUrl"
+    :wedding-date="weddingDate"
+    :venue="Grand Hyatt Kuala Lumpur"
+  />
+</JCurtainAnimation>
+```
+
+---
+
+**Phase 3: Integration & Polish (Week 2, Days 6-7)**
+
+**Integration Steps:**
+
+1. **Route Setup** (routes/web.php):
+```php
+Route::domain('{subdomain}.jomnikah.com')->group(function () {
+    Route::get('/', [PublicWeddingCardController::class, 'show']);
+});
+```
+
+2. **Controller** (app/Http/Controllers/PublicWeddingCardController.php):
+```php
+public function show($subdomain)
+{
+    $wedding = Wedding::where('subdomain', $subdomain)->firstOrFail();
+    $template = $wedding->template; // 'rustic', 'minimalist', etc.
+
+    return Inertia::render('PublicWeddingCard', [
+        'wedding' => $wedding,
+        'component' => "templates/{$template}"
+    ]);
+}
+```
+
+3. **Performance Optimization:**
+- Lazy load template components
+- Preload hero image during curtain animation
+- Compress images to <2MB (NFR compliance)
+- Test on 4G throttling (<5 second load requirement)
+
+---
+
+**Phase 4: Testing & Refinement (Week 3)**
+
+**Testing Checklist:**
+
+**Curtain Animation:**
+- ✅ Completes in <2 seconds on 4G
+- ✅ Smooth on mid-range Android/iOS devices
+- ✅ Touch target works (entire screen)
+- ✅ Auto-reveal fallback after 5 seconds
+- ✅ Screen reader announcement
+
+**Card Content:**
+- ✅ Photo displays correctly (progressive load)
+- ✅ Text is readable (16px minimum, 4.5:1 contrast)
+- ✅ RSVP button works (WhatsApp deep link)
+- ✅ Countdown updates every second
+- ✅ Smooth scroll on mobile
+
+**Cross-Device:**
+- ✅ iPhone 12 Pro (iOS 15)
+- ✅ Samsung Galaxy S21 (Android 12)
+- ✅ iPad Pro (tablet)
+- ✅ Desktop Chrome/Safari/Edge
+
+**Accessibility:**
+- ✅ Keyboard navigation (Tab, Enter, Escape)
+- ✅ Screen reader (VoiceOver, TalkBack)
+- ✅ Color contrast (WCAG AA)
+- ✅ Touch targets (44×44px minimum)
+
+---
+
+**Design Tokens Application:**
+
+**Curtain Colors:**
+- Background: `bg-rose-100` to `bg-rose-50` gradient
+- Text: `text-rose-900` (couple names)
+- Button: `bg-primary-rose` (CTA)
+
+**Card Colors:**
+- Background: `bg-white`
+- Text: `text-neutral-900` (headings), `text-neutral-600` (body)
+- Accents: `text-primary-rose` (dates, highlights)
+- Buttons: `bg-primary-rose` (primary), `bg-primary-gold` (premium)
+
+**Typography:**
+- Couple Names: `font-serif` (Playfair Display, 48px/32px)
+- Body Text: `font-sans` (Inter, 16px)
+- Labels: `font-medium` (Inter, 14px)
+
+**Spacing:**
+- Section Spacing: `space-y-6` (48px vertical rhythm)
+- Card Padding: `p-6` mobile, `p-8` desktop
+- Button Padding: `py-4` (touch-friendly)
+
+---
+
+**Success Metrics:**
+
+**Implementation Success Criteria:**
+- Curtain animation <2 seconds (NFR-PERF-001)
+- Page load <5 seconds on 4G (NFR-PERF-001)
+- Touch targets 44×44px minimum (NFR-USE-002)
+- 16px minimum font size (NFR-USE-003)
+- Lighthouse Performance Score >90
+- WCAG AA accessibility compliance
+
+**Emotional Success Criteria:**
+- Guest testing: "Wow, beautiful!" response within 2 seconds of curtain opening
+- Word-of-mouth: Guests mention curtain opening to couple
+- Differentiation: Clearly not ekaddigital (memorable ritual)
+
+**Technical Success Criteria:**
+- No console errors on any device
+- Smooth 60fps animations
+- Progressive image loading (blur-up technique)
+- Graceful degradation (animation disabled = show card directly)
 
 ---

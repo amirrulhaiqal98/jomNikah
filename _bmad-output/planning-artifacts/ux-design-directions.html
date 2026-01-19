@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JomNikah - Design Direction Showcase</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        h1, h2, .serif { font-family: 'Playfair Display', serif; }
+
+        /* Animation Keyframes */
+        @keyframes curtainOpen {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        /* Demo Specific */
+        .curtain-left {
+            animation: curtainOpen 1.8s ease-in-out forwards;
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out 1.5s both;
+        }
+
+        .pulse-btn {
+            animation: pulse 2s infinite;
+        }
+
+        .gradient-shimmer {
+            background: linear-gradient(90deg, #F43F5E 0%, #F59E0B 50%, #F43F5E 100%);
+            background-size: 200% 100%;
+            animation: shimmer 3s linear infinite;
+        }
+
+        /* Phone Mockup Frame */
+        .phone-frame {
+            width: 375px;
+            height: 812px;
+            border: 12px solid #1a1a1a;
+            border-radius: 40px;
+            overflow: hidden;
+            position: relative;
+            background: white;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .phone-notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 30px;
+            background: #1a1a1a;
+            border-radius: 0 0 20px 20px;
+            z-index: 100;
+        }
+
+        /* Navigation */
+        .directions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .direction-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .direction-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-neutral-50">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-neutral-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold text-neutral-900">JomNikah</h1>
+                    <p class="text-sm text-neutral-600">Design Direction Showcase</p>
+                </div>
+                <nav class="flex gap-4">
+                    <button onclick="scrollToSection('intro')" class="px-4 py-2 text-sm font-medium text-neutral-700 hover:text-rose-500 transition">Overview</button>
+                    <button onclick="scrollToSection('directions')" class="px-4 py-2 text-sm font-medium text-neutral-700 hover:text-rose-500 transition">Directions</button>
+                    <button onclick="scrollToSection('evaluation')" class="px-4 py-2 text-sm font-medium text-neutral-700 hover:text-rose-500 transition">Evaluation</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Introduction -->
+    <section id="intro" class="max-w-7xl mx-auto px-6 py-12">
+        <div class="bg-gradient-to-br from-rose-50 to-gold-50 rounded-2xl p-8 border border-rose-100">
+            <h2 class="text-3xl font-bold text-neutral-900 mb-4">Design Direction Exploration</h2>
+            <p class="text-lg text-neutral-700 mb-6">
+                Below are 8 different design direction variations for JomNikah. Each direction represents a complete visual approach
+                combining our established foundation (Rose/Gold/Emerald colors, Inter + Playfair Display typography) with different
+                layouts, interactions, and emotional tones.
+            </p>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white p-4 rounded-lg border border-rose-200">
+                    <h3 class="font-semibold text-rose-600 mb-2">🎯 Defining Experience</h3>
+                    <p class="text-sm text-neutral-700">"Tap to Open Their Wedding Card" - The curtain opening ritual</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg border border-gold-200">
+                    <h3 class="font-semibold text-gold-600 mb-2">🎨 Visual Foundation</h3>
+                    <p class="text-sm text-neutral-700">Rose/Gold/Emerald palette + Inter/Playfair Display fonts</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg border border-emerald-200">
+                    <h3 class="font-semibold text-emerald-600 mb-2">📱 Platform Focus</h3>
+                    <p class="text-sm text-neutral-700">Mobile-first, 80%+ guests on smartphones</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design Directions -->
+    <section id="directions" class="max-w-7xl mx-auto px-6 py-12">
+
+        <h2 class="text-3xl font-bold text-neutral-900 mb-8">8 Design Directions</h2>
+
+        <div class="directions-grid">
+
+            <!-- Direction 1: Ritual Elegance -->
+            <div class="direction-card">
+                <h3 class="text-xl font-bold text-neutral-900 mb-2">Direction 1: Ritual Elegance</h3>
+                <p class="text-sm text-neutral-600 mb-4">Focus on ceremonial curtain opening, dramatic reveal</p>
+
+                <div class="phone-frame mx-auto">
+                    <div class="phone-notch"></div>
+
+                    <!-- Curtain State -->
+                    <div class="absolute inset-0 bg-gradient-to-b from-rose-100 to-rose-50 flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-rose-500 flex items-center justify-center animate-pulse">
+                                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                                </svg>
+                            </div>
+                            <h1 class="serif text-2xl font-bold text-rose-900 mb-2">Sarah & Ahmad</h1>
+                            <p class="text-rose-700 text-sm mb-6">Tap to Open Their Wedding Card</p>
+                            <button class="bg-rose-500 text-white px-8 py-3 rounded-full font-medium shadow-lg pulse-btn">
+                                Open Invitation
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Card Revealed (behind curtain) -->
+                    <div class="absolute inset-0 bg-white opacity-0 fade-in-up">
+                        <div class="h-full overflow-y-auto">
+                            <div class="relative">
+                                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=300&fit=crop" class="w-full h-48 object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                                    <h1 class="serif text-white text-3xl font-bold">Sarah & Ahmad</h1>
+                                </div>
+                            </div>
+                            <div class="p-6 space-y-6">
+                                <div class="text-center">
+                                    <p class="text-4xl mb-2">💍</p>
+                                    <p class="text-neutral-600">Request the honor of your presence</p>
+                                </div>
+                                <div class="bg-rose-50 p-4 rounded-lg">
+                                    <p class="font-semibold text-rose-900 mb-1">Saturday, December 28, 2026</p>
+                                    <p class="text-rose-700 text-sm">at 2:00 PM</p>
+                                </div>
+                                <button class="w-full bg-rose-500 text-white py-3 rounded-lg font-medium">
+                                    RSVP via WhatsApp
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 space-y-2">
+                    <div class="flex items-center text-sm">
+                        <span class="text-emerald-500 mr-2">✓</span>
+                        <span class="text-neutral-700">Strong ceremonial moment</span>
+                    </div>
+                    <div class="flex items-center text-sm">
+                        <span class="text-emerald-500 mr-2">✓</span>
+                        <span class="text-neutral-700">Dramatic reveal</span>
+                    </div>
+                    <div class="flex items-center text-sm">
+                        <span class="text-neutral-400 mr-2">○</span>
+                        <span class="text-neutral-700">May feel too elaborate for quick viewing</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Direction 2: Minimalist Modern -->
+            <div class="direction-card">
+                <h3 class="text-xl font-bold text-neutral-900 mb-2">Direction 2: Minimalist Modern</h3>
+                <p class="text-sm text-neutral-600 mb-4">Instagram-inspired, content-first, clean</p>
+
+                <div class="phone-frame mx-auto">
+                    <div class="phone-notch"></div>
+                    <div class="h-full overflow-y-auto bg-white">
+                        <!-- Minimal Header -->
+                        <div class="p-6 text-center border-b border-neutral-100">
+                            <p class="text-xs font-medium text-rose-500 mb-2">THE WEDDING OF</p>
+                            <h1 class="serif text-3xl font-bold text-neutral-900">Sarah & Ahmad</h1>
+                        </div>
+
+                        <!-- Hero Photo -->
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=400&fit=crop" class="w-full aspect-square object-cover">
+                        </div>
+
+                        <!-- Content -->
+                        <div class="p-6 space-y-4">
+                            <div class="text-center">
+                                <p class="text-neutral-600 text-sm leading-relaxed">
+                                    Together with our families, we invite you to share our joy
+                                </p>
+                            </div>
+
+                            <div class="border-t border-b border-neutral-100 py-4">
+                                <div class="text-center space-y-2">
+                                    <p class="text-2xl font-bold text-neutral-900">Dec 28, 2026</p>
+                                    <p class="text-neutral-600">2:00 PM</p>
+                                    <p class="text-neutral-500 text-sm">Grand Hyatt Kuala Lumpur</p>
+                                </div>
+                            </div>
+
+                            <button class="w-full bg-neutral-900 text-white py-3 rounded-lg font-medium hover:bg-neutral-800 transition">
+                                RSVP Now
+                            </button>
+
+                            <!-- Small Countdown -->
+                            <div class="flex justify-center gap-4 text-center">
+                                <div>
+                                    <p class="text-2xl font-bold text-rose-500">342</p>
+                                    <p class="text-xs text-neutral-500">Days</p>
+                                </div>
+                                <div>
+                                    <p class="text-2xl font-bold text-rose-500">08</p>
+                                    <p class="text-xs text-neutral-500">Hours</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 space-y-2">
+                    <div class="flex items-center text-sm">
+                        <span class="text-emerald-500 mr-2">✓</span>
+                        <span class="text-neutral-700">Fast, efficient</span>
+                    </div>
+                    <div class="flex items-center text-sm">
+                        <span class="text-emerald-500 mr-2">✓</span>
+                        <span class="text-neutral-700">Instagram-familiar</span>
+                    </div>
+                    <div class="flex items-center text-sm">
+                        <span class="text-neutral-400 mr-2">○</span>
+                        <span class="text-neutral-700">Less emotional ritual</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Direction 3: Romantic Warmth -->
+            <div class="direction-card">
+                <h3 class="text-xl font-bold text-neutral-900 mb-2">Direction 3: Romantic Warmth</h3>
+                <p class="text-sm text-neutral-600 mb-4">Rose/gold emphasis, romantic atmosphere</p>
+
+                <div class="phone-frame mx-auto">
+                    <div class="phone-notch"></div>
+                    <div class="h-full overflow-y-auto bg-gradient-to-b from-rose-50 to-white">
+                        <!-- Romantic Header -->
+                        <div class="relative">
+                            <div class="absolute inset-0 bg-gradient-to-b from-rose-200/50 to-transparent"></div>
+                            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=350&fit=crop" class="w-full h-64 object-cover">
+                        </div>
+
+                        <div class="relative -mt-12 text-center px-6">
+                            <div class="inline-block bg-white rounded-full p-1 mb-4 shadow-lg">
+                                <div class="w-20 h-20 rounded-full border-4 border-rose-200 overflow-hidden">
+                                    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=100&h=100&fit=crop" class="w-full h-full object-cover">
+                                </div>
+                            </div>
+                            <h1 class="serif text-3xl font-bold text-rose-900 mb-1">Sarah & Ahmad</h1>
+                            <p class="text-rose-600 text-sm mb-6">Are getting married!</p>
+
+                            <div class="bg-white rounded-2xl p-6 shadow-lg border border-rose-100">
+                                <div class="flex items-center justify-center gap-2 mb-4">
+                                    <span class="text-2xl">💕</span>
+                                    <p class="text-rose-700 font-medium">Save the Date</p>
+                                    <span class="text-2xl">💕</span>
+                                </div>
+                                <p class="text-2xl font-bold text-rose-900">December 28, 2026</p>
+                                <p class="text-rose-600">2:00 PM</p>
+                            </div>
+                        </div>
+
+                        <div class="p-6 space-y-4">
+                            <button class="w-full gradient-shimmer text-white py-3 rounded-lg font-medium shadow-lg">
+                                RSVP with Love 💗
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 space-y-2">
+                    <div class="flex items-center text-sm">
+                        <span class="text-emerald-500 mr-2">✓</span>
+                        <span class="text-neutral-700">Strong emotional tone</span>
+                    </div>
+                    <div class="flex items-center text-sm">
+                        <span class="text-emerald-500 mr-2">✓</span>
+                        <span class="text-neutral-700">Romantic aesthetic</span>
+                    </div>
+                    <div class="flex items-center text-sm">
+                        <span class="text-neutral-400 mr-2">○</span>
+                        <span class="text-neutral-700">May feel too feminine</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Direction 4: Interactive Joy -->
+            <div class="direction-card">
+                <h3 class="text-xl font-bold text-neutral-900 mb-2">Direction 4: Interactive Joy</h3>
+                <p class="text-sm text-neutral-600 mb-4">Micro-interactions, animated, playful</p>
+
+                <div class="phone-frame mx-auto">
+                    <div class="phone-notch"></div>
+                    <div class="h-full overflow-y-auto bg-white relative">
+                        <!-- Confetti overlay -->
+                        <div class="absolute inset-0 pointer-events-none overflow-hidden">
+                            <div class="absolute top-10 left-10 text-2xl animate-bounce">🎉</div>
+                            <div class="absolute top-20 right-8 text-xl animate-pulse">💖</div>
+                            <div class="absolute top-32 left-20 text-lg animate-bounce" style="animation-delay: 0.5s">✨</div>
+                        </div>
+
+                        <div class="p-6 text-center">
+                            <h1 class="serif text-3xl font-bold text-neutral-900 mb-2">Sarah & Ahmad</h1>
+                            <p class="text-neutral-600 text-sm mb-6">Invite you to their celebration!</p>
+
+                            <!-- Interactive Photo -->
+                            <div class="relative mb-6 group cursor-pointer">
+                                <div class="absolute -inset-1 bg-gradient-to-r from-rose-500 to-gold-500 rounded-lg blur opacity-25 group-hover:opacity-50 transition"></div>
+                                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=300&fit=crop" class="relative rounded-lg shadow-lg transform group-hover:scale-105 transition duration-300">
+                                <div class="absolute bottom-2 right-2 bg-white/90 rounded-full p-2 shadow">
+                                    <span class="text-lg">💝</span>
+                                </div>
+                            </div>
+
+                            <!-- Animated Countdown -->
+                            <div class="bg-gradient-to-r from-rose-50 to-gold-50 rounded-xl p-4 mb-6">
+                                <p class="text-sm text-neutral-600 mb-3">Counting Down to Our Big Day!</p>
+                                <div class="grid grid-cols-4 gap-2">
+                                    <div class="bg-white rounded-lg p-2 shadow-sm">
+                                        <p class="text-xl font-bold text-rose-500">342</p>
+                                        <p class="text-xs text-neutral-500">Days</p>
+                                    </div>
+                                    <div class="bg-white rounded-lg p-2 shadow-sm">
+                                        <p class="text-xl font-bold text-gold-500">08</p>
+                                        <p class="text-xs text-neutral-500">Hours</p>
+                                    </div>
+                                    <div class="bg-white rounded-lg p-2 shadow-sm">
+                                        <p class="text-xl font-bold text-rose-500">23</p>
+                                        <p class="text-xs text-neutral-500">Mins</p>
+                                    </div>
+                                    <div class="bg-white rounded-lg p-2 shadow-sm">
+                                        <p class="text-xl font-bold text-gold-500">45</p>
+                                        <p class="text-xs text-neutral-500">Secs</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="w-full bg-rose-500 text-white py-3 rounded-lg font-medium shadow-lg pulse-btn">
+                                💌 RSVP Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 space-y-2">
+                    <div class="flex items-center text-sm">
+                        <span class="text-emerald-500 mr-2">✓</span>
+                        <span class="text-neutral-700">Engaging, delightful</span>
+                    </div>
+                    <div class="flex items-center text-sm">
+                        <span class="text-emerald-500 mr-2">✓</span>
+                        <span class="text-neutral-700">Word-of-mouth worthy</span>
+                    </div>
+                    <div class="flex items-center text-sm">
+                        <span class="text-neutral-400 mr-2">○</span>
+                        <span class="text-neutral-700">More complex to build</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Direction 5: Content Rich -->
+            <div class="direction-card">
+                <h3 class="text-xl font-bold text-neutral-900 mb-2">Direction 5: Content Rich</h3>
+                <p class="text-sm text-neutral-600 mb-4">More information visible, less scrolling</p>
+
+                <div class="phone-frame mx-auto">
+                    <div class="phone-notch"></div>
+                    <div class="h-full overflow-y-auto bg-neutral-50">
+                        <!-- Compact Header -->
+                        <div class="bg-white p-4 border-b border-neutral-200">
+                            <div class="flex items-center gap-3">
+                                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=80&h=80&fit=crop" class="w-16 h-16 rounded-full object-cover">
+                                <div>
+                                    <h1 class="serif text-xl font-bold text-neutral-900">Sarah & Ahmad</h1>
+                                    <p class="text-sm text-neutral-600">Dec 28, 2026 • 2:00 PM</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Information Grid -->
+                        <div class="p-4 space-y-3">
+                            <!-- Date & Time Card -->
+                            <div class="bg-white rounded-lg p-4 shadow-sm">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center">
+                                        <span class="text-lg">📅</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="font-semibold text-neutral-900">Saturday, Dec 28</p>
+                                        <p class="text-sm text-neutral-600">2:00 PM - 6:00 PM</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Location Card -->
+                            <div class="bg-white rounded-lg p-4 shadow-sm">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-gold-100 rounded-full flex items-center justify-center">
+                                        <span class="text-lg">📍</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="font-semibold text-neutral-900">Grand Hyatt Kuala Lumpur</p>
+                                        <p class="text-sm text-neutral-600">12, Jalan Sultan Ismail</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Quick Actions -->
+                            <div class="grid grid-cols-2 gap-3">
+                                <button class="bg-rose-500 text-white py-3 rounded-lg font-medium text-sm">
+                                    💌 RSVP
+                                </button>
+                                <button class="bg-gold-500 text-white py-3 rounded-lg font-medium text-sm">
+                                    📍 Directions
+                                </button>
+                            </div>
+
+                            <!-- Countdown -->
+                            <div class="bg-white rounded-lg p-4 shadow-sm">
+                                <p class="text-sm text-neutral-600 mb-2">Time Until Celebration</p>
+                                <div class="flex justify-between text-center">
+                                    <div>
+                                        <p class="text-xl font-bold text-rose-500">342</p>
+                                        <p class="text-xs text-neutral-500">Days</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xl font-bold text-gold-500">08</p>
+                                        <p class="text-xs text-neutral-500">Hours</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xl font-bold text-rose-500">23</p>
+                                        <p class="text-xs text-neutral-500">Mins</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xl font-bold text-gold-500">45</p>
+                                        <p class="text-xs text-neutral-500">Secs</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 space-y-2">
+                    <div class="flex items-center text-sm">
+                        <span class="text-emerald-500 mr-2">✓</span>
+                        <span class="text-neutral-700">Information efficient</span>
+                    </div>
+                    <div class="flex items-center text-sm">
+                        <span class="text-emerald-500 mr-2">✓</span>
+                        <span class="text-neutral-700">Less scrolling</span>
+                    </div>
+                    <div class="flex items-center text-sm">
+                        <span class="text-neutral-400 mr-2">○</span>
+                        <span class="text-neutral-700">Less emotional, more functional</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Direction 6: Cultural Traditional -->
+            <div class="direction-card">
+                <h3 class="text-xl font-bold text-neutral-900 mb-2">Direction 6: Cultural Traditional</h3>
+                <p class="text-sm text-neutral-600 mb-4">Malaysian wedding elements, Islamic motifs</p>
+
+                <div class="phone-frame mx-auto">
+                    <div class="phone-notch"></div>
+                    <div class="h-full overflow-y-auto bg-gradient-to-b from-emerald-50 to-white">
+                        <!-- Islamic Header -->
+                        <div class="bg-emerald-700 text-white p-6 text-center">
+                            <p class="text-emerald-200 text-sm mb-2">بسم الله الرحمن الرحيم</p>
+                            <p class="text-xs text-emerald-200 mb-4">In the name of Allah, the Most Gracious</p>
+                            <h1 class="serif text-2xl font-bold">Sarah & Ahmad</h1>
+                            <p class="text-emerald-100 text-sm mt-2">Request the pleasure of your company</p>
+                        </div>
+
+                        <div class="p-6 space-y-6">
+                            <!-- Photo with Pattern Border -->
+                            <div class="relative">
+                                <div class="absolute -inset-2 bg-emerald-200 rounded-lg pattern"></div>
+                                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=300&fit=crop" class="relative rounded-lg shadow-lg">
+                            </div>
+
+                            <!-- Details -->
+                            <div class="bg-white rounded-lg p-5 shadow-sm border-2 border-emerald-200">
+                                <div class="text-center space-y-3">
+                                    <div>
+                                        <p class="text-emerald-700 text-sm font-medium">Save The Date</p>
+                                        <p class="text-2xl font-bold text-neutral-900">December 28, 2026</p>
+                                    </div>
+                                    <div class="border-t border-emerald-100 pt-3">
+                                        <p class="text-emerald-700 text-sm font-medium">Time</p>
+                                        <p class="text-lg text-neutral-900">2:00 PM - 6:00 PM</p>
+                                    </div>
+                                    <div class="border-t border-emerald-100 pt-3">
+                                        <p class="text-emerald-700 text-sm font-medium">Venue</p>
+                                        <p class="text-lg text-neutral-900">Grand Hyatt Kuala Lumpur</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="w-full bg-emerald-600 text-white py-3 rounded-lg font-medium">
+                                Confirm Attendance
+                            </button>
+
+                            <p class="text-center text-xs text-emerald-600">
+                                Your presence is our greatest gift 🤲
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 space-y-2">
+                    <div class="flex items-center text-sm">
+                        <span class="text-emerald-500 mr-2">✓</span>
+                        <span class="text-neutral-700">Culturally aligned</span>
+                    </div>
+                    <div class="flex items-center text-sm">
+                        <span class="text-emerald-500 mr-2">✓</span>
+                        <span class="text-neutral-700">Respectful, traditional</span>
+                    </div>
+                    <div class="flex items-center text-sm">
+                        <span class="text-neutral-400 mr-2">○</span>
+                        <span class="text-neutral-700">May not appeal to modern couples</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Direction 7: Dark Mode Luxury -->
+            <div class="direction-card">
+                <h3 class="text-xl font-bold text-neutral-900 mb-2">Direction 7: Dark Mode Luxury</h3>
+                <p class="text-sm text-neutral-600 mb-4">Evening reception aesthetic, premium feel</p>
+
+                <div class="phone-frame mx-auto">
+                    <div class="phone-notch"></div>
+                    <div class="h-full overflow-y-auto bg-neutral-900">
+                        <!-- Dark Luxury Header -->
+                        <div class="relative">
+                            <div class="absolute inset-0 bg-gradient-to-b from-neutral-900 via-neutral-900/60 to-neutral-900"></div>
+                            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=400&fit=crop" class="w-full h-80 object-cover">
+                        </div>
+
+                        <div class="relative -mt-20 px-6 text-center">
+                            <div class="inline-block mb-4">
+                                <div class="w-24 h-24 rounded-full border-4 border-gold-500 overflow-hidden shadow-2xl">
+                                    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=150&h=150&fit=crop" class="w-full h-full object-cover">
+                                </div>
+                            </div>
+                            <h1 class="serif text-3xl font-bold text-white mb-1">Sarah & Ahmad</h1>
+                            <p class="text-gold-400 text-sm mb-6">Request the honor of your presence</p>
+
+                            <div class="bg-neutral-800 rounded-2xl p-6 border border-gold-500/30">
+                                <div class="flex items-center justify-center gap-3 mb-4">
+                                    <span class="text-gold-400 text-2xl">✨</span>
+                                    <p class="text-gold-300 font-medium">An Evening to Remember</p>
+                                    <span class="text-gold-400 text-2xl">✨</span>
+                                </div>
+                                <p class="text-2xl font-bold text-white mb-1">December 28, 2026</p>
+                                <p class="text-gold-400">2:00 PM • Grand Hyatt Kuala Lumpur</p>
+                            </div>
+                        </div>
+
+                        <div class="p-6 space-y-4">
+                            <button class="w-full bg-gradient-to-r from-gold-500 to-gold-600 text-neutral-900 py-3 rounded-lg font-medium shadow-lg">
+                                RSVP in Style
+                            </button>
+
+                            <p class="text-center text-xs text-neutral-500">
+                                Black tie optional 🎩
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 space-y-2">
+                    <div class="flex items-center text-sm">
+                        <span class="text-emerald-500 mr-2">✓</span>
+                        <span class="text-neutral-700">Premium, elegant</span>
+                    </div>
+                    <div class="flex items-center text-sm">
+                        <span class="text-emerald-500 mr-2">✓</span>
+                        <span class="text-neutral-700">Unique differentiation</span>
+                    </div>
+                    <div class="flex items-center text-sm">
+                        <span class="text-neutral-400 mr-2">○</span>
+                        <span class="text-neutral-700">Less suitable for day weddings</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Direction 8: Playful Celebration -->
+            <div class="direction-card">
+                <h3 class="text-xl font-bold text-neutral-900 mb-2">Direction 8: Playful Celebration</h3>
+                <p class="text-sm text-neutral-600 mb-4">Confetti, animations, celebratory</p>
+
+                <div class="phone-frame mx-auto">
+                    <div class="phone-notch"></div>
+                    <div class="h-full overflow-y-auto bg-gradient-to-br from-rose-100 via-pink-50 to-gold-50 relative">
+                        <!-- Confetti Background -->
+                        <div class="absolute inset-0 pointer-events-none opacity-30">
+                            <div class="absolute top-5 left-5 text-2xl">🎊</div>
+                            <div class="absolute top-10 right-10 text-xl">💐</div>
+                            <div class="absolute top-20 left-20 text-lg animate-bounce">✨</div>
+                            <div class="absolute top-40 right-5 text-xl animate-pulse">💕</div>
+                            <div class="absolute bottom-40 left-10 text-lg">🎉</div>
+                        </div>
+
+                        <div class="relative p-6 text-center">
+                            <!-- Celebration Badge -->
+                            <div class="inline-block bg-gradient-to-r from-rose-500 to-gold-500 text-white px-4 py-1 rounded-full text-xs font-medium mb-4 shadow-lg">
+                                We're Getting Married! 💍
+                            </div>
+
+                            <h1 class="serif text-3xl font-bold text-neutral-900 mb-2">Sarah & Ahmad</h1>
+                            <p class="text-neutral-600 mb-6">And we want YOU there! 🥳</p>
+
+                            <!-- Bouncing Photo -->
+                            <div class="mb-6">
+                                <div class="relative inline-block">
+                                    <div class="absolute -inset-3 bg-gradient-to-r from-rose-400 to-gold-400 rounded-2xl blur opacity-50 animate-pulse"></div>
+                                    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=300&h=300&fit=crop" class="relative rounded-2xl shadow-2xl border-4 border-white">
+                                </div>
+                            </div>
+
+                            <!-- Playful Info -->
+                            <div class="bg-white rounded-2xl p-5 shadow-lg mb-6">
+                                <div class="space-y-3">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <span class="text-2xl">📅</span>
+                                        <p class="text-lg font-bold text-neutral-900">Dec 28, 2026</p>
+                                    </div>
+                                    <div class="flex items-center justify-center gap-2">
+                                        <span class="text-2xl">⏰</span>
+                                        <p class="text-neutral-700">2:00 PM</p>
+                                    </div>
+                                    <div class="flex items-center justify-center gap-2">
+                                        <span class="text-2xl">📍</span>
+                                        <p class="text-neutral-700">Grand Hyatt KL</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="w-full bg-gradient-to-r from-rose-500 to-gold-500 text-white py-4 rounded-xl font-bold text-lg shadow-xl pulse-btn">
+                                🎊 RSVP Party Time! 🎊
+                            </button>
+
+                            <p class="mt-4 text-sm text-neutral-600">
+                                Let's celebrate love together! 💖
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 space-y-2">
+                    <div class="flex items-center text-sm">
+                        <span class="text-emerald-500 mr-2">✓</span>
+                        <span class="text-neutral-700">Fun, memorable</span>
+                    </div>
+                    <div class="flex items-center text-sm">
+                        <span class="text-emerald-500 mr-2">✓</span>
+                        <span class="text-neutral-700">Highly shareable</span>
+                    </div>
+                    <div class="flex items-center text-sm">
+                        <span class="text-neutral-400 mr-2">○</span>
+                        <span class="text-neutral-700">May not suit formal weddings</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Evaluation Framework -->
+    <section id="evaluation" class="max-w-7xl mx-auto px-6 py-12">
+        <div class="bg-white rounded-2xl p-8 shadow-lg border border-neutral-200">
+            <h2 class="text-3xl font-bold text-neutral-900 mb-6">Design Evaluation Framework</h2>
+
+            <p class="text-lg text-neutral-700 mb-8">
+                Use these criteria to evaluate and choose the best direction for JomNikah:
+            </p>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="p-6 bg-rose-50 rounded-xl border border-rose-200">
+                    <h3 class="font-bold text-rose-700 mb-2">💕 Emotional Impact</h3>
+                    <p class="text-sm text-neutral-700">
+                        Which creates the strongest "Wow, beautiful!" moment for guests?
+                    </p>
+                </div>
+
+                <div class="p-6 bg-gold-50 rounded-xl border border-gold-200">
+                    <h3 class="font-bold text-gold-700 mb-2">🎭 Cultural Fit</h3>
+                    <p class="text-sm text-neutral-700">
+                        Which feels most aligned with Malaysian wedding celebrations?
+                    </p>
+                </div>
+
+                <div class="p-6 bg-emerald-50 rounded-xl border border-emerald-200">
+                    <h3 class="font-bold text-emerald-700 mb-2">📱 Mobile Experience</h3>
+                    <p class="text-sm text-neutral-700">
+                        Which works best on smartphones (80%+ guests)?
+                    </p>
+                </div>
+
+                <div class="p-6 bg-purple-50 rounded-xl border border-purple-200">
+                    <h3 class="font-bold text-purple-700 mb-2">⚡ Differentiation</h3>
+                    <p class="text-sm text-neutral-700">
+                        Which stands out most from ekaddigital and competitors?
+                    </p>
+                </div>
+
+                <div class="p-6 bg-blue-50 rounded-xl border border-blue-200">
+                    <h3 class="font-bold text-blue-700 mb-2">🛠️ Implementation</h3>
+                    <p class="text-sm text-neutral-700">
+                        Which is realistic for solo developer to build well?
+                    </p>
+                </div>
+
+                <div class="p-6 bg-pink-50 rounded-xl border border-pink-200">
+                    <h3 class="font-bold text-pink-700 mb-2">🗣️ Word-of-Mouth</h3>
+                    <p class="text-sm text-neutral-700">
+                        Which will guests recommend to their friends?
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-8 p-6 bg-neutral-100 rounded-xl">
+                <h3 class="font-bold text-neutral-900 mb-3">Decision Questions:</h3>
+                <ul class="space-y-2 text-neutral-700">
+                    <li>✅ Which layout feels most intuitive for couples setting up their card?</li>
+                    <li>✅ Which visual weight matches JomNikah's brand personality?</li>
+                    <li>✅ Which interaction style best supports the "curtain opening" defining experience?</li>
+                    <li>✅ Are there elements from different directions you'd like to combine?</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-neutral-900 text-white py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <p class="text-neutral-400 text-sm">JomNikah UX Design Direction Showcase</p>
+            <p class="text-neutral-500 text-xs mt-2">Generated for design exploration and decision-making</p>
+        </div>
+    </footer>
+
+    <script>
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+
+</body>
+</html>

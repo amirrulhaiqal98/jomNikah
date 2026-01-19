@@ -1,5 +1,5 @@
 ---
-stepsCompleted: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+stepsCompleted: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 inputDocuments: ['prd.md', 'project-proposal.md', 'implementation-readiness-report-2026-01-19.md']
 documentCounts:
   briefs: 0
@@ -2504,5 +2504,529 @@ setInterval(async () => {
 - Monitoring Frequency: Dashboard checks 2-3× daily
 - Support Response: <2 hours average
 - Platform Health: >99% uptime during active periods
+
+---
+
+## Component Strategy
+
+### Design System Components (From Step 6)
+
+**Selected Design System:** Tailwind CSS + Headless UI + Custom Emotional Components
+
+**Available from Headless UI:**
+- ✅ **Dialog** - Modal dialogs (upgrade prompts, confirmations)
+- ✅ **Menu** - Dropdown menus (account menu, template selector)
+- ✅ **Tab** - Tab navigation (dashboard tabs)
+- ✅ **Disclosure** - Accordion sections (setup form sections)
+- ✅ **Listbox** - Select dropdowns (template selection)
+- ✅ **Switch** - Toggle switches (feature toggles)
+
+**Foundation Coverage:**
+- Interactive component logic: ✅ Fully covered by Headless UI
+- Accessibility: ✅ Built-in ARIA labels, keyboard navigation
+- Styling: ✅ Tailwind utilities provide complete control
+- Complex state management: ✅ Headless UI handles modals, dropdowns, etc.
+
+### Custom Components (JomNikah-Specific)
+
+**Gap Analysis:**
+User journeys and design direction revealed 8 critical components that must be built custom:
+
+#### 1. JCurtainAnimation (The Defining Experience)
+
+**Purpose:** Creates ritualistic wedding card opening experience - the moment guests will remember and talk about
+
+**Usage Example:**
+```vue
+<JCurtainAnimation :couple-names="'Sarah & Ahmad'" :wedding-date="weddingDate">
+  <WeddingCard />
+</JCurtainAnimation>
+```
+
+**Component Anatomy:**
+- Full-screen overlay (rose gradient background `bg-gradient-to-b from-rose-100 to-rose-50`)
+- Center content: Ring icon 💍 + couple names (Playfair Display, 48px) + CTA text ("Tap to Open Their Wedding Card")
+- Tap target: Entire viewport (100vw × 100vh)
+- Animation: Theater curtain parts left/right (1.8s ease-in-out), fades out
+- Card reveal: Fade-in from bottom (0.5s ease-out, 1.5s delay)
+
+**States:**
+- **Default:** Curtain visible, card hidden
+- **Animating:** Curtain parting, card fading in
+- **Complete:** Curtain gone, card visible and interactive
+- **Auto-reveal:** Fallback after 5 seconds (accessibility for users who don't tap)
+
+**Accessibility:**
+- `role="button"` on curtain overlay
+- `aria-label="Tap to open wedding card for Sarah & Ahmad"`
+- `tabindex="0"` (keyboard accessible, Enter/Space triggers open)
+- `aria-live="polite"` announcement when card reveals
+- Screen reader: "Wedding card loading. Tap to open."
+
+**Performance:**
+- GPU-accelerated CSS transitions (transform, opacity)
+- Progressive image load during curtain (perceived performance boost)
+- Animation completes in <2 seconds (NFR-PERF-001 compliance)
+
+---
+
+#### 2. JcProgressBar (Setup Progress Tracking)
+
+**Purpose:** Visualizes setup completion progress (0-100%), gamifies the setup experience
+
+**Usage Example:**
+```vue
+<JcProgressBar
+  :progress="60"
+  currentSection="template"
+  nextSection="details"
+  variant="detailed"
+/>
+```
+
+**Component Anatomy:**
+- Horizontal progress bar (height: 8px, rounded-full, bg-neutral-200)
+- Progress fill (bg-primary-rose, animated width transition)
+- Percentage text (text-2xl font-bold text-primary-rose, "60%")
+- Section label (text-sm text-neutral-600, "Selecting template")
+- Milestone celebrations (confetti burst at 20%, 40%, 70%, 90%, 100%)
+
+**States:**
+- **0%:** Empty bar, "Let's get started!" encouragement
+- **20-90%:** Fill animates smoothly, section label updates
+- **100%:** Full bar, confetti triggers, "Your wedding card is ready!"
+
+**Variants:**
+- **Compact:** Percentage only (mobile)
+- **Detailed:** Percentage + label + next section (desktop)
+
+**Accessibility:**
+- `role="progressbar"`
+- `aria-valuenow="60"`
+- `aria-valuemin="0"`
+- `aria-valuemax="100"`
+- `aria-label="Wedding card setup progress: 60% complete, current section: template selection. Next: Add wedding details."`
+
+---
+
+#### 3. JcConfetti (Celebration Animation)
+
+**Purpose:** Creates celebration moments for achievements (100% setup, first RSVP, milestones)
+
+**Usage Example:**
+```vue
+<JcConfetti :trigger="showConfetti" :duration="3000" :intensity="full" />
+```
+
+**Component Anatomy:**
+- Canvas-based particle system (full-screen overlay)
+- Particles: Confetti shapes (circles, squares, triangles)
+- Colors: Primary rose (#F43F5E), Gold (#F59E0B), Emerald (#10B981)
+- Physics: Gravity, rotation, velocity, wind effect
+- Auto-cleanup after duration (removes from DOM)
+
+**States:**
+- **Hidden:** Canvas `display: none`, no rendering
+- **Animating:** Particles falling, rotating, fading
+- **Complete:** Canvas cleared, component unmounted
+
+**Variants:**
+- **Subtle:** 50 particles, gentle celebration (template selection)
+- **Full:** 200 particles, major celebration (100% setup)
+
+**Performance:**
+- Canvas rendering (60fps via requestAnimationFrame)
+- Particle count: 50-200 (configurable)
+- Duration: 2-4 seconds (configurable)
+- File size: <50KB (minified + gzipped)
+
+---
+
+#### 4. JcPhotoGallery (Wedding Photo Display)
+
+**Purpose:** Displays couple's wedding photos with lazy loading and lightbox view
+
+**Usage Example:**
+```vue
+<JcPhotoGallery
+  :photos="photoList"
+  layout="grid"
+  :columns="2"
+  lightbox-enabled
+/>
+```
+
+**Component Anatomy:**
+- Photo grid (2 columns mobile `grid-cols-2`, 3-4 desktop `grid-cols-3 md:grid-cols-4`)
+- Image cards (rounded-lg, shadow-md, overflow-hidden)
+- Lazy loading (blur-up technique: small blurred placeholder → full image)
+- Lightbox view (tap to expand, full-screen modal)
+- Swipe gestures (mobile navigation, left/right swipe)
+
+**States:**
+- **Loading:** Blur placeholder, skeleton screen pulse
+- **Loaded:** Sharp image, fade-in transition (0.3s)
+- **Expanded:** Lightbox modal full-screen with close button
+- **Error:** Fallback icon + "Image unavailable" text
+
+**Accessibility:**
+- `loading="lazy"` attribute on images
+- `alt` text from couple's photo descriptions
+- `role="img"` for lightbox
+- Keyboard navigation (arrow keys in lightbox, Escape to close)
+- Focus management (trap focus in lightbox)
+
+---
+
+#### 5. JcCountdown (Wedding Countdown Timer)
+
+**Purpose:** Displays time remaining until wedding day, builds anticipation
+
+**Usage Example:**
+```vue
+<JcCountdown
+  :wedding-date="new Date('2026-12-28T14:00:00')"
+  :format="short"
+/>
+```
+
+**Component Anatomy:**
+- 4-unit grid (grid-cols-4, gap-4)
+- Large numbers (text-2xl font-bold, primary-rose or primary-gold)
+- Labels below each unit (text-xs text-neutral-600 uppercase)
+- Units: Days, Hours, Minutes, Seconds
+- Updates every second via `setInterval`
+
+**States:**
+- **Active:** Counting down, numbers changing every second
+- **Complete:** Shows "Today!" or "Celebrating!" message
+- **Hidden:** If >30 days away (optional setting via prop)
+
+**Accessibility:**
+- `aria-live="off"` (updates too frequently for live regions)
+- `aria-label="Countdown timer: 342 days, 8 hours, 23 minutes, 45 seconds until wedding on December 28, 2026 at 2:00 PM"`
+- Text content available for screen readers (not just visual)
+
+---
+
+#### 6. JcGuestbook (Guestbook Wishes)
+
+**Purpose:** Displays guest wishes and collects new messages
+
+**Usage Example:**
+```vue
+<JcGuestbook
+  :wishes="wishList"
+  :wedding-id="wedding.id"
+  :pending-approval="true"
+/>
+```
+
+**Component Anatomy:**
+- Message cards (flex, avatar placeholder + name + message + date)
+- Status badges (bg-yellow-100 text-yellow-800 for "Pending", bg-green-100 for "Approved")
+- Approval controls (Approve/Delete buttons for couple, hidden from guests)
+- Submission form (Name input + Message textarea + Submit button)
+
+**States:**
+- **Empty:** "No wishes yet. Be the first to leave a message!"
+- **Loaded:** List of approved wishes (pending hidden from guests)
+- **Submitting:** Form disabled, spinner showing
+- **Success:** Toast "Thank you! Your wish will appear after couple approval"
+- **Error:** Inline error message ("Please enter your name and message")
+
+**Variants:**
+- **Card:** For couple dashboard (editable, approval controls)
+- **List:** For public card (read-only, approved wishes only)
+
+**Accessibility:**
+- `role="list"` for wishes container
+- `aria-label="Guestbook message from {name}: {message}"`
+- Form validation: `aria-invalid` on errors, `aria-describedby` for error messages
+- Keyboard accessible form (Tab through fields, Enter to submit)
+
+---
+
+#### 7. JcRSVPCounter (RSVP Statistics)
+
+**Purpose:** Shows RSVP counts and statistics for couples and admin
+
+**Usage Example:**
+```vue
+<JcRSVPCounter
+  :rsvps="rsvpList"
+  :show-breakdown="true"
+  :export-enabled="true"
+/>
+```
+
+**Component Anatomy:**
+- Stat cards (grid-cols-2 md:grid-cols-4)
+  - Total RSVPs
+  - Confirmed (bg-green-50 text-green-700)
+  - Pending (bg-yellow-50 text-yellow-700)
+  - Declined (bg-red-50 text-red-700)
+- Visual percentages (progress bars for each status)
+- Recent activity list (last 5 RSVPs with names)
+- Export button (Excel/PDF, couples only)
+
+**States:**
+- **No RSVPs:** "Waiting for first RSVP!" encouraging message
+- **Has RSVPs:** Counts + breakdown + percentages
+- **Real-time Updates:** Polling every 5 seconds (via parent)
+
+**Accessibility:**
+- `role="region"` with `aria-label="RSVP statistics: 23 total, 18 confirmed, 3 pending, 2 declined"`
+- Data available as text (not just visual)
+- Export buttons have clear labels
+
+---
+
+#### 8. Base Components (JcButton, JcInput, JcCard)
+
+**JcButton:**
+```vue
+<JcButton variant="primary" size="large" :loading="isSubmitting">
+  RSVP Now
+</JcButton>
+```
+
+**Variants:** primary (bg-primary-rose), secondary (bg-neutral-200), tertiary (bg-transparent border)
+**Sizes:** small (py-2 px-4 text-sm), medium (py-3 px-6), large (py-4 px-8 text-lg)
+**States:** default, hover (scale-105), active (scale-95), disabled (opacity-50 cursor-not-allowed), loading (spinner)
+
+**JcInput:**
+```vue
+<JcInput
+  label="Subdomain"
+  placeholder="sarah-ahmad"
+  :error="errorMessage"
+  required
+/>
+```
+
+**Types:** text, email, tel, textarea
+**States:** default (border-neutral-300), focus (border-primary-rose ring-2), error (border-red-500), disabled (bg-neutral-100)
+**Validation:** Real-time feedback (green checkmark when valid, red message when invalid)
+
+**JcCard:**
+```vue
+<JcCard title="Setup Progress" variant="elevated">
+  <p>Your wedding card is 60% complete</p>
+</JcCard>
+```
+
+**Variants:** default (border), elevated (shadow-lg), outlined (border-2)
+**Sizes:** Small (p-4), Medium (p-6), Large (p-8)
+
+### Component Implementation Strategy
+
+**Design System Integration:**
+
+**1. Tailwind CSS Styling**
+- All custom components use Tailwind utility classes
+- Design tokens defined in `tailwind.config.js` (colors, spacing, typography)
+- Responsive classes (sm:, md:, lg:) for mobile-first approach
+- Dark mode support (optional future enhancement)
+
+**2. Headless UI Wrappers**
+- Complex interactive components wrap Headless UI logic
+- JcModal wraps `<Dialog>` (upgrade prompts)
+- JcTabs wraps `<Tab>` (dashboard navigation)
+- JcAccordion wraps `<Disclosure>` (setup form sections)
+- Maintains accessibility while adding JomNikah styling
+
+**3. Vue 3 Composition API**
+- All components use `<script setup>` syntax
+- Reactive state with `ref()` and `reactive()`
+- Props validation with TypeScript-style prop definitions
+- Emits events: `@click`, `@submit`, `@change`, `@complete`
+
+**4. Consistency Patterns**
+
+**Naming Convention:**
+- Prefix: `Jc` (JomNikah Component) to prevent collisions
+- Format: PascalCase (JcProgressBar, JcPhotoGallery)
+
+**Props Convention:**
+- Booleans: `:loading`, `:disabled`, `:show-label`
+- Objects: `:wedding-date`, `:photos` (Date, Array)
+- Strings: `variant="primary"`, `size="large"`
+- Defaults: All props have sensible defaults
+
+**Emits Convention:**
+- Actions: `@click`, `@submit`, `@change`
+- Custom: `@complete`, `@progress`, `@error`
+
+**Styling Convention:**
+- Colors: `bg-primary-rose`, `text-neutral-900`
+- Spacing: `p-6`, `gap-4`, `space-y-6`
+- Typography: `font-serif`, `text-2xl`, `font-bold`
+- Responsive: `grid-cols-2 md:grid-cols-4`
+
+### Implementation Roadmap
+
+**Phase 1: Core Components (Week 2) - Critical Path**
+
+**Priority: P0 (Must have for MVP launch)**
+
+**Week 2, Day 1-2: JCurtainAnimation**
+- **Why Critical:** Defining experience, brand differentiator
+- **Effort:** 4-6 hours (CSS animations, Vue transitions, accessibility)
+- **Success:** Curtain opens smoothly, card reveals, auto-reveal fallback works
+
+**Week 2, Day 2: JcProgressBar**
+- **Why Critical:** Setup wizard requires progress tracking
+- **Effort:** 2-3 hours (progress bar, milestone confetti triggers)
+- **Success:** Progress animates from 0-100%, celebrations trigger at milestones
+
+**Week 2, Day 2-3: JcButton, JcInput**
+- **Why Critical:** Base components used everywhere
+- **Effort:** 3-4 hours (variants, states, validation styles)
+- **Success:** All button/input needs met across application
+
+**Week 2, Day 3: BaseWeddingCard**
+- **Why Critical:** Template wrapper for curtain animation
+- **Effort:** 4-5 hours (layout, responsive design, content sections)
+- **Success:** Couple's data displays correctly, RSVP button works
+
+**Deliverable:** Couple can complete setup flow, guests can view card with curtain opening ritual
+
+---
+
+**Phase 2: Wedding Features (Week 3) - Core Value**
+
+**Priority: P1 (Essential for complete user experience)**
+
+**Week 3, Day 4: JcPhotoGallery**
+- **Why Critical:** Photo display is central to wedding cards
+- **Effort:** 6-8 hours (lazy loading, lightbox, swipe gestures)
+- **Success:** Photos load progressively, lightbox works, swipe navigation
+
+**Week 3, Day 4: JcCountdown**
+- **Why Critical:** Builds anticipation, requested feature
+- **Effort:** 3-4 hours (timer logic, formatting, auto-hide)
+- **Success:** Countdown updates every second, hides if >30 days
+
+**Week 3, Day 5: JcGuestbook**
+- **Why Critical:** Guest wishes create emotional connection
+- **Effort:** 6-8 hours (form, list, approval workflow, validation)
+- **Success:** Guests can submit wishes, couples can approve/delete
+
+**Week 3, Day 5: RSVP Flow**
+- **Why Critical:** Core functionality (RSVP via WhatsApp)
+- **Effort:** 4-5 hours (WhatsApp deep link, web form fallback, confirmation)
+- **Success:** RSVP works via WhatsApp, fallback form works, confirmation displays
+
+**Deliverable:** Full guest experience (view card → RSVP → wish → confirmation)
+
+---
+
+**Phase 3: Dashboard & Analytics (Week 4) - Operational**
+
+**Priority: P2 (Important for couples and admin management)**
+
+**Week 4, Day 6: JcRSVPCounter**
+- **Why Critical:** Real-time RSVP tracking (emotional payoff for couples)
+- **Effort:** 4-5 hours (statistics cards, real-time polling, export)
+- **Success:** RSVPs appear in real-time, export to Excel works
+
+**Week 4, Day 6: JcConfetti**
+- **Why Critical:** Celebration at 100% setup completion
+- **Effort:** 4-5 hours (canvas system, particle physics, cleanup)
+- **Success:** Confetti triggers at 100%, smooth animation, auto-cleanup
+
+**Week 4, Day 7: Admin Dashboard**
+- **Why Critical:** Wedding list, account creation, monitoring
+- **Effort:** 8-10 hours (table views, forms, real-time updates)
+- **Success:** Admin can create accounts, monitor progress, view statistics
+
+**Week 4, Day 7: Export Features**
+- **Why Critical:** Excel/PDF for RSVP lists (admin convenience)
+- **Effort:** 3-4 hours (Laravel Excel, PDF generation, download)
+- **Success:** Export buttons work, files generate correctly
+
+**Deliverable:** Couple dashboard (RSVP tracking, wish approval), Admin dashboard (account management, monitoring)
+
+---
+
+**Phase 4: Polish & Optimization (Week 5) - Enhancement**
+
+**Priority: P3 (Nice to have, production readiness)**
+
+**Week 5, Day 8: JcCard Variants**
+- **Why Important:** Different card styles for dashboard variety
+- **Effort:** 3-4 hours (elevated, outlined variants, shadow styles)
+- **Success:** Dashboard has visual variety, cards look polished
+
+**Week 5, Day 8: Advanced Animations**
+- **Why Important:** Micro-interactions, smooth transitions
+- **Effort:** 4-5 hours (hover effects, page transitions, loading states)
+- **Success:** All interactions feel smooth and polished
+
+**Week 5, Day 9: Performance Optimization**
+- **Why Critical:** <5 second page load requirement (NFR-PERF-001)
+- **Effort:** 5-6 hours (lazy loading, code splitting, image optimization)
+- **Success:** Lighthouse score >90, loads fast on 4G
+
+**Week 5, Day 9: Accessibility Audit**
+- **Why Critical:** WCAG AA compliance, cross-generational usability
+- **Effort:** 4-5 hours (screen reader testing, keyboard nav, color contrast)
+- **Success:** All components accessible, passes WAVE/Lighthouse tests
+
+**Week 5, Day 10: Unit Tests**
+- **Why Important:** Component reliability, regression prevention
+- **Effort:** 6-8 hours (Vitest for all custom components)
+- **Success:** All components have tests, >80% coverage
+
+**Deliverable:** Production-ready component library, tested, optimized, accessible
+
+### Component File Structure
+
+```
+resources/js/components/
+├── jc-base/                    # Base components (P0, Week 2)
+│   ├── JcButton.vue           # Primary, secondary, tertiary variants
+│   ├── JcInput.vue            # Text, email, tel, textarea types
+│   ├── JcCard.vue             # Card containers (default, elevated, outlined)
+│   └── JcBadge.vue            # Status badges (confirmed, pending, etc.)
+│
+├── jc-feedback/                # Feedback components (P0-P1, Week 2-3)
+│   ├── JcProgressBar.vue      # Setup progress tracking (0-100%)
+│   ├── JcConfetti.vue         # Celebration animations (canvas-based)
+│   └── JcToast.vue            # Success/error toasts (notifications)
+│
+├── jc-interactive/             # Headless UI wrappers (P0-P1, Week 2-3)
+│   ├── JcModal.vue            # Dialog wrapper (upgrade prompts)
+│   ├── JcTabs.vue             # Tab wrapper (dashboard navigation)
+│   ├── JcAccordion.vue        # Disclosure wrapper (setup sections)
+│   └── JcDropdown.vue         # Menu wrapper (account menu, etc.)
+│
+└── jc-wedding/                 # Wedding-specific (P1-P2, Week 3-4)
+    ├── JCurtainAnimation.vue  # Curtain opening ritual (P0)
+    ├── JcPhotoGallery.vue     # Photo display + lightbox (P1)
+    ├── JcCountdown.vue        # Wedding countdown timer (P1)
+    ├── JcGuestbook.vue        # Guestbook wishes (P1)
+    └── JcRSVPCounter.vue      # RSVP statistics (P2)
+```
+
+**Component Count:** 13 custom components total
+- **P0 (Critical):** 6 components (base + curtain + progress)
+- **P1 (Essential):** 5 components (gallery, countdown, guestbook, RSVP)
+- **P2 (Important):** 2 components (analytics, admin)
+
+---
+
+**Total Component Strategy Complete!**
+
+This gives you:
+- ✅ Clear component library structure
+- ✅ 13 well-defined custom components
+- ✅ 4-phase implementation roadmap (Week 2-5)
+- ✅ Priority-based development (P0 → P1 → P2 → P3)
+- ✅ Foundation (Tailwind + Headless UI) leveraged properly
+- ✅ Accessibility built-in (WCAG AA compliance)
+- ✅ Performance considerations (lazy loading, code splitting)
+- ✅ Solo developer realistic scope (achievable in 4 weeks)
 
 ---

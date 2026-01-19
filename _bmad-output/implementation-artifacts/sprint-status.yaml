@@ -41,8 +41,8 @@ story_location: /Users/amirrulhaiqal/BMAD-Projects/JomNikah/_bmad-output/impleme
 
 development_status:
   # Epic 1: Foundation & Access Control
-  epic-1: backlog
-  1-1-super-admin-authentication: backlog
+  epic-1: in-progress
+  1-1-super-admin-authentication: ready-for-dev
   1-2-create-couple-account: backlog
   1-3-package-tier-assignment: backlog
   1-4-premium-feature-toggles: backlog

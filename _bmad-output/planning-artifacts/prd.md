@@ -1,5 +1,5 @@
 ---
-stepsCompleted: ['step-01-init', 'step-02-discovery', 'step-03-success', 'step-04-journeys', 'step-05-domain', 'step-06-innovation', 'step-07-project-type', 'step-08-scoping', 'step-09-functional', 'step-10-nonfunctional']
+stepsCompleted: ['step-01-init', 'step-02-discovery', 'step-03-success', 'step-04-journeys', 'step-05-domain', 'step-06-innovation', 'step-07-project-type', 'step-08-scoping', 'step-09-functional', 'step-10-nonfunctional', 'step-11-polish']
 inputDocuments: ['project-proposal.md']
 workflowType: 'prd'
 documentCounts:
@@ -19,6 +19,18 @@ classification:
 
 **Author:** Amirrul
 **Date:** 2026-01-15
+
+## Executive Summary
+
+**Vision:** JomNikah modernizes Malaysian wedding invitations by replacing expensive physical cards (RM500-RM1000) with affordable digital alternatives (RM20-30), reducing setup time from weeks to under one hour while adding real-time RSVP tracking and gift management features.
+
+**Product Differentiator:** JomNikah combines three unique advantages: (1) **Managed service model** with admin-led onboarding ensuring quality control, (2) **Culturally-aligned features** including Digital Ang Pow for Malaysian wedding gift-giving traditions, and (3) **Mobile-first design** optimized for guests viewing on smartphones. The platform offers two pricing tiers—Standard (RM20) for basic digital cards and Premium (RM30) adding gift registry and digital monetary collection features.
+
+**Target Users:** Malaysian engaged couples aged 25-35 seeking modern, affordable wedding invitation solutions. Primary users are tech-comfortable couples wanting convenience and cost savings. Secondary users are wedding guests (all ages) viewing cards on mobile devices. The platform serves 100 weddings in its initial validation phase with 6-month card validity per couple.
+
+**Business Model:** One-time fee pricing (RM20 Standard, RM30 Premium) with 6-month card validity. Admin manually creates accounts after payment, sends credentials via WhatsApp, and couples complete self-service setup in under one hour. Premium features (Wish Present registry and Digital Ang Pow) can be unlocked for RM10 upgrade fee.
+
+**Technical Foundation:** Built as a Single Page Application using Vue 3 + Inertia.js + Laravel 12, deployed on DigitalOcean with manual server management. Platform supports 100 concurrent weddings with subdomain routing (e.g., sarah-ahmad.jomnikah.com), frontend validation for 2MB photo uploads, and 6-month automated data deletion for PDPA compliance.
 
 ## Success Criteria
 
@@ -70,29 +82,6 @@ Couples complete their full wedding card setup in **under 1 hour** (compared to 
 - **100 weddings** successfully hosted on initial infrastructure
 - **RM20 revenue** per couple with 6-month card validity
 - **6-month runway** for market validation and iteration
-
-## Product Scope
-
-### MVP - Minimum Viable Product (Current - v1.0)
-✅ **All features currently built:**
-- Admin-led couple account creation
-- Dynamic subdomain generation (e.g., sarah-ahmad.jomnikah.com)
-- Template switching engine (change designs without losing data)
-- RSVP tracking with real-time updates
-- Guestbook with wishes
-- Wish Present registry (claim system, prevent duplicates, cancel functionality)
-- Digital Ang Pow (QR codes, bank details, private amounts)
-- Print to PDF (guestbook and wishes)
-- Mobile-first responsive design
-- Super Admin dashboard
-- Couple dashboard
-- Public wedding card display
-
-### Growth Features (Post-MVP - v2.0)
-*To be determined after launch feedback from first 100 weddings*
-
-### Vision (Future)
-*Dream version to be defined based on market learning*
 
 ## User Journeys
 

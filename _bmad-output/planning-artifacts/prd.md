@@ -1,5 +1,5 @@
 ---
-stepsCompleted: ['step-01-init', 'step-02-discovery', 'step-03-success', 'step-04-journeys', 'step-05-domain', 'step-06-innovation', 'step-07-project-type', 'step-08-scoping', 'step-09-functional']
+stepsCompleted: ['step-01-init', 'step-02-discovery', 'step-03-success', 'step-04-journeys', 'step-05-domain', 'step-06-innovation', 'step-07-project-type', 'step-08-scoping', 'step-09-functional', 'step-10-nonfunctional']
 inputDocuments: ['project-proposal.md']
 workflowType: 'prd'
 documentCounts:
@@ -829,4 +829,100 @@ JomNikah is a **Single Page Application (SPA)** built with **Vue 3 + Inertia.js 
 - **FR73:** System can display upgrade prompts for locked premium features
 - **FR74:** System can send upgrade request notifications to Super Admin
 - **FR75:** System can instantly unlock premium features when package is upgraded
+
+
+## Non-Functional Requirements
+
+### Performance
+
+**Page Load Performance:**
+- **NFR-PERF-001:** Public wedding card pages must load within 5 seconds on 4G mobile connections
+- **NFR-PERF-002:** Initial Time to Interactive (TTI) for couple dashboard must be within 3 seconds on desktop
+- **NFR-PERF-003:** Photo gallery images must display progressively with lazy loading
+- **NFR-PERF-004:** Subdomain lookup validation must complete within 2 seconds during typing
+
+**Concurrent User Performance:**
+- **NFR-PERF-005:** System must support 100 concurrent weddings without performance degradation
+- **NFR-PERF-006:** System must handle 50 concurrent guests viewing the same wedding card without slowdown
+
+**Real-Time Features:**
+- **NFR-PERF-007:** Countdown timer must update every second without page refresh
+- **NFR-PERF-008:** RSVP submissions must reflect in couple dashboard within 5 seconds
+
+### Security
+
+**Data Protection:**
+- **NFR-SEC-001:** All passwords must be hashed using bcrypt or Argon2 before storage
+- **NFR-SEC-002:** User sessions must use secure HTTP-only cookies
+- **NFR-SEC-003:** Couple bank account numbers and QR codes must be stored securely in database
+- **NFR-SEC-004:** Guest contact information (email/phone) must be encrypted at rest
+
+**Access Control:**
+- **NFR-SEC-005:** Super Admin dashboard must require authentication with super-admin role
+- **NFR-SEC-006:** Couple dashboards must require authentication and role-based access to their own data only
+- **NFR-SEC-007:** Guests must not access admin or couple dashboard areas
+- **NFR-SEC-008:** Standard package couples must not access locked premium features
+
+**Data Privacy (PDPA Compliance):**
+- **NFR-SEC-009:** System must display Privacy Policy accessible from all pages
+- **NFR-SEC-010:** System must obtain implicit consent for data collection through service use
+- **NFR-SEC-011:** System must automatically delete wedding data (photos, content) 6 months after wedding date
+- **NFR-SEC-012:** System must retain account credentials separately from wedding data
+
+**Input Validation:**
+- **NFR-SEC-013:** All user inputs must be sanitized to prevent XSS attacks
+- **NFR-SEC-014:** File uploads must be validated for type and size before processing
+- **NFR-SEC-015:** Subdomain inputs must be validated to prevent SQL injection
+
+**Transmission Security:**
+- **NFR-SEC-016:** All authenticated connections must use HTTPS (TLS 1.2+)
+- **NFR-SEC-017:** Sensitive data (bank details, contact info) must be transmitted over encrypted connections
+
+### Scalability
+
+**Current Capacity:**
+- **NFR-SCALE-001:** System must support 100 active wedding subdomains
+- **NFR-SCALE-002:** System must support 1 Super Admin and 100 Couple accounts simultaneously
+- **NFR-SCALE-003:** System must support 500 guest RSVPs per wedding without performance degradation
+
+**Growth Planning:**
+- **NFR-SCALE-004:** System architecture must allow manual addition of server resources (DigitalOcean droplet upgrade)
+- **NFR-SCALE-005:** Database must handle 10,000 guestbook messages across all weddings
+- **NFR-SCALE-006:** File storage must accommodate 5,000 photos (100 weddings × 50 photos each)
+
+**Performance Under Load:**
+- **NFR-SCALE-007:** Page load times must not exceed 7 seconds during peak wedding weekend traffic
+- **NFR-SCALE-008:** System must not crash when 20 guests simultaneously RSVP to the same wedding
+
+### Reliability
+
+**System Availability:**
+- **NFR-REL-001:** System must maintain 95% uptime during active wedding periods (weekends)
+- **NFR-REL-002:** System must support manual server restarts during low-traffic periods (weekday nights)
+
+**Data Integrity:**
+- **NFR-REL-003:** RSVP submissions must not be lost due to server errors
+- **NFR-REL-004:** Guestbook messages must be saved atomically (complete or not at all)
+- **NFR-REL-005:** Photo uploads must validate before saving to prevent corruption
+
+**Error Handling:**
+- **NFR-REL-006:** System must display user-friendly error messages for all failure scenarios
+- **NFR-REL-007:** System must log all errors for Super Admin review
+- **NFR-REL-008:** Frontend validation must prevent common user errors before server submission
+
+### Usability
+
+**Mobile Usability:**
+- **NFR-USE-001:** All primary user actions must be completable on mobile devices (smartphones)
+- **NFR-USE-002:** Touch targets (buttons, links) must be minimum 44×44 pixels for mobile interaction
+- **NFR-USE-003:** Text must be minimum 16px base font size on mobile for readability
+
+**User Interface Clarity:**
+- **NFR-USE-004:** Error messages must be clear and actionable in user's language (English/BM)
+- **NFR-USE-005:** Form inputs must provide immediate validation feedback
+- **NFR-USE-006:** Locked premium features must display upgrade prompts clearly
+
+**Navigation:**
+- **NFR-USE-007:** Users must be able to complete wedding card setup within 1 hour
+- **NFR-USE-008:** Super Admin must be able to create new couple account within 5 minutes
 

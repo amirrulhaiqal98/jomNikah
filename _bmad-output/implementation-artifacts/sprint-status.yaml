@@ -43,7 +43,7 @@ development_status:
   # Epic 1: Foundation & Access Control
   epic-1: in-progress
   1-1-super-admin-authentication: done
-  1-2-create-couple-account: backlog
+  1-2-create-couple-account: done
   1-3-package-tier-assignment: backlog
   1-4-premium-feature-toggles: backlog
   1-5-couple-package-upgrade: backlog

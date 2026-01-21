@@ -21,6 +21,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone', // Contact number for couples
         'password',
         'wedding_id', // For couples (nullable for super-admin)
     ];

@@ -17,7 +17,10 @@ class PermissionSeeder extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         // Create Super Admin role
-        $superAdminRole = Role::create(['name' => 'super-admin']);
+        $superAdminRole = Role::firstOrCreate(['name' => 'super-admin']);
+
+        // Create Couple role (Story 1.2)
+        Role::firstOrCreate(['name' => 'couple']);
 
         // Create permissions for admin actions
         $permissions = [
@@ -27,8 +30,8 @@ class PermissionSeeder extends Seeder
         ];
 
         foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
-            $superAdminRole->givePermissionTo($permission);
+            $permissionModel = Permission::firstOrCreate(['name' => $permission]);
+            $superAdminRole->givePermissionTo($permissionModel);
         }
     }
 }

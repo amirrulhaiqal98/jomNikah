@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Admin\WeddingController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -21,7 +22,12 @@ Route::middleware(['auth', 'role:super-admin'])
     ->name('admin.')
     ->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-        // Additional admin routes will be added in future stories
+
+        // Wedding account management routes (Story 1.2)
+        Route::get('/weddings/create', [WeddingController::class, 'create'])->name('weddings.create');
+        Route::post('/weddings', [WeddingController::class, 'store'])->name('weddings.store');
+        Route::get('/weddings', [WeddingController::class, 'index'])->name('weddings.index'); // For future Story 7.1
+
         Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
     });
 

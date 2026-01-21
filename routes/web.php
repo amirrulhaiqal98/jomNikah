@@ -1,9 +1,29 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
+// Guest routes (admin login)
+Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])
+    ->name('admin.login');
+// Auth check handled in controller (AC: 3)
+
+Route::post('/admin/login', [AdminAuthController::class, 'login'])
+    ->name('admin.login.post');
+
+// Protected admin routes (require authentication and super-admin role)
+Route::middleware(['auth', 'role:super-admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        // Additional admin routes will be added in future stories
+        Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
+    });
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [

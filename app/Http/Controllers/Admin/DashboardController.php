@@ -12,6 +12,10 @@ class DashboardController extends Controller
     /**
      * Display the Super Admin dashboard.
      * AC: 1 - Show wedding account management options
+     *
+     * Security: Middleware applied via routes (web.php)
+     * - auth: User must be authenticated
+     * - role:super-admin: User must have super-admin role
      */
     public function index()
     {

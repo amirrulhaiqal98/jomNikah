@@ -26,7 +26,9 @@ Route::middleware(['auth', 'role:super-admin'])
         // Wedding account management routes (Story 1.2)
         Route::get('/weddings/create', [WeddingController::class, 'create'])->name('weddings.create');
         Route::post('/weddings', [WeddingController::class, 'store'])->name('weddings.store');
-        Route::get('/weddings', [WeddingController::class, 'index'])->name('weddings.index'); // For future Story 7.1
+        Route::get('/weddings', [WeddingController::class, 'index'])->name('weddings.index'); // Story 7.1
+        Route::get('/weddings/{wedding}/edit', [WeddingController::class, 'edit'])->name('weddings.edit'); // Story 1.4
+        Route::put('/weddings/{wedding}', [WeddingController::class, 'update'])->name('weddings.update'); // Story 1.4
 
         Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
     });

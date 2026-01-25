@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreWeddingRequest;
+use App\Http\Requests\UpdateWeddingRequest;
 use App\Models\User;
 use App\Models\Wedding;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
+use Spatie\Permission\Models\Permission;
 
 class WeddingController extends Controller
 {
@@ -43,8 +45,8 @@ class WeddingController extends Controller
                 'bride_name' => $request->bride_name,
                 'groom_name' => $request->groom_name,
                 'package_tier' => $request->package_tier ?? 'standard', // AC: 2, 3 - Use form input with fallback
-                'wish_present_enabled' => false, // Default (Story 1.4 will add toggles)
-                'digital_ang_pow_enabled' => false, // Default (Story 1.4 will add toggles)
+                'wish_present_enabled' => $request->boolean('wish_present_enabled', false), // Story 1.4 - Use checkbox
+                'digital_ang_pow_enabled' => $request->boolean('digital_ang_pow_enabled', false), // Story 1.4 - Use checkbox
                 'setup_progress' => 0, // 0% complete (Story 2.6 will track progress)
             ]);
 
@@ -63,6 +65,9 @@ class WeddingController extends Controller
             // Step 3: Assign 'couple' role using Spatie Permissions
             $user->assignRole('couple');
 
+            // Story 1.4 - Sync premium feature permissions
+            $this->syncPremiumPermissions($user, $wedding);
+
             DB::commit();
 
             // AC: 2 - Log account creation action
@@ -72,6 +77,8 @@ class WeddingController extends Controller
                 'email' => $user->email,
                 'phone' => $request->phone,
                 'package_tier' => $wedding->package_tier, // AC: 4 - Log package tier
+                'wish_present_enabled' => $wedding->wish_present_enabled, // Story 1.4 - Log feature toggle
+                'digital_ang_pow_enabled' => $wedding->digital_ang_pow_enabled, // Story 1.4 - Log feature toggle
                 'password_was_phone' => !$request->filled('password'), // Track if phone used as password
                 'created_by' => auth()->user()->id,
             ]);
@@ -105,7 +112,96 @@ class WeddingController extends Controller
     }
 
     /**
-     * Display list of weddings (for future Story 7.1)
+     * Sync premium feature permissions based on feature toggles (Story 1.4)
+     * CRITICAL: Permission synchronization for feature access control
+     */
+    protected function syncPremiumPermissions(User $user, Wedding $wedding): void
+    {
+        // Ensure permissions exist in database (defensive programming)
+        $wishPresentPermission = Permission::firstOrCreate(['name' => 'access_wish_present_registry']);
+        $digitalAngPowPermission = Permission::firstOrCreate(['name' => 'access_digital_ang_pow']);
+
+        // Wish Present Registry permission
+        if ($wedding->wish_present_enabled) {
+            if (!$user->hasPermissionTo('access_wish_present_registry')) {
+                $user->givePermissionTo($wishPresentPermission);
+            }
+        } else {
+            if ($user->hasPermissionTo('access_wish_present_registry')) {
+                $user->revokePermissionTo($wishPresentPermission);
+            }
+        }
+
+        // Digital Ang Pow permission
+        if ($wedding->digital_ang_pow_enabled) {
+            if (!$user->hasPermissionTo('access_digital_ang_pow')) {
+                $user->givePermissionTo($digitalAngPowPermission);
+            }
+        } else {
+            if ($user->hasPermissionTo('access_digital_ang_pow')) {
+                $user->revokePermissionTo($digitalAngPowPermission);
+            }
+        }
+    }
+
+    /**
+     * Display wedding account edit form (Story 1.4)
+     */
+    public function edit(Wedding $wedding)
+    {
+        $wedding->load('user'); // Eager load user relationship
+
+        return Inertia::render('Admin/EditWedding', [
+            'wedding' => $wedding,
+        ]);
+    }
+
+    /**
+     * Update wedding account (Story 1.4)
+     */
+    public function update(UpdateWeddingRequest $request, Wedding $wedding)
+    {
+        DB::beginTransaction();
+
+        try {
+            $wedding->update([
+                'bride_name' => $request->bride_name,
+                'groom_name' => $request->groom_name,
+                'wish_present_enabled' => $request->boolean('wish_present_enabled', false), // Story 1.4
+                'digital_ang_pow_enabled' => $request->boolean('digital_ang_pow_enabled', false), // Story 1.4
+            ]);
+
+            // Sync permissions when toggles change
+            $this->syncPremiumPermissions($wedding->user, $wedding);
+
+            DB::commit();
+
+            Log::info('Wedding account updated', [
+                'wedding_id' => $wedding->id,
+                'wish_present_enabled' => $wedding->wish_present_enabled,
+                'digital_ang_pow_enabled' => $wedding->digital_ang_pow_enabled,
+                'updated_by' => auth()->user()->id,
+            ]);
+
+            return redirect()->route('admin.weddings.index')
+                ->with('success', 'Wedding account updated successfully. / Akaun perkahwinan berjaya dikemaskini!');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            Log::error('Failed to update wedding account', [
+                'error' => $e->getMessage(),
+                'wedding_id' => $wedding->id,
+            ]);
+
+            return back()
+                ->with('error', 'Maaf, gagal mengemaskini akaun. Sila cuba lagi. / Sorry, failed to update account. Please try again.')
+                ->withInput();
+        }
+    }
+
+    /**
+     * Display list of weddings (Story 7.1)
      */
     public function index()
     {

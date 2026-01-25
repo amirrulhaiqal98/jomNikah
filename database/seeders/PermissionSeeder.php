@@ -33,5 +33,13 @@ class PermissionSeeder extends Seeder
             $permissionModel = Permission::firstOrCreate(['name' => $permission]);
             $superAdminRole->givePermissionTo($permissionModel);
         }
+
+        // Premium feature permissions (Story 1.4)
+        Permission::firstOrCreate(['name' => 'access_wish_present_registry']);
+        Permission::firstOrCreate(['name' => 'access_digital_ang_pow']);
+
+        // Basic permissions (Story 1.4)
+        Permission::firstOrCreate(['name' => 'manage_rsvps']);
+        Permission::firstOrCreate(['name' => 'manage_guestbook']);
     }
 }

@@ -1,5 +1,6 @@
 <script setup>
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
+import { watch } from 'vue';
 
 const page = usePage();
 
@@ -16,10 +17,25 @@ const form = useForm({
     password: '',
     password_confirmation: '', // For confirmed validation rule
     package_tier: 'standard', // Default to standard package
+    wish_present_enabled: false, // Story 1.4 - Default to unchecked
+    digital_ang_pow_enabled: false, // Story 1.4 - Default to unchecked
 });
 
 // Get credentials from flash session (if available)
 const coupleCredentials = page.props.flash.couple_credentials || null;
+
+// Auto-check both for Premium package (Story 1.4)
+// FIXED: This is a convenience default for Premium tier. Admin can override by unchecking boxes manually.
+// Purpose: Save time for admins while maintaining flexibility for promotional access.
+watch(() => form.package_tier, (newTier) => {
+    if (newTier === 'premium') {
+        form.wish_present_enabled = true;
+        form.digital_ang_pow_enabled = true;
+    } else {
+        form.wish_present_enabled = false;
+        form.digital_ang_pow_enabled = false;
+    }
+});
 
 const submit = () => {
     form.post(route('admin.weddings.store'), {
@@ -179,6 +195,45 @@ const submit = () => {
                             <div v-if="form.errors.package_tier" class="mt-2 text-sm text-red-600">
                                 {{ form.errors.package_tier }}
                             </div>
+                        </div>
+
+                        <!-- Feature Toggles Section (Story 1.4) -->
+                        <div class="mb-6 p-4 bg-gray-50 rounded-lg">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-3">
+                                Premium Features / Fitur Premium
+                            </h3>
+                            <p class="text-sm text-gray-600 mb-4">
+                                Enable premium features for this couple regardless of package tier.
+                                These features will override default package settings.
+                            </p>
+
+                            <!-- Wish Present Registry Toggle -->
+                            <label class="flex items-center p-3 border rounded-lg mb-2 cursor-pointer hover:bg-white transition">
+                                <input
+                                    v-model="form.wish_present_enabled"
+                                    type="checkbox"
+                                    class="mr-3 h-5 w-5 text-purple-600 rounded"
+                                    name="wish_present_enabled"
+                                />
+                                <div>
+                                    <span class="font-semibold text-gray-900">Enable Wish Present Registry</span>
+                                    <p class="text-sm text-gray-600">Allow guests to claim gifts from registry</p>
+                                </div>
+                            </label>
+
+                            <!-- Digital Ang Pow Toggle -->
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-white transition">
+                                <input
+                                    v-model="form.digital_ang_pow_enabled"
+                                    type="checkbox"
+                                    class="mr-3 h-5 w-5 text-purple-600 rounded"
+                                    name="digital_ang_pow_enabled"
+                                />
+                                <div>
+                                    <span class="font-semibold text-gray-900">Enable Digital Ang Pow</span>
+                                    <p class="text-sm text-gray-600">Allow couples to collect monetary gifts privately</p>
+                                </div>
+                            </label>
                         </div>
 
                         <!-- Email -->

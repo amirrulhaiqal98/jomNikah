@@ -45,7 +45,7 @@ development_status:
   1-1-super-admin-authentication: done
   1-2-create-couple-account: done
   1-3-package-tier-assignment: done
-  1-4-premium-feature-toggles: backlog
+  1-4-premium-feature-toggles: done
   1-5-couple-package-upgrade: backlog
   epic-1-retrospective: optional
 

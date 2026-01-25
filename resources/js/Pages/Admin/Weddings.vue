@@ -37,7 +37,10 @@ const props = defineProps({
                                         Email
                                     </th>
                                     <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Package Tier
+                                        Package
+                                    </th>
+                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Features
                                     </th>
                                     <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Actions
@@ -63,9 +66,30 @@ const props = defineProps({
                                             {{ wedding.package_tier === 'premium' ? 'Premium (RM30)' : 'Standard (RM20)' }}
                                         </span>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <!-- Future: Add edit/delete actions in Story 7.1 -->
-                                        <span class="text-gray-400">Actions in Story 7.1</span>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <!-- Feature badges (Story 1.4) -->
+                                        <div class="flex gap-1">
+                                            <span v-if="wedding.wish_present_enabled"
+                                                class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                                                Wish Present ✓
+                                            </span>
+                                            <span v-if="wedding.digital_ang_pow_enabled"
+                                                class="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                                                Ang Pow ✓
+                                            </span>
+                                            <span v-if="!wedding.wish_present_enabled && !wedding.digital_ang_pow_enabled"
+                                                class="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-600">
+                                                No Premium Features
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <Link
+                                            :href="route('admin.weddings.edit', wedding.id)"
+                                            class="text-blue-600 hover:text-blue-900"
+                                        >
+                                            Edit
+                                        </Link>
                                     </td>
                                 </tr>
                             </tbody>

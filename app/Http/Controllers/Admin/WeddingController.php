@@ -42,7 +42,7 @@ class WeddingController extends Controller
             $wedding = Wedding::create([
                 'bride_name' => $request->bride_name,
                 'groom_name' => $request->groom_name,
-                'package_tier' => 'standard', // Default (Story 1.3 will make this selectable)
+                'package_tier' => $request->package_tier ?? 'standard', // AC: 2, 3 - Use form input with fallback
                 'wish_present_enabled' => false, // Default (Story 1.4 will add toggles)
                 'digital_ang_pow_enabled' => false, // Default (Story 1.4 will add toggles)
                 'setup_progress' => 0, // 0% complete (Story 2.6 will track progress)
@@ -71,6 +71,7 @@ class WeddingController extends Controller
                 'user_id' => $user->id,
                 'email' => $user->email,
                 'phone' => $request->phone,
+                'package_tier' => $wedding->package_tier, // AC: 4 - Log package tier
                 'password_was_phone' => !$request->filled('password'), // Track if phone used as password
                 'created_by' => auth()->user()->id,
             ]);
@@ -108,7 +109,10 @@ class WeddingController extends Controller
      */
     public function index()
     {
-        // Placeholder for Story 7.1
-        return Inertia::render('Admin/Weddings');
+        $weddings = Wedding::with('user')->get(); // Eager load user relationship
+
+        return Inertia::render('Admin/Weddings', [
+            'weddings' => $weddings,
+        ]);
     }
 }

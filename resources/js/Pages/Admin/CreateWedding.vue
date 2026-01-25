@@ -15,6 +15,7 @@ const form = useForm({
     phone: '', // Phone number for contact and default password
     password: '',
     password_confirmation: '', // For confirmed validation rule
+    package_tier: 'standard', // Default to standard package
 });
 
 // Get credentials from flash session (if available)
@@ -136,6 +137,47 @@ const submit = () => {
                             />
                             <div v-if="form.errors.groom_name" class="mt-2 text-sm text-red-600">
                                 {{ form.errors.groom_name }}
+                            </div>
+                        </div>
+
+                        <!-- Package Tier Selection -->
+                        <div class="mb-4">
+                            <label class="block text-gray-700 font-medium mb-2">
+                                Package Tier / Pakej
+                            </label>
+
+                            <!-- Standard Option -->
+                            <label class="flex items-center p-3 border rounded-lg mb-2 cursor-pointer hover:bg-gray-50">
+                                <input
+                                    v-model="form.package_tier"
+                                    type="radio"
+                                    value="standard"
+                                    class="mr-3"
+                                    name="package_tier"
+                                />
+                                <div>
+                                    <span class="font-semibold text-gray-900">Standard (RM20)</span>
+                                    <p class="text-sm text-gray-600">Basic wedding card features</p>
+                                </div>
+                            </label>
+
+                            <!-- Premium Option -->
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input
+                                    v-model="form.package_tier"
+                                    type="radio"
+                                    value="premium"
+                                    class="mr-3"
+                                    name="package_tier"
+                                />
+                                <div>
+                                    <span class="font-semibold text-gray-900">Premium (RM30)</span>
+                                    <p class="text-sm text-gray-600">All features + Wish Present + Digital Ang Pow</p>
+                                </div>
+                            </label>
+
+                            <div v-if="form.errors.package_tier" class="mt-2 text-sm text-red-600">
+                                {{ form.errors.package_tier }}
                             </div>
                         </div>
 

@@ -25,6 +25,7 @@ class StoreWeddingRequest extends FormRequest
             'email' => ['required', 'email', 'unique:users,email'], // AC: 4 - Unique check
             'phone' => ['required', 'string', 'min:10', 'max:15', 'regex:/^[0-9+\-\s]+$/'], // Malaysian phone format
             'password' => ['nullable', 'string', 'min:8', 'confirmed'], // Optional - if provided, must be min 8 chars
+            'package_tier' => ['nullable', 'in:standard,premium'], // AC: 1 - Package tier validation (nullable with controller fallback)
         ];
     }
 
@@ -44,6 +45,7 @@ class StoreWeddingRequest extends FormRequest
             'phone.min' => 'Maaf, nombor telefon mesti sekurang-kurangnya 10 digit. / Sorry, phone number must be at least 10 digits.',
             'password.min' => 'Maaf, kata laluan mesti sekurang-kurangnya 8 aksara. / Sorry, password must be at least 8 characters.',
             'password.confirmed' => 'Maaf, pengesahan kata laluan tidak sepadan. / Sorry, password confirmation does not match.',
+            'package_tier.in' => 'Maaf, pilihan pakej tidak sah. / Sorry, package tier is invalid.',
         ];
     }
 }

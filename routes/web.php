@@ -3,10 +3,21 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\WeddingController;
+use App\Http\Controllers\Couple\DashboardController as CoupleDashboardController;
+use App\Http\Controllers\Couple\UpgradeRequestController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
+// Protected couple routes (require authentication and couple role)
+Route::middleware(['auth', 'role:couple'])
+    ->prefix('couple')
+    ->name('couple.')
+    ->group(function () {
+        Route::get('/dashboard', [CoupleDashboardController::class, 'index'])->name('dashboard');
+        Route::post('upgrade-request', [UpgradeRequestController::class, 'store'])->name('upgrade-request.store');
+    });
 
 // Guest routes (admin login)
 Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])

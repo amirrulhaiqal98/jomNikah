@@ -157,24 +157,71 @@ class WeddingController extends Controller
     }
 
     /**
-     * Update wedding account (Story 1.4)
+     * Update wedding account (Story 1.4, modified for Story 1.5 package upgrade/downgrade)
+     * AC: 2, 3, 5, 6 - Handle package tier changes with permission sync
      */
     public function update(UpdateWeddingRequest $request, Wedding $wedding)
     {
-        DB::beginTransaction();
+        // Authorization handled in UpdateWeddingRequest
+
+        $oldPackageTier = $wedding->package_tier;
 
         try {
             $wedding->update([
                 'bride_name' => $request->bride_name,
                 'groom_name' => $request->groom_name,
-                'wish_present_enabled' => $request->boolean('wish_present_enabled', false), // Story 1.4
-                'digital_ang_pow_enabled' => $request->boolean('digital_ang_pow_enabled', false), // Story 1.4
+                'package_tier' => $request->package_tier ?? $wedding->package_tier,
+                'wish_present_enabled' => $request->boolean('wish_present_enabled', $wedding->wish_present_enabled),
+                'digital_ang_pow_enabled' => $request->boolean('digital_ang_pow_enabled', $wedding->digital_ang_pow_enabled),
             ]);
 
+            // Handle package upgrade: Standard → Premium (Story 1.5)
+            if ($oldPackageTier === 'standard' && $wedding->package_tier === 'premium') {
+                // Auto-enable premium features on upgrade
+                $wedding->update([
+                    'wish_present_enabled' => true,
+                    'digital_ang_pow_enabled' => true,
+                ]);
+
+                // Sync permissions (grants access to both features)
+                $this->syncPremiumPermissions($wedding->user, $wedding);
+
+                Log::info('Package upgraded from Standard to Premium', [
+                    'wedding_id' => $wedding->id,
+                    'user_id' => $wedding->user->id,
+                    'old_package' => $oldPackageTier,
+                    'new_package' => $wedding->package_tier,
+                    'upgraded_by' => auth()->user()->id,
+                ]);
+
+                return redirect()->route('admin.weddings.index')
+                    ->with('success', 'Package upgraded to Premium successfully. Features unlocked immediately. / Pakej berjaya dinaik taraf ke Premium. Ciri-ciri telah dibuka.');
+            }
+
+            // Handle package downgrade: Premium → Standard (Story 1.5)
+            if ($oldPackageTier === 'premium' && $wedding->package_tier === 'standard') {
+                // Manually revoke permissions (data retained but inaccessible)
+                $wishPresentPermission = Permission::firstOrCreate(['name' => 'access_wish_present_registry']);
+                $digitalAngPowPermission = Permission::firstOrCreate(['name' => 'access_digital_ang_pow']);
+
+                $wedding->user->revokePermissionTo($wishPresentPermission);
+                $wedding->user->revokePermissionTo($digitalAngPowPermission);
+
+                Log::info('Package downgraded from Premium to Standard', [
+                    'wedding_id' => $wedding->id,
+                    'user_id' => $wedding->user->id,
+                    'old_package' => $oldPackageTier,
+                    'new_package' => $wedding->package_tier,
+                    'downgraded_by' => auth()->user()->id,
+                ]);
+
+                return redirect()->route('admin.weddings.index')
+                    ->with('success', 'Package downgraded to Standard. Premium features now locked. / Pakej diturunkan taraf ke Standard. Ciri-ciri Premium kini dikunci.');
+            }
+
+            // Regular update (no package change)
             // Sync permissions when toggles change
             $this->syncPremiumPermissions($wedding->user, $wedding);
-
-            DB::commit();
 
             Log::info('Wedding account updated', [
                 'wedding_id' => $wedding->id,
@@ -187,8 +234,6 @@ class WeddingController extends Controller
                 ->with('success', 'Wedding account updated successfully. / Akaun perkahwinan berjaya dikemaskini!');
 
         } catch (\Exception $e) {
-            DB::rollBack();
-
             Log::error('Failed to update wedding account', [
                 'error' => $e->getMessage(),
                 'wedding_id' => $wedding->id,

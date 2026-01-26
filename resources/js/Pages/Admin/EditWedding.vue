@@ -1,5 +1,6 @@
 <script setup>
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
+import { watch } from 'vue';
 
 const page = usePage();
 
@@ -13,8 +14,35 @@ const props = defineProps({
 const form = useForm({
     bride_name: props.wedding.bride_name,
     groom_name: props.wedding.groom_name,
+    package_tier: props.wedding.package_tier,
     wish_present_enabled: props.wedding.wish_present_enabled ?? false,
     digital_ang_pow_enabled: props.wedding.digital_ang_pow_enabled ?? false,
+});
+
+// Auto-check/uncheck features based on package tier
+watch(() => form.package_tier, (newTier, oldTier) => {
+    if (oldTier && newTier !== oldTier) {
+        if (newTier === 'premium') {
+            // Upgrading: confirm with user (AC: 1)
+            const confirmed = confirm('Upgrade this couple to Premium package? Features will be unlocked immediately. / Naik taraf pasangan ini ke pakej Premium? Ciri-ciri akan dibuka serta-merta.');
+            if (!confirmed) {
+                form.package_tier = oldTier; // Revert
+                return;
+            }
+            // Auto-enable both features
+            form.wish_present_enabled = true;
+            form.digital_ang_pow_enabled = true;
+        } else if (newTier === 'standard') {
+            // Downgrading: confirm with user
+            const confirmed = confirm('Downgrading to Standard will lock premium features. Continue? / Menurunkan taraf ke Standard akan mengunci ciri-ciri Premium. Teruskan?');
+            if (!confirmed) {
+                form.package_tier = oldTier; // Revert
+            } else {
+                form.wish_present_enabled = false;
+                form.digital_ang_pow_enabled = false;
+            }
+        }
+    }
 });
 
 const submit = () => {
@@ -168,20 +196,27 @@ const submit = () => {
                             </p>
                         </div>
 
-                        <!-- Package Tier (Read-only) -->
+                        <!-- Package Tier Selection -->
                         <div class="mb-4">
-                            <label class="block text-gray-700 font-medium mb-2">
+                            <label for="package_tier" class="block text-gray-700 font-medium mb-2">
                                 Package Tier / Pakej
                             </label>
-                            <input
-                                type="text"
-                                :value="wedding.package_tier === 'premium' ? 'Premium (RM30)' : 'Standard (RM20)'"
-                                class="w-full px-3 py-2 border rounded-lg bg-gray-100 text-gray-600"
-                                disabled
-                            />
-                            <p class="mt-1 text-xs text-gray-500">
-                                Package tier cannot be changed here
+                            <select
+                                id="package_tier"
+                                v-model="form.package_tier"
+                                class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                name="package_tier"
+                            >
+                                <option value="standard">Standard (RM20)</option>
+                                <option value="premium">Premium (RM30)</option>
+                            </select>
+                            <p class="mt-1 text-sm text-gray-600">
+                                Upgrading to Premium will instantly unlock Wish Present and Digital Ang Pow features.
+                                Downgrading to Standard will lock these features (data retained).
                             </p>
+                            <div v-if="form.errors.package_tier" class="mt-2 text-sm text-red-600">
+                                {{ form.errors.package_tier }}
+                            </div>
                         </div>
 
                         <!-- Submit Button -->
